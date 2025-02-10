@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#3C612D</color>
+    <color name="purple_700">#035483</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#00cc00</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#E32527</color>
+
+    <color name="colorPrimary">#3C612D</color>
+
+    <color name="colorPrimaryDark">#5D864D</color>
+
+    <color name="colorAccent">#5D864D</color>
+
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="colorText">#424D91</color>
+
+    <color name="colorHint">#82424D91</color>
+
+    <color name="colorLogoBlue">#27357b</color>
+
+    <color name="backgroundColor">#e3ebf1</color>
+
+    <color name="colorLogoRed">#E32527</color>
+    <color name="colorRed">#A63B3C</color>
+
+    <color name="colorBlack">#1b1b1b</color>
+
+    <color name="foreColor">#000000</color>
+
+    <color name="actionBtnForeColor">#ffffff</color>
+
+    <color name="darkGreen">#347339</color>
+    <color name="backMain">#FFFFFF</color>
+
+    <color name="notSoWhiteBackground">#e4e4e4</color>
+
+    <color name="loginBack">#ffffff</color>
+
+    <color name="colorCustom">#8F4164C2</color>
+
+    <color name="textLoanRenewal">#2B2B2B</color>
+
+    <color name="hintLoanRenewal">#4D1A1A1A</color>
+
+    <color name="headingDarkLoanRenewal">#1A1A1A</color>
+
+    <color name="colorBlackHint">#80000000</color>
+
+    <color name="colorTextHint">#8050686C</color>
+    <color name="colorBranchGrey">#96E887</color>
 </resources>

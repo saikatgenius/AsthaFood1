@@ -3,6 +3,7 @@ package com.example.asthafood.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,13 +14,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.os.BuildCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.example.asthafood.BuildConfig;
+import com.example.asthafood.LoginOptionsActivity;
 import com.example.asthafood.R;
+import com.example.asthafood.UpdateAppActivity;
+import com.example.asthafood.Util.OpenLinks;
+import com.example.asthafood.mssql.SqlManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 public class SplashScreenActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView mTv_splashVersion;
@@ -34,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
         setViewReferences();
         bindEventHandlers();
 
-       /// mTv_splashVersion.setText("Version " + .);
+        mTv_splashVersion.setText("Version " + BuildConfig.VERSION_NAME);
 
         isUpdateAvail();
 
@@ -56,24 +65,31 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
         }
     }
     public void isUpdateAvail() {
-        new GetDataParserArray(this, APILinks.IS_UPDATE_AVAILABLE + com.geniustechnoindia.sanglapMicro.BuildConfig.VERSION_NAME, true, new GetDataParserArray.OnGetResponseListener() {
-            @Override
-            public void onGetResponse(JSONArray response) {
-                try {
-                    if (response != null) {
-                        JSONObject jsonObject = response.getJSONObject(0);
-                        updated_app_ver = jsonObject.getString("VersionName");
-                        if (jsonObject.getInt("isAvailable") == 1) {
-                            callWaitMethod(true);
-                        } else {
-                            callWaitMethod(false);
-                        }
+        Connection cn = new SqlManager().getSQLConnection();
+        try {
+            if (cn != null) {
+                CallableStatement smt = cn.prepareCall("{call ADROID_CheckIfUpdateAvailable(?)}");
+                smt.setString("@versionName", BuildConfig.VERSION_NAME);
+                smt.executeQuery();
+                ResultSet rs = smt.getResultSet();
+                while (rs.next()) {
+                    Log.d("hvsv", "isUpdateAvail: "+rs.getBoolean("isAvailable"));
+                    if (rs.getBoolean("isAvailable")) {
+                        updated_app_ver = rs.getString("VersionName");
+                        callWaitMethod(true);
+                    } else {
+                        callWaitMethod(false);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
                 }
+
+            } else {
+                Log.d("bbc1", "isUpdateAvail: "+cn);
             }
-        });
+        } catch (Exception ex) {
+            Log.d("bbc", "isUpdateAvail: "+ex);
+        }
+
     }
 
     private void callWaitMethod(Boolean flag) {

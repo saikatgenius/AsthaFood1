@@ -6,4 +6,15 @@
     </style>
 
     <style name="Theme.AsthaFood" parent="Base.Theme.AsthaFood" />
+
+
+    <style name="TextLabelCustom">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorHint</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">#292929</item>
+        <item name="colorControlActivated">#000000</item>
+    </style>
 </resources>
