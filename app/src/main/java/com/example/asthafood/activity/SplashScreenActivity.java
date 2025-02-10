@@ -94,12 +94,12 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
 
     private void callWaitMethod(Boolean flag) {
         if (flag) {
-            YoYo.with(Techniques.StandUp)
-                    .duration(3000)
-                    .repeat(0)
-                    .playOn(findViewById(R.id.tv_splash_activity_title));
-
-            int secondsDelayed = 2;
+//            YoYo.with(Techniques.StandUp)
+//                    .duration(3000)
+//                    .repeat(0)
+//                    .playOn(findViewById(R.id.tv_splash_activity_title));
+//
+//            int secondsDelayed = 2;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -107,14 +107,15 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
                     finish();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
-            }, secondsDelayed * 2000);
-        } else {
-            YoYo.with(Techniques.StandUp)
-                    .duration(3000)
-                    .repeat(0)
-                    .playOn(findViewById(R.id.tv_splash_activity_title));
+            },  5000);
 
-            int secondsDelayed = 2;
+        } else {
+//            YoYo.with(Techniques.StandUp)
+//                    .duration(3000)
+//                    .repeat(0)
+//                    .playOn(findViewById(R.id.tv_splash_activity_title));
+//
+//            int secondsDelayed = 2;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -122,7 +123,7 @@ public class SplashScreenActivity extends AppCompatActivity implements View.OnCl
                     finish();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
-            }, secondsDelayed * 2000);
+            },  5000);
         }
     }
 }

@@ -48,7 +48,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation (libs.exoplayer)
-    //implementation (libs.autoimageslider.v140)
 
     implementation (libs.circleimageview)
     implementation ("com.google.android.material:material:1.2.1")
@@ -62,11 +61,7 @@ dependencies {
     implementation("com.github.MrNouri:DynamicSizes:1.0")
     implementation ("com.daimajia.easing:library:2.0@aar")
     implementation ("com.daimajia.androidanimations:library:2.3@aar")
-    ///SQL DATABASE CONNECTION
 
-//    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.+")
-
-    //  implementation("com.vanniktech:android-image-cropper:4.3.3")
 
     implementation("net.sourceforge.jtds:jtds:1.3.1")
     implementation ("com.github.CanHub:Android-Image-Cropper:3.1.3")
