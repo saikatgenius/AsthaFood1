@@ -32,6 +32,50 @@ public class EmployeeLoginActivity extends AppCompatActivity {
     private CheckBox mCheckBox_remember;
     private SharedPreferences sharedPreferencesarranger;
 
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_employee_login);
+
+
+
+
+        txtUserName = findViewById(R.id.loginUserName);
+        txtPassword = findViewById(R.id.loginPassword);
+        btnLogin = findViewById(R.id.btnlogin);
+        mTv_devByGen = findViewById(R.id.tv_activity_login_developed_by);
+        mCheckBox_remember=findViewById(R.id.check_box_arranger_login_remember_me);
+        mTv_devByGen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new OpenLinks(com.example.asthafood.activity.EmployeeLoginActivity.this).openGeniusTechnology();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login();
+            }
+        });
+
+        sharedPreferencesarranger=getSharedPreferences("ARRANGERLOGIN", Context.MODE_PRIVATE);
+        mCheckBox_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    rememberStatus=true;
+                }
+                else{
+                    rememberStatus=false;
+                }
+            }
+        });
+
+    }
+
     private boolean validate() {
         boolean valid = false;
         String _userName, _password;
@@ -105,44 +149,6 @@ public class EmployeeLoginActivity extends AppCompatActivity {
         startActivity(new Intent(com.example.asthafood.activity.EmployeeLoginActivity.this, com.example.asthafood.MainActivity.class));
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employee_login);
-        txtUserName = findViewById(R.id.loginUserName);
-        txtPassword = findViewById(R.id.loginPassword);
-        btnLogin = findViewById(R.id.btnlogin);
-        mTv_devByGen = findViewById(R.id.tv_activity_login_developed_by);
-        mCheckBox_remember=findViewById(R.id.check_box_arranger_login_remember_me);
-        mTv_devByGen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new OpenLinks(com.example.asthafood.activity.EmployeeLoginActivity.this).openGeniusTechnology();
-            }
-        });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
-
-        sharedPreferencesarranger=getSharedPreferences("ARRANGERLOGIN", Context.MODE_PRIVATE);
-        mCheckBox_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    rememberStatus=true;
-                }
-                else{
-                    rememberStatus=false;
-                }
-            }
-        });
-
     }
     @Override
     public void onBackPressed() {

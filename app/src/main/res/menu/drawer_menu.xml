@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_assign_product"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Assign Product" />
+    <item
+        android:id="@+id/nav_request_product"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Request Product" />
+    <item
+        android:id="@+id/nav_sell"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Sell" />
+    <item
+        android:id="@+id/nav_report"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Report" />
+    <item
+        android:id="@+id/nav_return"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Return" />
+    <item
+        android:id="@+id/nav_billing"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Billing" />
+</menu>
