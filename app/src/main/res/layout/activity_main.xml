@@ -443,13 +443,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableTop="@drawable/sell"
+                            android:drawableTop="@drawable/bill"
                             android:drawablePadding="2sp"
                             android:gravity="center"
                             android:paddingTop="15dp"
                             android:text="Sell \n Report"
                             android:textColor="@color/theme_color"
                             android:textSize="13sp"
+
                             android:textStyle="bold" />
 
                     </androidx.cardview.widget.CardView>
@@ -588,13 +589,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableTop="@drawable/sell"
+                            android:drawableTop="@drawable/report"
                             android:drawablePadding="2sp"
                             android:gravity="center"
                             android:paddingTop="15dp"
                             android:text="Sell \n Report"
                             android:textColor="@color/theme_color"
                             android:textSize="13sp"
+                            android:padding="1dp"
                             android:textStyle="bold" />
 
                     </androidx.cardview.widget.CardView>
