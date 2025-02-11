@@ -1,5 +1,6 @@
 package com.example.asthafood;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ReportFragment;
 
+import com.example.asthafood.activity.RequestProductSubmitActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (id == R.id.nav_assign_product) {
                 Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
+                startActivity(i);
             } else if (id == R.id.nav_request_product) {
                 Toast.makeText(this, "Request Product", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_sell) {

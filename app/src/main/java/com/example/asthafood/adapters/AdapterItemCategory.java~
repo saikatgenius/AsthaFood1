@@ -36,6 +36,8 @@ public class AdapterItemCategory extends RecyclerView.Adapter<AdapterItemCategor
     @Override
     public void onBindViewHolder(@NonNull AdapterItemCategory.AdapterItemCategoryViewHolder holder, int position) {
 
+        holder.mtv_categoryName.setText(arrayList.get(position).getCategoriName());
+
     }
 
     @Override

@@ -49,7 +49,7 @@ public class AdapterItemCategory extends RecyclerView.Adapter<AdapterItemCategor
         TextView mtv_categoryName;
         public AdapterItemCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.findViewById(R.id.tv_category_name);
+            mtv_categoryName=  itemView.findViewById(R.id.tv_category_name);
         }
     }
 }
