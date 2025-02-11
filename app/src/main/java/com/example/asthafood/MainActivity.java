@@ -1,5 +1,6 @@
 package com.example.asthafood;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -31,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         toolbar = findViewById(R.id.toolbar);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
             if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
             }
             return true;
         });
@@ -65,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Report", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_return) {
                 Toast.makeText(this, "Return", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_billing) {
-                Toast.makeText(this, "Billing", Toast.LENGTH_SHORT).show();
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);

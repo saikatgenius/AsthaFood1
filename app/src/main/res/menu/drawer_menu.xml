@@ -2,25 +2,36 @@
     <item
         android:id="@+id/nav_assign_product"
         android:icon="@drawable/ic_app_logo"
-        android:title="Assign Product" />
-    <item
-        android:id="@+id/nav_request_product"
-        android:icon="@drawable/ic_app_logo"
-        android:title="Request Product" />
-    <item
-        android:id="@+id/nav_sell"
-        android:icon="@drawable/ic_app_logo"
-        android:title="Sell" />
+        android:title="Home" />
+
     <item
         android:id="@+id/nav_report"
-        android:icon="@drawable/ic_app_logo"
+        android:icon="@drawable/report"
         android:title="Report" />
     <item
         android:id="@+id/nav_return"
-        android:icon="@drawable/ic_app_logo"
-        android:title="Return" />
-    <item
-        android:id="@+id/nav_billing"
-        android:icon="@drawable/ic_app_logo"
-        android:title="Billing" />
+        android:icon="@drawable/sell_new"
+        android:title="Sell" />
+
+    <item android:id="@+id/menu"
+        android:icon="@color/theme_color"
+        android:title="Others">
+        <menu>
+
+            <item
+                android:id="@+id/nav_request_product"
+                android:icon="@drawable/contact_us"
+                android:title="Contaus US" />
+            <item
+                android:id="@+id/nav_sell"
+                android:icon="@drawable/profile"
+                android:title="Profile" />
+        </menu>
+
+
+    </item>
+
+
+
+
 </menu>

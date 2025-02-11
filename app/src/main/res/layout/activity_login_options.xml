@@ -9,7 +9,7 @@
     tools:context=".LoginOptionsActivity">
 
     <FrameLayout
-        android:background="#E4334C75"
+        android:background="@color/theme_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:gravity="center"
+           >
 
 
             <ImageView

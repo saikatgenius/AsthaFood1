@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E32527</color>
+    <color name="theme_color">#E4334C75</color>
+
+
 
     <color name="colorPrimary">#3C612D</color>
 
