@@ -7,10 +7,10 @@
     <item
         android:id="@+id/nav_report"
         android:icon="@drawable/report"
-        android:title="Report" />
+        android:title="SellReport" />
     <item
         android:id="@+id/nav_sell"
         android:icon="@drawable/sell_new"
-        android:title="Sell" />
+        android:title="SellProduct" />
 </menu>
 

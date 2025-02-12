@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report;
+    private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product;
     private TextView user_naem,UserId;
 
     @Override
@@ -56,11 +56,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
-            switch (item.getItemId()) {
+            int id = item.getItemId();
 
-            }
-            if (selectedFragment != null) {
-               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Already in HomePage", Toast.LENGTH_SHORT).show();
+
+            } else if (id == R.id.nav_report) {
+                Intent i = new Intent(MainActivity.this, SellReportActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
             return true;
         });
@@ -72,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             } else if (id == R.id.nav_request_product) {
                 Toast.makeText(this, "Request Product", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_sell) {
@@ -92,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assign_product.setOnClickListener(this);
         Btn_add_shopkeeper.setOnClickListener(this);
         Btn_ll_activity_main_sell_report.setOnClickListener(this);
+        Btn_ll_activity_main_sell_product.setOnClickListener(this);
     }
 
     private void setViewReferences() {
@@ -104,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         UserId=findViewById(R.id.tv_activity_main_employee_code);
         Btn_add_shopkeeper=findViewById(R.id.add_shopkeeper);
         Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
+        Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
     }
 
     @Override
@@ -128,11 +137,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        } else if (v==Btn_add_shopkeeper) {
            Intent intent=new Intent(MainActivity.this, NewShopKeeperEntry.class);
            startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();
 
-       } else if (v==Btn_ll_activity_main_sell_report) {
+       } else if (v==Btn_ll_activity_main_sell_product) {
 
            Intent intent=new Intent(MainActivity.this, SellReportActivity.class);
            startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();
        }
 
     }

@@ -28,6 +28,9 @@
         android:theme="@style/Theme.AsthaFood"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ProductSellActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SellReportActivity"
             android:exported="false" />
         <activity
