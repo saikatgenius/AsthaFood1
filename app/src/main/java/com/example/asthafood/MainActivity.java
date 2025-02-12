@@ -3,6 +3,9 @@ package com.example.asthafood;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,29 +20,33 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ReportFragment;
 
+import com.example.asthafood.activity.NewShopKeeperEntry;
 import com.example.asthafood.activity.RequestProductSubmitActivity;
+import com.example.asthafood.activity.SellReportActivity;
+import com.example.asthafood.bean.GlobalStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
+    private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report;
+    private TextView user_naem,UserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setViewReferences();
+        bindEventHandlers();
 
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        toolbar = findViewById(R.id.toolbar);
+        user_naem.setText("Welcome "+GlobalStore.GlobalValue.getUserOriginalName());  //
+        UserId.setText(GlobalStore.GlobalValue.getUserName());
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         setSupportActionBar(toolbar);
@@ -81,6 +88,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void bindEventHandlers() {
+        assign_product.setOnClickListener(this);
+        Btn_add_shopkeeper.setOnClickListener(this);
+        Btn_ll_activity_main_sell_report.setOnClickListener(this);
+    }
+
+    private void setViewReferences() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        toolbar = findViewById(R.id.toolbar);
+        assign_product=findViewById(R.id.ll_activity_main_assign_product);
+        user_naem=findViewById(R.id.tv_activity_main_welcome_message);
+        UserId=findViewById(R.id.tv_activity_main_employee_code);
+        Btn_add_shopkeeper=findViewById(R.id.add_shopkeeper);
+        Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
+    }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -88,5 +113,27 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+       if (v==assign_product){
+           /*Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
+           Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
+           startActivity(i);*/
+       } else if (v==UserId) {
+
+
+       } else if (v==Btn_add_shopkeeper) {
+           Intent intent=new Intent(MainActivity.this, NewShopKeeperEntry.class);
+           startActivity(intent);
+
+       } else if (v==Btn_ll_activity_main_sell_report) {
+
+           Intent intent=new Intent(MainActivity.this, SellReportActivity.class);
+           startActivity(intent);
+       }
+
     }
 }

@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/theme_color"
     tools:context=".activity.NewShopKeeperEntry">
 
     <ScrollView
@@ -19,90 +21,94 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                 android:visibility="gone"
+                android:layout_height="1dp"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:text =" ---Enter ShopKeeper Details---"
+                android:text =" ~ Enter ShopKeeper Details ~"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="@dimen/_15font_mdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_22font_mdp"
                 android:layout_marginTop="@dimen/_30font_mdp" />
 
             <EditText
                 android:id="@+id/shopkeeper_name"
                 android:layout_width="match_parent"
-                android:layout_weight=".8"
+
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter ShopKeeper Name"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="5dp"
-                android:layout_marginTop="@dimen/_20font_mdp"
+                android:paddingVertical="2dp"
+                android:textColor="@color/red"
+                android:layout_marginTop="@dimen/_25mdp"
                 android:background="@drawable/border_background"
-                android:layout_height="40dp">
+                android:layout_height="@dimen/_40mdp">
 
             </EditText>
             <EditText
                 android:id="@+id/shop_name"
                 android:layout_width="match_parent"
-                android:layout_weight=".8"
+                android:textColor="@color/red"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter Shop Name"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="5dp"
                 android:layout_marginTop="@dimen/_20font_mdp"
                 android:background="@drawable/border_background"
-                android:layout_height="40dp">
+                android:layout_height="@dimen/_40mdp">
 
             </EditText>
             <EditText
                 android:id="@+id/shopkeeper_address"
                 android:layout_width="match_parent"
-                android:layout_weight=".8"
+                android:textColor="@color/red"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter Shop Address"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="5dp"
                 android:layout_marginTop="@dimen/_20font_mdp"
                 android:background="@drawable/border_background"
-                android:layout_height="40dp">
+                android:layout_height="@dimen/_40mdp">
 
             </EditText>
             <EditText
                 android:id="@+id/shopkeeper_phone"
                 android:layout_width="match_parent"
-                android:layout_weight=".8"
+                android:textColor="@color/red"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter Phone Number"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:paddingHorizontal="8dp"
                 android:inputType="phone"
                 android:paddingVertical="5dp"
                 android:layout_marginTop="@dimen/_20font_mdp"
                 android:background="@drawable/border_background"
-                android:layout_height="40dp">
+                android:layout_height="@dimen/_40mdp">
 
             </EditText>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/shopkeeper_submit"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/colorRed"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_background"
+
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:layout_marginTop="@dimen/_20font_mdp"
                 android:text="Submit"
-                android:layout_weight="2"/>
+               />
 
         </LinearLayout>
 
