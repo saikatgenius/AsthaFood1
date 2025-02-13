@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ReportFragment;
 
 import com.example.asthafood.activity.NewShopKeeperEntry;
+import com.example.asthafood.activity.ProductSellActivity;
 import com.example.asthafood.activity.RequestProductSubmitActivity;
 import com.example.asthafood.activity.SellReportActivity;
 import com.example.asthafood.bean.GlobalStore;
@@ -128,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
        if (v==assign_product){
-           /*Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
+          // Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
            Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
-           startActivity(i);*/
+           startActivity(i);
        } else if (v==UserId) {
 
 
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
        } else if (v==Btn_ll_activity_main_sell_product) {
 
-           Intent intent=new Intent(MainActivity.this, SellReportActivity.class);
+           Intent intent=new Intent(MainActivity.this, ProductSellActivity.class);
            startActivity(intent);
            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
            finish();

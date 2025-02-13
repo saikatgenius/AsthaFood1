@@ -185,6 +185,7 @@
                 <LinearLayout
                     android:id="@+id/ll_activity_main_assign_product"
                     android:layout_width="match_parent"
+                    android:layout_margin="@dimen/_2mdp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
