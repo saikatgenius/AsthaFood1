@@ -7,4 +7,135 @@
     android:layout_height="match_parent"
     tools:context=".activity.ProductSellActivity">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10mdp"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/shopkeeper_name"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/_10mdp"
+                android:hint="Enter ShopKeeper Name"
+                android:textSize="14sp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/border_background"
+                android:layout_height="@dimen/_40mdp">
+            </EditText>
+            <EditText
+                android:id="@+id/shopkeeper_phone"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:hint="Enter ShopKeeper Phone"
+                android:textSize="14sp"
+                android:inputType="phone"
+                android:layout_marginHorizontal="@dimen/_10mdp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/border_background"
+                android:layout_height="@dimen/_40mdp">
+
+            </EditText>
+
+
+        </LinearLayout>
+        <EditText
+            android:layout_marginTop="@dimen/_10mdp"
+            android:id="@+id/shopkeeper_address"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_10mdp"
+            android:hint="Enter ShopKeeper Address"
+            android:textSize="14sp"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/border_background"
+            android:layout_height="@dimen/_40mdp">
+        </EditText>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvproductDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clHeading" />
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="40dp"
+        app:cardCornerRadius="@dimen/_20mdp"
+        android:elevation="@dimen/_10mdp"
+        android:layout_marginBottom="@dimen/_60font_mdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_8mdp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Total Price :"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Total Price"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_12font_mdp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/getTotal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottom_background"
+                android:text="GET Amount"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_10mdp"
+        android:background="@drawable/bottom_background"
+        android:text="SELL PRODUCT"
+        />
+
 </RelativeLayout>
