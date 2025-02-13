@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+       android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/productCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            app:cardCornerRadius="12dp"
+            android:backgroundTint="@color/theme_color"
+
+            android:padding="@dimen/_10mdp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/productImageView"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="16dp"
+                        android:scaleType="fitXY"
+                        android:contentDescription="test product list "
+
+                        android:src="@drawable/testimage"
+                        tools:ignore="ContentDescription" />
+                    <!-- Product Name -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/productNameTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Product Name"
+                            android:textColor="@android:color/primary_text_dark_nodisable"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="Sample Product" />
+
+
+
+                        <TextView
+                            android:id="@+id/productDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="4dp"
+                            android:text="Details: aegfszdfhzdfg set serfS AEreaw er"
+                            android:textColor="@color/orange"
+                            android:textSize="14sp"
+                            tools:text="Details: sf sdbsbdnfgt dfgfgh hj fgh" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- Product Image -->
+
+
+                <!-- Vertical LinearLayout for Text Details -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+
+
+                    <!-- Sell Date -->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Date:  "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="Date:  " />
+                    <TextView
+                        android:id="@+id/sellDateTextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="2023-10-01"
+                        android:textColor="@android:color/holo_blue_light"
+                        android:textSize="14sp"
+                        tools:text="2023-10-01" />
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Amount: ₹ "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="ID: ₹ " />
+                    <!-- Amount -->
+                    <TextView
+                        android:id="@+id/amountTextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="99.99"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textSize="14sp"
+                        tools:text="99.99" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Buyer: "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="Buyer: " />
+                    <!-- Buyer Name -->
+                    <TextView
+                        android:id="@+id/buyerNameTextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Jonny"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="14sp"
+                        tools:text=" Jon " />
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Quantity: "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="Quantity: " />
+                        <!-- Buyer Name -->
+                        <TextView
+                            android:id="@+id/quantity"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text=" Jonny"
+                            android:textColor="@android:color/holo_purple"
+                            android:textSize="14sp"
+                            tools:text=" 1321 " />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+
+                        <!-- Product ID -->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="ID: "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="ID: " />
+                        <TextView
+                            android:id="@+id/productIdTextView"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text=" 12345"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text=" 12345" />
+
+                        <!-- Bill Number -->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Bill No:"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="Bill No: " />
+                        <TextView
+                            android:id="@+id/billNumberTextView"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="67890"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="67890" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/warningIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/exclamation"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"
+            android:layout_alignTop="@id/productCardView"
+            android:layout_alignEnd="@id/productCardView" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eaeaea" />
+</LinearLayout>
