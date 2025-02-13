@@ -79,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="ProductName"
+                android:text="ProductName"
                 android:layout_weight="1.2"
                 android:textColor="@color/black"
                 android:textSize="10dp"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".6"
                 android:gravity="center"
-                android:hint="ProDuct\nCode"
+                android:text="ProDuct\nCode"
                 android:textColor="@color/colorBlack"
                 android:textSize="10dp"
                 android:textStyle="bold"
@@ -104,7 +104,7 @@
                 android:layout_weight="0.6"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="InStock"
+                android:text="InStock"
                 android:textColor="@color/colorRed"
                 android:textSize="10dp"
                 />
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="Price"
+                android:text="Price"
                 android:textColor="@color/colorBlack"
                 android:textSize="10dp" />
 
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="Sell Qnty"
+                android:text="Sell Qnty"
                 android:textColor="@color/colorBlack"
                 android:textSize="10dp" />
 
@@ -132,6 +132,10 @@
 
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#eaeaea" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvproductDetails"
             android:layout_width="match_parent"
@@ -165,8 +169,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Total Price :"
+                android:textSize="@dimen/_10font_mdp"
                 android:layout_weight="1.2"
                 android:gravity="center"
+
                 android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/price"

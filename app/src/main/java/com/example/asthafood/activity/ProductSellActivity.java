@@ -5,25 +5,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
-import com.example.asthafood.adapters.AdapterItemCategory;
 import com.example.asthafood.adapters.SellProductDetailsAdapter;
 import com.example.asthafood.bean.GlobalStore;
 import com.example.asthafood.databinding.ActivityProductSellBinding;
 import com.example.asthafood.mssql.SqlManager;
-import com.example.asthafood.mssql.models.ItemCategory;
 import com.example.asthafood.mssql.models.SellProductDetailsModel;
 
 import java.sql.CallableStatement;
@@ -35,7 +32,8 @@ public class ProductSellActivity extends AppCompatActivity {
 
     ActivityProductSellBinding binding;
     double TotalPrice =0.0;
-
+    private Toolbar mToolbar;
+    private TextView mToolbarTitle;
     SellProductDetailsModel sellProductDetailsModel;
     private ArrayList<SellProductDetailsModel> arrayList=new ArrayList<>();
     SellProductDetailsAdapter sellProductDetailsAdapter;
@@ -45,6 +43,16 @@ public class ProductSellActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProductSellBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mToolbar = findViewById(R.id.custom_toolbar);
+        mToolbarTitle = findViewById(R.id.toolbar_title);
+
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        mToolbarTitle.setText("Sell Product");
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         binding.rvproductDetails.setLayoutManager(linearLayoutManager);
         getProducts(GlobalStore.GlobalValue.getUserName());
@@ -65,12 +73,12 @@ public class ProductSellActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (TotalPrice==Integer.parseInt(binding.price.getText().toString()) && binding.price.getText() != ""){
+                if (TotalPrice==Double.parseDouble(binding.price.getText().toString()) && binding.price.getText() != ""){
                     if (!binding.shopkeeperName.getText().toString().isEmpty() &&
                             !binding.shopkeeperAddress.getText().toString().isEmpty() &&
                             !binding.shopkeeperPhone.getText().toString().isEmpty())
                     {
-                        SubmitData(arrayList);
+                        SubmitData(arrayList,TotalPrice);
                     }else{
                         Toast.makeText(ProductSellActivity.this,"Please Fill All ShopkeeperDetails",Toast.LENGTH_LONG).show();
                         binding.shopkeeperName.requestFocus();
@@ -86,14 +94,15 @@ public class ProductSellActivity extends AppCompatActivity {
 
     }
 
-    private void SubmitData(ArrayList<SellProductDetailsModel> arrayList) {
+    private void SubmitData(ArrayList<SellProductDetailsModel> arrayList, double totalPrice) {
         String collectionList = "";
         for (int i = 0 ; i<arrayList.size();i++){
             if (arrayList.get(i).getSellingQnty()>0){
                 collectionList +=
                         arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
                                 + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+";";
-                Log.d("list", collectionList);
+                Log.d("" +
+                        "", collectionList);
             }
 
         }
@@ -104,15 +113,18 @@ public class ProductSellActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP(?,?,?,?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP(?,?,?,?,?,?,?,?,?)}");
                 smt.setString("@UserName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CollectionList",collectionList);
-                smt.setString("@CustomerName",GlobalStore.GlobalValue.getUserName());
-                smt.setString("@CustomerPhn",GlobalStore.GlobalValue.getUserName());
-                smt.setString("@CustomerAddrs",GlobalStore.GlobalValue.getUserName());
+                smt.setString("@CustomerName",binding.shopkeeperName.getText().toString());
+                smt.setString("@CustomerPhn",binding.shopkeeperPhone.getText().toString());
+                smt.setString("@CustomerAddrs",binding.shopkeeperAddress.getText().toString());
+                smt.setString("@TotalAmount",String.valueOf(totalPrice));
+                smt.registerOutParameter("@ReturnVoucherNo",java.sql.Types.VARCHAR);
+                smt.registerOutParameter("@SaleID",java.sql.Types.VARCHAR);
                 smt.registerOutParameter("@ErrorCode",java.sql.Types.INTEGER);
                 smt.executeUpdate();
-                Integer ReturnERRORCode  = smt.getInt("@ErrorCode");
+                int ReturnERRORCode  = smt.getInt("@ErrorCode");
                 if (ReturnERRORCode==0){
                     AlertDialog.Builder builder = new AlertDialog.Builder(ProductSellActivity.this);
                     builder.setCancelable(false);
@@ -156,6 +168,8 @@ public class ProductSellActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void getProducts(String userName) {
         Connection cn = new SqlManager().getSQLConnection();
         try {
@@ -189,7 +203,19 @@ public class ProductSellActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+                startActivity(new Intent(ProductSellActivity.this, MainActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onBackPressed() {

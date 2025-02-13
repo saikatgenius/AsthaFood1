@@ -11,7 +11,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Group Code"
+            android:hint="Pname"
             android:layout_weight="1.2"
             android:textColor="@color/darkGreen"
             android:textSize="10dp"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".6"
             android:gravity="center"
-            android:hint="Member\nName"
+            android:hint="id"
             android:textColor="@color/colorBlack"
             android:textSize="10dp"
             android:textStyle="bold"
@@ -36,7 +36,7 @@
             android:layout_weight="0.6"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Loan\nCode"
+            android:hint="stock"
             android:textColor="@color/colorRed"
             android:textSize="10dp"
             />
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="EMI"
+            android:hint="price"
             android:textColor="@color/colorBlack"
             android:textSize="10dp" />
 
@@ -61,6 +61,7 @@
             android:gravity="center"
             android:maxLength="5"
             android:maxLines="1"
+            android:textColor="@color/red"
             android:textSize="10sp"
             android:hint="Enter Qnty"/>
 
