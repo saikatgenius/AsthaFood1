@@ -1,6 +1,7 @@
 package com.example.asthafood.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -63,8 +65,11 @@ public class ProductSellActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (TotalPrice==Integer.parseInt(binding.price.getText().toString())){
-                    if (binding.price.getText() != ""){
+                if (TotalPrice==Integer.parseInt(binding.price.getText().toString()) && binding.price.getText() != ""){
+                    if (!binding.shopkeeperName.getText().toString().isEmpty() &&
+                            !binding.shopkeeperAddress.getText().toString().isEmpty() &&
+                            !binding.shopkeeperPhone.getText().toString().isEmpty())
+                    {
                         SubmitData(arrayList);
                     }else{
                         Toast.makeText(ProductSellActivity.this,"Please Fill All ShopkeeperDetails",Toast.LENGTH_LONG).show();
@@ -105,10 +110,42 @@ public class ProductSellActivity extends AppCompatActivity {
                 smt.setString("@CustomerName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CustomerPhn",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CustomerAddrs",GlobalStore.GlobalValue.getUserName());
-                smt.registerOutParameter("@ErrorCode",10);
-                smt.execute();
-
-
+                smt.registerOutParameter("@ErrorCode",java.sql.Types.INTEGER);
+                smt.executeUpdate();
+                Integer ReturnERRORCode  = smt.getInt("@ErrorCode");
+                if (ReturnERRORCode==0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductSellActivity.this);
+                    builder.setCancelable(false);
+                    builder.setTitle("Successful");
+                    builder.setMessage("Product Sale Successfully. ");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //builder.setCancelable(true);
+                            Intent i = new Intent(ProductSellActivity.this, ProductSellActivity.class);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            startActivity(i);
+                            finish();
+                            progressDialog.dismiss();
+                        }
+                    }).show();
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductSellActivity.this);
+                    builder.setCancelable(false);
+                    builder.setTitle("Unable to enter Data");
+                    builder.setMessage("Product Sale UnSuccessfully. ");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //builder.setCancelable(true);
+                            Intent i = new Intent(ProductSellActivity.this, ProductSellActivity.class);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            startActivity(i);
+                            finish();
+                            progressDialog.dismiss();
+                        }
+                    }).show();
+                }
             } else {
                 progressDialog.dismiss();
                 Log.d("bbc1", "isUpdateAvail: "+cn);
