@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ReportFragment;
 
+import com.example.asthafood.activity.AssignProductActivity;
 import com.example.asthafood.activity.NewShopKeeperEntry;
 import com.example.asthafood.activity.ProductSellActivity;
 import com.example.asthafood.activity.RequestProductSubmitActivity;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product;
+    private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product,Btn_ll_activity_main_assign_product;
     private TextView user_naem,UserId;
 
     @Override
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         user_naem.setText("Welcome "+GlobalStore.GlobalValue.getUserOriginalName());  //
         UserId.setText(GlobalStore.GlobalValue.getUserName());
-        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,15 +76,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int id = item.getItemId();
 
             if (id == R.id.nav_assign_product) {
-                Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
+                Toast.makeText(this, "Already in Home", Toast.LENGTH_SHORT).show();
+                /*Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
+               // finish();
+            } else if (id == R.id.nav_request_product) {
+
+            } else if (id == R.id.nav_sell) {
+                Intent i = new Intent(MainActivity.this, SellReportActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
-            } else if (id == R.id.nav_request_product) {
-                Toast.makeText(this, "Request Product", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_sell) {
-                Toast.makeText(this, "Sell", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(this, "Sell", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_report) {
                 Toast.makeText(this, "Report", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_return) {
@@ -101,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_add_shopkeeper.setOnClickListener(this);
         Btn_ll_activity_main_sell_report.setOnClickListener(this);
         Btn_ll_activity_main_sell_product.setOnClickListener(this);
+        Btn_ll_activity_main_assign_product.setOnClickListener(this);
     }
 
     private void setViewReferences() {
@@ -114,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_add_shopkeeper=findViewById(R.id.add_shopkeeper);
         Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
         Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
+        Btn_ll_activity_main_assign_product=findViewById(R.id.ll_activity_main_assign_product);
     }
 
     @Override
@@ -130,8 +137,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
        if (v==assign_product){
           // Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
-           Intent i = new Intent(MainActivity.this, RequestProductSubmitActivity.class);
-           startActivity(i);
+
+           Intent intent=new Intent(MainActivity.this, AssignProductActivity.class);
+           startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();
+
+
        } else if (v==UserId) {
 
 
@@ -147,6 +159,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            startActivity(intent);
            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
            finish();
+       } else if (v==Btn_ll_activity_main_sell_report) {
+           Intent intent=new Intent(MainActivity.this, SellReportActivity.class);
+           startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();
+
        }
 
     }

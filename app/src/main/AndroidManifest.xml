@@ -37,6 +37,9 @@
             android:name=".activity.RequestProductItems"
             android:exported="false" />
         <activity
+            android:name=".activity.AssignProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.RequestProductSubmitActivity"
             android:exported="false" />
         <activity
