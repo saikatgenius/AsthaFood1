@@ -41,8 +41,19 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
              override fun afterTextChanged(editable: Editable) {
                  if (holder.SellQnty.getText().toString().isNotBlank()) {
                      if(holder.SellQnty.getText().toString().toInt()<=items[position].remainingQuntity){
+                         var gstAmt:Double = 0.0
+                         var sellAmt:Double = 0.0
+
                          items[position].sellingQnty = holder.SellQnty.getText().toString().toInt()
                          items[position].sellingQntyFinalPrice = items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()
+
+                         gstAmt = ((items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()) * items[position].gst.toDouble()) / 100
+                         sellAmt = (items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()) - gstAmt
+                         items[position].sellPrice = sellAmt
+                         items[position].gstPrice = gstAmt
+
+
+
                      }else{
                          Toast.makeText(
                              context,

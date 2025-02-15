@@ -96,6 +96,54 @@ public class SellProductDetailsModel {
     }
 
     String ProductName;
+    String MRP;
+
+    public String getExpiryDate() {
+        return ExpiryDate;
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        ExpiryDate = expiryDate;
+    }
+
+    public String getGST() {
+        return GST;
+    }
+
+    public void setGST(String GST) {
+        this.GST = GST;
+    }
+
+    public String getMRP() {
+        return MRP;
+    }
+
+    public void setMRP(String MRP) {
+        this.MRP = MRP;
+    }
+
+    String ExpiryDate;
+    String GST;
+
+    public double getSellPrice() {
+        return SellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        SellPrice = sellPrice;
+    }
+
+    double SellPrice;
+
+    public double getGstPrice() {
+        return GstPrice;
+    }
+
+    public void setGstPrice(double gstPrice) {
+        GstPrice = gstPrice;
+    }
+
+    double GstPrice;
 
 
 

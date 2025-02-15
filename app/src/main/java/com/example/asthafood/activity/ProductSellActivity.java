@@ -32,6 +32,8 @@ public class ProductSellActivity extends AppCompatActivity {
 
     ActivityProductSellBinding binding;
     double TotalPrice =0.0;
+    double TotalGST =0.0;
+    double ProductOriginalTotal =0.0;
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
     SellProductDetailsModel sellProductDetailsModel;
@@ -65,10 +67,15 @@ public class ProductSellActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TotalPrice = 0.0;
+                TotalGST = 0.0;
+                ProductOriginalTotal = 0.0;
                 for (int i = 0 ; i<arrayList.size();i++){
                     TotalPrice += arrayList.get(i).getSellingQntyFinalPrice();
+
+                    TotalGST += arrayList.get(i).getGstPrice();
+                    ProductOriginalTotal += arrayList.get(i).getSellPrice();
                 }
-                binding.price.setText(String.valueOf(TotalPrice));
+                binding.grandTotal.setText(String.valueOf(TotalPrice));
             }
         });
 
@@ -76,7 +83,7 @@ public class ProductSellActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (TotalPrice==Double.parseDouble(binding.price.getText().toString()) && binding.price.getText() != ""){
+                if (TotalPrice==Double.parseDouble(binding.grandTotal.getText().toString()) && binding.grandTotal.getText() != ""){
                     if (!binding.shopkeeperName.getText().toString().isEmpty() &&
                             !binding.shopkeeperAddress.getText().toString().isEmpty() &&
                             !binding.shopkeeperPhone.getText().toString().isEmpty())
@@ -103,7 +110,8 @@ public class ProductSellActivity extends AppCompatActivity {
             if (arrayList.get(i).getSellingQnty()>0){
                 collectionList +=
                         arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
-                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+";";
+                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()
+                                +";";
                 Log.d("" +
                         "", collectionList);
             }
@@ -116,13 +124,16 @@ public class ProductSellActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP_OLD(?,?,?,?,?,?,?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP_OLD(?,?,?,?,?,?,?,?,?,?)}");
                 smt.setString("@UserName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CollectionList",collectionList);
                 smt.setString("@CustomerName",binding.shopkeeperName.getText().toString());
                 smt.setString("@CustomerPhn",binding.shopkeeperPhone.getText().toString());
                 smt.setString("@CustomerAddrs",binding.shopkeeperAddress.getText().toString());
                 smt.setString("@TotalAmount",String.valueOf(totalPrice));
+
+                smt.setString("@GSTAmount",String.valueOf(TotalGST));
+
                 smt.registerOutParameter("@ReturnVoucherNo",java.sql.Types.VARCHAR);
                 smt.registerOutParameter("@SaleID",java.sql.Types.VARCHAR);
                 smt.registerOutParameter("@ErrorCode",java.sql.Types.INTEGER);
@@ -191,6 +202,9 @@ public class ProductSellActivity extends AppCompatActivity {
                     sellProductDetailsModel.setPrice(rs.getString("EmployeeSellPrice"));
                     sellProductDetailsModel.setRemainingQuntity(rs.getInt("RemianingQnty"));
                     sellProductDetailsModel.setProductName(rs.getString("ProductName"));
+                    sellProductDetailsModel.setMRP(rs.getString("MRP"));
+                    sellProductDetailsModel.setExpiryDate(rs.getString("ExpiryDate"));
+                    sellProductDetailsModel.setGST(rs.getString("TotalGST"));
 
                     arrayList.add(sellProductDetailsModel);
                 }
