@@ -155,27 +155,6 @@ public class AssignProductActivity extends AppCompatActivity implements View.OnC
          SetGetAssignProduct setGetAssignProduct = null;
 
 
-         //setGetAssignProduct = new SetGetAssignProduct();
-       /*  for  (int i = 1; i <= 5; i++) {
-             setGetAssignProduct.setProductName("Pav Bhaji Masala");
-             setGetAssignProduct.setProductDetails("Sunrise Pav Bhaji Masala is a spice blend that captures the authentic flavours of our famous street food, pav bhaji.");
-             setGetAssignProduct.setProductId("45834");
-             setGetAssignProduct.setBillNo("57297");
-             setGetAssignProduct.setDate("2025/10/10");
-             setGetAssignProduct.setAmount("120");
-             setGetAssignProduct.setBuyer("Saikat");
-             setGetAssignProduct.setBuyer("Saikat");
-             setGetAssignProduct.setProductQuantity("12");
-             mArrayListSellReport.add(setGetLoanDueReport);
-         }
-
-
-
-
-
-         adapterSellReport = new AdapterSellReport(AssignProductActivity.this, mArrayListSellReport);
-         mRv_loanDueReport.setAdapter(adapterSellReport);
-         mPb_proggress.setVisibility(View.GONE);*/
 
 
          try {

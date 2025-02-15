@@ -42,6 +42,9 @@ public class ProductSellActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProductSellBinding.inflate(getLayoutInflater());
+
+
+
         setContentView(binding.getRoot());
         mToolbar = findViewById(R.id.custom_toolbar);
         mToolbarTitle = findViewById(R.id.toolbar_title);
@@ -113,7 +116,7 @@ public class ProductSellActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP(?,?,?,?,?,?,?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP_OLD(?,?,?,?,?,?,?,?,?)}");
                 smt.setString("@UserName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CollectionList",collectionList);
                 smt.setString("@CustomerName",binding.shopkeeperName.getText().toString());

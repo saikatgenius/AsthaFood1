@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_add_shopkeeper.setOnClickListener(this);
         Btn_ll_activity_main_sell_report.setOnClickListener(this);
         Btn_ll_activity_main_sell_product.setOnClickListener(this);
-        Btn_ll_activity_main_assign_product.setOnClickListener(this);
+
     }
 
     private void setViewReferences() {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_add_shopkeeper=findViewById(R.id.add_shopkeeper);
         Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
         Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
-        Btn_ll_activity_main_assign_product=findViewById(R.id.ll_activity_main_assign_product);
+
     }
 
     @Override
