@@ -125,6 +125,16 @@ public class SellProductDetailsModel {
     String ExpiryDate;
     String GST;
 
+    public String getIsNew() {
+        return IsNew;
+    }
+
+    public void setIsNew(String isNew) {
+        IsNew = isNew;
+    }
+
+    String IsNew;
+
     public double getSellPrice() {
         return SellPrice;
     }

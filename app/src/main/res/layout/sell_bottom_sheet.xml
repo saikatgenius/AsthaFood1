@@ -3,202 +3,221 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/ivProductImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/testimage" />
-
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="8dp">
-
-        <!-- Price -->
-        <TextView
-            android:id="@+id/tvProductName"
+        app:cardBackgroundColor="@color/white"
+        android:padding="@dimen/_10mdp"
+        app:shapeAppearanceOverlay="@style/TopRoundedCardStyle"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:textStyle="bold"
-             />
+            android:padding="@dimen/_10mdp"
+            android:layout_marginBottom="@dimen/_10mdp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="@dimen/_2mdp"
+                android:background="@color/colorBlackHint"
+                android:layout_marginVertical="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/ivProductImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/testimage" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <!-- Price -->
+                <TextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Name"
+                    android:layout_weight="1"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    />
 
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Product ID : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/productid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Product ID : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/productid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="MRP : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvProductPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="My Selling Price : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvSellPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="EXp Date : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/expdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Total GST : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/gst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Assing Quantity : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/assingQnty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining Quantity : "
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/remainingQunt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$99.99"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MRP : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tvProductPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Selling Price : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tvSellPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EXp Date : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/expdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total GST : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/gst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Assing Quantity : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/assingQnty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remaining Quantity : "
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/remainingQunt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$99.99"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-    </LinearLayout>
 
 </LinearLayout>

@@ -333,19 +333,24 @@ public class ProductSellActivity extends AppCompatActivity {
                 ResultSet rs = smt.getResultSet();
 
                 while (rs.next()) {
-                    sellProductDetailsModel = new SellProductDetailsModel();
-                    sellProductDetailsModel.setProductID(rs.getString("ProductID"));
-                    sellProductDetailsModel.setBatchNo(rs.getString("BatchNo"));
-                    sellProductDetailsModel.setAssingQnty(rs.getString("AssingQnty"));
-                    sellProductDetailsModel.setSellQunty(rs.getString("SellQnty"));
-                    sellProductDetailsModel.setReturnQunt(rs.getString("ReturnQnty"));
-                    sellProductDetailsModel.setPrice(rs.getString("EmployeeSellPrice"));
-                    sellProductDetailsModel.setRemainingQuntity(rs.getInt("RemianingQnty"));
-                    sellProductDetailsModel.setProductName(rs.getString("ProductName"));
-                    sellProductDetailsModel.setMRP(rs.getString("MRP"));
-                    sellProductDetailsModel.setExpiryDate(rs.getString("ExpiryDate"));
-                    sellProductDetailsModel.setGST(rs.getString("TotalGST"));
-                    arrayList.add(sellProductDetailsModel);
+                    if (rs.getInt("RemianingQnty") >0){
+                        sellProductDetailsModel = new SellProductDetailsModel();
+                        sellProductDetailsModel.setProductID(rs.getString("ProductID"));
+                        sellProductDetailsModel.setBatchNo(rs.getString("BatchNo"));
+                        sellProductDetailsModel.setAssingQnty(rs.getString("AssingQnty"));
+                        sellProductDetailsModel.setSellQunty(rs.getString("SellQnty"));
+                        sellProductDetailsModel.setReturnQunt(rs.getString("ReturnQnty"));
+                        sellProductDetailsModel.setPrice(rs.getString("EmployeeSellPrice"));
+                        sellProductDetailsModel.setRemainingQuntity(rs.getInt("RemianingQnty"));
+                        sellProductDetailsModel.setProductName(rs.getString("ProductName"));
+                        sellProductDetailsModel.setMRP(rs.getString("MRP"));
+                        sellProductDetailsModel.setExpiryDate(rs.getString("ExpiryDate"));
+                        sellProductDetailsModel.setGST(rs.getString("TotalGST"));
+
+                        sellProductDetailsModel.setIsNew(rs.getString("NewProduct"));
+                        arrayList.add(sellProductDetailsModel);
+                    }
+
                 }
                 sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,ProductSellActivity.this);
                 binding.rvproductDetails.setAdapter(sellProductDetailsAdapter);

@@ -1,6 +1,6 @@
 package com.example.asthafood.adapters
 
-import android.R
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthafood.R
+
 import com.example.asthafood.databinding.SellBottomSheetBinding
 import com.example.asthafood.mssql.models.SellProductDetailsModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -30,6 +32,18 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 
      @SuppressLint("SuspiciousIndentation")
      override fun onBindViewHolder(holder: SellProductViewHolder, position: Int) {
+
+         if (items[position].isNew=="1"){
+             holder.mainLL.setBackgroundResource(R.drawable.green_white)
+
+         }else{
+             holder.mainLL.setBackgroundResource(R.drawable.border_background)
+         }
+
+
+
+
+
          holder.Name.text = items[position].productName.toString()
          holder.Code.text = items[position].productID.toString()
          holder.stock.text = items[position].remainingQuntity.toString()
@@ -80,9 +94,19 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
              val binding: SellBottomSheetBinding = SellBottomSheetBinding.inflate(LayoutInflater.from(context))
              dialog.setContentView(binding.getRoot())
 
+             binding.tvProductName.text = items[position].productName.toString()
+             binding.productid.text = items[position].productID.toString()
+             binding.tvProductPrice.text ="₹"+ items[position].mrp.toString()
+             binding.tvSellPrice.text ="₹"+ items[position].price.toString()
+             if (items[position].expiryDate.isNullOrEmpty()){
+                 binding.expdate.text= "No Data"
+             }else{
+                 binding.expdate.text= items[position].expiryDate.toString()
+             }
 
-
-
+             binding.gst.text = items[position].gst.toString()+"%"
+             binding.assingQnty.text=items[position].assingQnty.toString()
+             binding.remainingQunt.text= items[position].remainingQuntity.toString()
 
              dialog.setCancelable(true)
              dialog.setCanceledOnTouchOutside(true)
@@ -100,10 +124,11 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 
 class SellProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var Name:TextView = itemView.findViewById<TextView?>(R.id.tv_name)
-    var Code = itemView.findViewById<TextView?>(R.id.Code)
-    var stock = itemView.findViewById<TextView?>(R.id.stock)
+    var Code = itemView.findViewById<TextView?>(com.example.asthafood.R.id.Code)
+    var stock = itemView.findViewById<TextView?>(com.example.asthafood.R.id.stock)
     var Price = itemView.findViewById<TextView?>(R.id.price)
-    var SellQnty = itemView.findViewById<EditText?>(R.id.etSellingQnty)
+    var SellQnty = itemView.findViewById<EditText?>(com.example.asthafood.R.id.etSellingQnty)
+    var mainLL = itemView.findViewById<LinearLayout?>(R.id.main_ll)
 
 
 
