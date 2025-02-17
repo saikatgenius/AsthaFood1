@@ -47,6 +47,13 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
                          items[position].sellingQnty = holder.SellQnty.getText().toString().toInt()
                          items[position].sellingQntyFinalPrice = items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()
 
+
+//                         if (items[position].gst.toInt() == 0) {
+//
+//                         }else{
+//
+//                         }
+
                          gstAmt = ((items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()) * items[position].gst.toDouble()) / 100
                          sellAmt = (items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()) - gstAmt
                          items[position].sellPrice = sellAmt

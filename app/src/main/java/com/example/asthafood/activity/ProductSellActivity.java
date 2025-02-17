@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +36,16 @@ public class ProductSellActivity extends AppCompatActivity {
     double TotalPrice =0.0;
     double TotalGST =0.0;
     double ProductOriginalTotal =0.0;
+
+    private  boolean AddShopKeeperFlag = true;
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
     SellProductDetailsModel sellProductDetailsModel;
     private ArrayList<SellProductDetailsModel> arrayList=new ArrayList<>();
     SellProductDetailsAdapter sellProductDetailsAdapter;
+
+    private ArrayList<String> arrayList_SCode = new ArrayList<>();
+    private ArrayList<String> arrayList_SCodeName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,40 @@ public class ProductSellActivity extends AppCompatActivity {
         binding.rvproductDetails.setLayoutManager(linearLayoutManager);
         getProducts(GlobalStore.GlobalValue.getUserName());
 
+
+        binding.btnSearchShopkepper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!binding.txtSearchShopkeeper.getText().toString().isEmpty()){
+                    arrayList_SCode.clear();
+                    arrayList_SCodeName.clear();
+                    arrayList_SCode.add("");
+                    arrayList_SCodeName.add("---Select ShoopKeeper---");
+                    getShopkeeperID(binding.txtSearchShopkeeper.getText().toString());
+
+                }else{
+                    Toast.makeText(ProductSellActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
+                    binding.txtSearchShopkeeper.requestFocus();
+                }
+
+            }
+        });
+
+        binding.spActivityGetShopkeeperList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    AddShopKeeperFlag = false;
+                    fetchValue(arrayList_SCode.get(position));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                AddShopKeeperFlag=true;
+            }
+
+        });
 
         binding.getTotal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +130,10 @@ public class ProductSellActivity extends AppCompatActivity {
                             !binding.shopkeeperPhone.getText().toString().isEmpty())
                     {
                         SubmitData(arrayList,TotalPrice);
+                        if (AddShopKeeperFlag){
+                            SubmitShopKeeper();
+                        }
+
                     }else{
                         Toast.makeText(ProductSellActivity.this,"Please Fill All ShopkeeperDetails",Toast.LENGTH_LONG).show();
                         binding.shopkeeperName.requestFocus();
@@ -104,6 +149,99 @@ public class ProductSellActivity extends AppCompatActivity {
 
     }
 
+    private void SubmitShopKeeper() {
+        Connection cn = new SqlManager().getSQLConnection();
+        try {
+            if (cn != null) {
+                CallableStatement smt = cn.prepareCall("{call ADROID_AddShopkeeper(?,?,?,?,?)}");
+                smt.setString("@Name", binding.shopkeeperName.getText().toString());
+                smt.setString("@Phone", binding.shopkeeperPhone.getText().toString());
+                smt.setString("@Address", binding.shopkeeperAddress.getText().toString());
+                smt.registerOutParameter("@ShopkepperID", java.sql.Types.VARCHAR);
+                smt.registerOutParameter("@isError", java.sql.Types.INTEGER);
+                smt.executeUpdate();
+                String shopkeeperID = smt.getString("@ShopkepperID");
+                int isError = smt.getInt("@isError");
+                if (isError == 0) {
+                    Toast.makeText(this, "Generated Shopkeeper ID", Toast.LENGTH_SHORT).show();
+                    Log.d("ShopkeeperID", "Generated Shopkeeper ID: " + shopkeeperID);
+                }else{
+                    Toast.makeText(this, "New Shopkeeper Add Faild", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("Exception1",""+ex);
+        }
+
+
+
+    }
+
+    private void fetchValue(String phoneNo) {
+        Connection cn = new SqlManager().getSQLConnection();
+        try {
+            if (cn != null) {
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetShopkeeperDetails(?)}");
+                smt.setString("@PhoneNo",phoneNo);
+                smt.execute();
+                ResultSet rs = smt.getResultSet();
+                if (rs.isBeforeFirst()){
+                    while (rs.next()) {
+                        binding.shopkeeperName.setText(rs.getString("Name"));
+                        binding.shopkeeperPhone.setText(rs.getString("Phone"));
+                        binding.shopkeeperAddress.setText(rs.getString("Address"));
+
+                    }
+                }else{
+                    Toast.makeText(ProductSellActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
+                }
+
+            }else{
+                Log.d("bbc", "getShopkeeperDetails: Error ");
+            }
+        } catch (Exception e) {
+
+            Log.d("bbc", "getShopkeeperDetails: "+e);
+        }
+
+    }
+
+    private void getShopkeeperID(String Value) {
+        final ProgressDialog progressDialog = new ProgressDialog(ProductSellActivity.this,
+                ProgressDialog.THEME_HOLO_DARK);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+        Connection cn = new SqlManager().getSQLConnection();
+        try {
+            if (cn != null) {
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetShopkeeper(?)}");
+                smt.setString("@SearchValue",Value);
+                smt.execute();
+                ResultSet rs = smt.getResultSet();
+                if (rs.isBeforeFirst()){
+                    while (rs.next()) {
+                        arrayList_SCode.add(rs.getString("Phone"));
+                        arrayList_SCodeName.add(rs.getString("Name")+"-"+rs.getString("Phone"));
+                    }
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter(ProductSellActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
+                    binding.spActivityGetShopkeeperList.setAdapter(arrayAdapter);
+                    progressDialog.dismiss();
+                }else{
+                    progressDialog.dismiss();
+                    Toast.makeText(ProductSellActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
+                }
+
+            }else{
+                progressDialog.dismiss();
+            }
+        } catch (Exception e) {
+            progressDialog.dismiss();
+            Log.d("bbc", "getShopkeeperDetails: "+e);
+        }
+
+
+    }
+
     private void SubmitData(ArrayList<SellProductDetailsModel> arrayList, double totalPrice) {
         String collectionList = "";
         for (int i = 0 ; i<arrayList.size();i++){
@@ -112,7 +250,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
                                 + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()
                                 +";";
-                Log.d("" +
+                Log.d("ergergerg" +
                         "", collectionList);
             }
 
@@ -192,6 +330,7 @@ public class ProductSellActivity extends AppCompatActivity {
                 smt.setString("@UserName",userName);
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
+
                 while (rs.next()) {
                     sellProductDetailsModel = new SellProductDetailsModel();
                     sellProductDetailsModel.setProductID(rs.getString("ProductID"));
@@ -205,7 +344,9 @@ public class ProductSellActivity extends AppCompatActivity {
                     sellProductDetailsModel.setMRP(rs.getString("MRP"));
                     sellProductDetailsModel.setExpiryDate(rs.getString("ExpiryDate"));
                     sellProductDetailsModel.setGST(rs.getString("TotalGST"));
-
+                    Log.d("kwkwkw", "getProducts: "+rs.getString("MRP"));
+                    Log.d("kwkwkw", "getProducts: "+rs.getString("ExpiryDate"));
+                    Log.d("kwkwkw", "getProducts: "+rs.getString("TotalGST"));
                     arrayList.add(sellProductDetailsModel);
                 }
                 sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,ProductSellActivity.this);
