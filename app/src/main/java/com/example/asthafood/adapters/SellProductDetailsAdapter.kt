@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthafood.R
 
@@ -30,19 +32,18 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
              .inflate(R.layout.row_assi_selling_pro, parent, false)
      )
 
-     @SuppressLint("SuspiciousIndentation")
+     @SuppressLint("SuspiciousIndentation", "ResourceAsColor")
      override fun onBindViewHolder(holder: SellProductViewHolder, position: Int) {
 
          if (items[position].isNew=="1"){
              holder.mainLL.setBackgroundResource(R.drawable.green_white)
+             holder.Name.setTextColor(ContextCompat.getColor(context, R.color.colorWhite))
+             holder.newLL.visibility = View.VISIBLE
 
          }else{
              holder.mainLL.setBackgroundResource(R.drawable.border_background)
+             holder.newLL.visibility = View.GONE
          }
-
-
-
-
 
          holder.Name.text = items[position].productName.toString()
          holder.Code.text = items[position].productID.toString()
@@ -123,12 +124,13 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 }
 
 class SellProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var Name:TextView = itemView.findViewById<TextView?>(R.id.tv_name)
+    var Name:TextView = itemView.findViewById<TextView?>(R.id.tv_name1)
     var Code = itemView.findViewById<TextView?>(com.example.asthafood.R.id.Code)
     var stock = itemView.findViewById<TextView?>(com.example.asthafood.R.id.stock)
     var Price = itemView.findViewById<TextView?>(R.id.price)
     var SellQnty = itemView.findViewById<EditText?>(com.example.asthafood.R.id.etSellingQnty)
     var mainLL = itemView.findViewById<LinearLayout?>(R.id.main_ll)
+    var newLL = itemView.findViewById<RelativeLayout?>(R.id.newpro)
 
 
 
