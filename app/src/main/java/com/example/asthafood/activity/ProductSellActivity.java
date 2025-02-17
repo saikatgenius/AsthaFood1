@@ -223,6 +223,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         arrayList_SCode.add(rs.getString("Phone"));
                         arrayList_SCodeName.add(rs.getString("Name")+"-"+rs.getString("Phone"));
                     }
+                    binding.spActivityGetShopkeeperList.setVisibility(View.VISIBLE);
                     ArrayAdapter<String> arrayAdapter=new ArrayAdapter(ProductSellActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
                     binding.spActivityGetShopkeeperList.setAdapter(arrayAdapter);
                     progressDialog.dismiss();
@@ -344,9 +345,6 @@ public class ProductSellActivity extends AppCompatActivity {
                     sellProductDetailsModel.setMRP(rs.getString("MRP"));
                     sellProductDetailsModel.setExpiryDate(rs.getString("ExpiryDate"));
                     sellProductDetailsModel.setGST(rs.getString("TotalGST"));
-                    Log.d("kwkwkw", "getProducts: "+rs.getString("MRP"));
-                    Log.d("kwkwkw", "getProducts: "+rs.getString("ExpiryDate"));
-                    Log.d("kwkwkw", "getProducts: "+rs.getString("TotalGST"));
                     arrayList.add(sellProductDetailsModel);
                 }
                 sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,ProductSellActivity.this);

@@ -1,5 +1,6 @@
 package com.example.asthafood.adapters
 
+import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
@@ -12,10 +13,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthafood.R
+import com.example.asthafood.databinding.SellBottomSheetBinding
 import com.example.asthafood.mssql.models.SellProductDetailsModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+
 
 class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val context: Context) :
     RecyclerView.Adapter<SellProductViewHolder>()  {
+
 
 
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SellProductViewHolder(
@@ -25,7 +30,6 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 
      @SuppressLint("SuspiciousIndentation")
      override fun onBindViewHolder(holder: SellProductViewHolder, position: Int) {
-
          holder.Name.text = items[position].productName.toString()
          holder.Code.text = items[position].productID.toString()
          holder.stock.text = items[position].remainingQuntity.toString()
@@ -46,13 +50,6 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 
                          items[position].sellingQnty = holder.SellQnty.getText().toString().toInt()
                          items[position].sellingQntyFinalPrice = items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()
-
-
-//                         if (items[position].gst.toInt() == 0) {
-//
-//                         }else{
-//
-//                         }
 
                          gstAmt = ((items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()) * items[position].gst.toDouble()) / 100
                          sellAmt = (items[position].price.toDouble() * holder.SellQnty.getText().toString().toInt()) - gstAmt
@@ -75,6 +72,23 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
                  }
              }
          })
+
+
+         holder.Name.setOnClickListener{
+             val context: Context = context // Get the correct context
+             val dialog = BottomSheetDialog(context)
+             val binding: SellBottomSheetBinding = SellBottomSheetBinding.inflate(LayoutInflater.from(context))
+             dialog.setContentView(binding.getRoot())
+
+
+
+
+
+             dialog.setCancelable(true)
+             dialog.setCanceledOnTouchOutside(true)
+             dialog.show()
+         }
+
      }
 
      override fun getItemCount() = items.size

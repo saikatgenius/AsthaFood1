@@ -3,6 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:gravity="center"
+    android:background="@drawable/border_background"
+    android:layout_marginVertical="@dimen/_5mdp"
+    android:layout_marginHorizontal="@dimen/_3mdp"
     android:layout_height="50dp">
 
 
