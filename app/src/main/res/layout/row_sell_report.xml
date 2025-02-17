@@ -41,6 +41,7 @@
                         android:layout_height="80dp"
                         android:layout_marginEnd="16dp"
                         android:scaleType="fitXY"
+                        android:visibility="gone"
                         android:contentDescription="test product list "
 
                         android:src="@drawable/testimage"
@@ -67,6 +68,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="4dp"
+                            android:visibility="gone"
                             android:text="Details: aegfszdfhzdfg set serfS AEreaw er"
                             android:textColor="@color/orange"
                             android:textSize="14sp"
@@ -99,10 +101,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Date:  "
+                            android:text="SellDt:  "
                             android:textColor="@android:color/white"
                             android:textSize="14sp"
-                            tools:text="Date:  " />
+                            tools:text="SellDt:  " />
                     <TextView
                         android:id="@+id/sellDateTextView"
                         android:layout_width="0dp"
@@ -121,7 +123,7 @@
                             android:text="Amount: ₹ "
                             android:textColor="@android:color/white"
                             android:textSize="14sp"
-                            tools:text="ID: ₹ " />
+                            tools:text="Amount: ₹ " />
                     <!-- Amount -->
                     <TextView
                         android:id="@+id/amountTextView"
@@ -146,21 +148,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Buyer: "
+                            android:text="Batch No:"
                             android:textColor="@android:color/white"
                             android:textSize="14sp"
-                            tools:text="Buyer: " />
-                    <!-- Buyer Name -->
-                    <TextView
-                        android:id="@+id/buyerNameTextView"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Jonny"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="14sp"
-                        tools:text=" Jon " />
+                            tools:text="Batch No:" />
+                        <TextView
+                            android:id="@+id/batchno"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="67890"
+                            android:textColor="@color/yellow"
+                            android:textSize="14sp"
+                            tools:text="67890" />
                         <TextView
 
                             android:layout_width="wrap_content"
@@ -195,10 +196,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="ID: "
+                            android:text="Product ID: "
                             android:textColor="@android:color/white"
                             android:textSize="14sp"
-                            tools:text="ID: " />
+                            tools:text="Product ID: " />
                         <TextView
                             android:id="@+id/productIdTextView"
                             android:layout_width="0dp"
@@ -211,25 +212,61 @@
                             tools:text=" 12345" />
 
                         <!-- Bill Number -->
+
                         <TextView
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Bill No:"
+                            android:text="Buyer: "
                             android:textColor="@android:color/white"
                             android:textSize="14sp"
-                            tools:text="Bill No: " />
+                            tools:text="Buyer: " />
+                        <!-- Buyer Name -->
                         <TextView
-                            android:id="@+id/billNumberTextView"
+                            android:id="@+id/buyerNameTextView"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="67890"
+                            android:text="Jonny"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="14sp"
+                            tools:text=" Jon " />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+
+                        <!-- Product ID -->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Payment Amount: "
+                            android:visibility="gone"
                             android:textColor="@android:color/white"
                             android:textSize="14sp"
-                            tools:text="67890" />
+                            tools:text="Payment Amount: " />
+                        <TextView
+                            android:id="@+id/payment_amount"
+                            android:layout_width="0dp"
+                            android:visibility="gone"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text=" 12345"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text=" 12345" />
+
+
+
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -75,5 +75,88 @@ public class SetGetSellReport {
 
     String ProductName,ProductQuantity,ProductPrice,ProductDetails,BillNo,Amount,Buyer,date,ProductId;
 
+    public String getSaleid() {
+        return Saleid;
+    }
+
+    public void setSaleid(String saleid) {
+        Saleid = saleid;
+    }
+
+    public String getSaleDate() {
+        return SaleDate;
+    }
+
+    public void setSaleDate(String saleDate) {
+        SaleDate = saleDate;
+    }
+
+    public String getPayableAmt() {
+        return PayableAmt;
+    }
+
+    public void setPayableAmt(String payableAmt) {
+        PayableAmt = payableAmt;
+    }
+
+    public String getCoustomerPh() {
+        return CoustomerPh;
+    }
+
+    public void setCoustomerPh(String coustomerPh) {
+        CoustomerPh = coustomerPh;
+    }
+
+    public String getCoustomerName() {
+        return CoustomerName;
+    }
+
+    public void setCoustomerName(String coustomerName) {
+        CoustomerName = coustomerName;
+    }
+
+    public String getItemID() {
+        return ItemID;
+    }
+
+    public void setItemID(String itemID) {
+        ItemID = itemID;
+    }
+
+    public String getBatchNo() {
+        return BatchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        BatchNo = batchNo;
+    }
+
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
+    }
+
+    public String getSalePrice() {
+        return SalePrice;
+    }
+
+    public void setSalePrice(String salePrice) {
+        SalePrice = salePrice;
+    }
+
+    public String getItemName() {
+        return ItemName;
+    }
+
+    public void setItemName(String itemName) {
+        ItemName = itemName;
+    }
+
+    String Saleid,SaleDate,PayableAmt,CoustomerPh,CoustomerName,ItemID,BatchNo,Quantity,SalePrice,ItemName;
+
+
 
 }

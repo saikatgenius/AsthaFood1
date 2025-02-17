@@ -34,14 +34,17 @@ public class AdapterSellReport extends RecyclerView.Adapter<AdapterSellReport.Du
 
     @Override
     public void onBindViewHolder(@NonNull DueReportViewHolder holder, int position) {
-        holder.mTv_productNameTextView.setText(arrayList.get(position).getProductName());
-        holder.mTv_productDetails.setText(arrayList.get(position).getProductDetails());
-        holder.mTv_productIdTextView.setText(arrayList.get(position).getProductId());
-        holder.mTv_billNumberTextView.setText(arrayList.get(position).getBillNo());
-        holder.mTv_sellDateTextView.setText(arrayList.get(position).getDate());
-        holder.mTv_amountTextView.setText(arrayList.get(position).getAmount());
-        holder.mTv_buyerNameTextView.setText(arrayList.get(position).getBuyer());
-        holder.mTv_quantity.setText(arrayList.get(position).getProductQuantity());
+        holder.mTv_productNameTextView.setText(arrayList.get(position).getItemName());
+        holder.mTv_amountTextView.setText(arrayList.get(position).getSalePrice());
+        holder.mTv_sellDateTextView.setText(arrayList.get(position).getSaleDate());
+        holder.mTv_buyerNameTextView.setText(arrayList.get(position).getCoustomerName());
+        holder.mTv_quantity.setText(arrayList.get(position).getQuantity());
+       // holder.mTv_productDetails.setText(arrayList.get(position).getSaleDate());
+        holder.mTv_productIdTextView.setText(arrayList.get(position).getItemID());
+        holder.mTv_batchno.setText(arrayList.get(position).getBatchNo());
+
+
+
     }
 
     @Override
@@ -58,6 +61,7 @@ public class AdapterSellReport extends RecyclerView.Adapter<AdapterSellReport.Du
         TextView mTv_sellDateTextView;
         TextView mTv_amountTextView;
         TextView mTv_buyerNameTextView;
+        TextView mTv_batchno;
         TextView mTv_quantity;
 
 
@@ -67,7 +71,7 @@ public class AdapterSellReport extends RecyclerView.Adapter<AdapterSellReport.Du
             mTv_productNameTextView = itemView.findViewById(R.id.productNameTextView);
             mTv_productDetails = itemView.findViewById(R.id.productDetails);
             mTv_productIdTextView = itemView.findViewById(R.id.productIdTextView);
-            mTv_billNumberTextView = itemView.findViewById(R.id.billNumberTextView);
+            mTv_batchno = itemView.findViewById(R.id.batchno);
             mTv_sellDateTextView = itemView.findViewById(R.id.sellDateTextView);
             mTv_amountTextView = itemView.findViewById(R.id.amountTextView);
             mTv_buyerNameTextView = itemView.findViewById(R.id.buyerNameTextView);

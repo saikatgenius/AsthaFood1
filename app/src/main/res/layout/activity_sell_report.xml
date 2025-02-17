@@ -37,6 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="FDate"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -46,6 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="gone"
                 android:textSize="13sp"
                 android:textColor="@color/purple_200"
                 android:hint="Select FDate"
@@ -56,9 +58,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TDate"
+                android:text="DATE"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+               />
 
             <TextView
                 android:id="@+id/tv_activity_agent_loan_due_report_tdate"
@@ -66,8 +68,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
-                android:hint="Select TDate"
+                android:textSize="16sp"
+                android:hint="Select Date"
                 android:layout_marginEnd="@dimen/_3mdp"
                 android:textColor="@color/purple_200"
                />
@@ -77,6 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
             android:layout_marginEnd="2dp"
             android:layout_marginStart="2dp"
             android:layout_marginBottom="@dimen/_3mdp"
@@ -143,6 +146,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="@dimen/_40mdp">
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="Total Amount :"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp"
+                android:gravity="center"
+                tools:text="Total Amount :" />
+            <!-- Buyer Name -->
+            <TextView
+                android:id="@+id/totalamt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text=""
+                android:layout_gravity="center"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp"
+                tools:text=" Jon " />
+
+        </LinearLayout>
 
     </LinearLayout>
 
