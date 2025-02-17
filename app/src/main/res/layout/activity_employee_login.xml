@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:background="#E4334C75"
+        android:background="@drawable/app_bg_final"
         android:orientation="vertical"
       >
 
@@ -67,7 +67,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="~ Employee Login ~"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

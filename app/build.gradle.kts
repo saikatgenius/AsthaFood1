@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures{
         buildConfig = true
@@ -64,6 +64,8 @@ dependencies {
     implementation ("com.daimajia.androidanimations:library:2.3@aar")
     implementation("net.sourceforge.jtds:jtds:1.3.1")
     implementation ("com.github.CanHub:Android-Image-Cropper:4.3.1")
+
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 
 }

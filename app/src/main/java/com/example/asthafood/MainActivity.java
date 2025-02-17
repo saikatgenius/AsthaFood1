@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setViewReferences();
         bindEventHandlers();
 
-        user_naem.setText("Welcome "+GlobalStore.GlobalValue.getUserOriginalName());  //
+        user_naem.setText(GlobalStore.GlobalValue.getUserOriginalName());  //
         UserId.setText(GlobalStore.GlobalValue.getUserName());
         sharedPreferencesarranger = getSharedPreferences("ARRANGERLOGIN", Context.MODE_PRIVATE);
 
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+       // setSupportActionBar(toolbar);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
