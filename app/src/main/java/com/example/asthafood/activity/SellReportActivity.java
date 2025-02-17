@@ -24,6 +24,7 @@ import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
 
 import com.example.asthafood.adapters.AdapterSellReport;
+import com.example.asthafood.bean.GlobalStore;
 import com.example.asthafood.mssql.models.SetGetSellReport;
 import com.example.asthafood.mssql.SqlManager;
 
@@ -36,7 +37,7 @@ import java.util.Calendar;
    public class SellReportActivity extends AppCompatActivity implements View.OnClickListener {
         // toolbar
         private Toolbar mToolbar;
-        private TextView mToolbarTitle;
+        private TextView mToolbarTitle,mTV_buyerNameTextView;
 
         private TextView mTv_fDate;
         private TextView mTv_tDate;
@@ -54,6 +55,7 @@ import java.util.Calendar;
         int mYear, mMonth, mDay;
         private int currentDay, currentMonth, currentYear;
         private Calendar mCalendar;
+        private  Double totalAmount=0.0;
 
         private Connection cn;
 
@@ -80,6 +82,11 @@ import java.util.Calendar;
             mArrayListSellReport = new ArrayList<>();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             mRv_loanDueReport.setLayoutManager(linearLayoutManager);
+            mArrayListSellReport.clear();
+            getLoanDueReport(1, 2, GlobalStore.GlobalValue.getUserName());
+
+
+
         }
 
         private void setViewReferences() {
@@ -96,6 +103,7 @@ import java.util.Calendar;
 
             //mEt_enterOfficeId = findViewById(R.id.et_activity_agent_loan_due_report_enter_office_id);
             mBtn_showAll = findViewById(R.id.btn_activity_agent_loan_due_report_show_all);
+            mTV_buyerNameTextView=findViewById(R.id.totalamt);
         }
 
         private void bindEventHandlers() {
@@ -115,7 +123,7 @@ import java.util.Calendar;
                 if (mTv_fDate.getText().toString().trim().length() > 0) {
                     if (mTv_tDate.getText().toString().trim().length() > 0) {
                         mArrayListSellReport.clear();
-                        getLoanDueReport(fdate, tdate, mEt_loanCode.getText().toString());
+                        getLoanDueReport(fdate, tdate, GlobalStore.GlobalValue.getUserName());
                     } else {
                         mTv_tDate.performClick();
                         Toast.makeText(this, "Select tDate", Toast.LENGTH_SHORT).show();
@@ -143,15 +151,16 @@ import java.util.Calendar;
 
 
 
-        public void getLoanDueReport(int fDate, int tDate, String memberCode) {
+        public void getLoanDueReport(int fDate, int tDate, String username) {
+            mTV_buyerNameTextView.setText("0");
             mPb_proggress.setVisibility(View.VISIBLE);
             cn = new SqlManager().getSQLConnection();
             mArrayListSellReport.clear();
             SetGetSellReport setGetLoanDueReport = null;
 
-
+            totalAmount=0.0;
             setGetLoanDueReport = new SetGetSellReport();
-            for  (int i = 1; i <= 5; i++) {
+         /*   for  (int i = 1; i <= 5; i++) {
                 setGetLoanDueReport.setProductName("Pav Bhaji Masala");
                 setGetLoanDueReport.setProductDetails("Sunrise Pav Bhaji Masala is a spice blend that captures the authentic flavours of our famous street food, pav bhaji.");
                 setGetLoanDueReport.setProductId("45834");
@@ -171,15 +180,13 @@ import java.util.Calendar;
             adapterSellReport = new AdapterSellReport(SellReportActivity.this, mArrayListSellReport);
             mRv_loanDueReport.setAdapter(adapterSellReport);
             mPb_proggress.setVisibility(View.GONE);
+*/
 
-
-           /* try {
+            try {
                 if (cn != null) {
-                    CallableStatement smt = cn.prepareCall("{call ADROID_GetLoanDueReport(?,?)}");
-                    smt.setInt("@Fdate", fDate);
-                    smt.setInt("@Tdate", tDate);
-                    Log.e("tt",""+fDate);
-                    Log.e("tt2",""+tDate);
+                    CallableStatement smt = cn.prepareCall("{call ADROID_GetSellReport(?)}");
+                    smt.setString("@UserValue", username);
+
                     // smt.setString("@arrCode", GlobalStore.GlobalValue.getUserName());
                     //smt.setString("@MemberCode", memberCode);
                     smt.execute();
@@ -187,16 +194,27 @@ import java.util.Calendar;
                     if (rs.isBeforeFirst()) {
                         while (rs.next()) {
                             setGetLoanDueReport = new SetGetSellReport();
-                            setGetLoanDueReport.setLoanCode(rs.getString("LoanCode"));
-                            setGetLoanDueReport.setApplicantName(rs.getString("ApplicantName"));
-                            setGetLoanDueReport.setPhNo(rs.getString("HolderPhoneNo"));
-                            setGetLoanDueReport.setTotalDueEmiNo(rs.getString("NoDueEMI"));
-                            setGetLoanDueReport.setTotalDueEmiAmnt(rs.getString("TotalDueEMIAmount"));
+                            setGetLoanDueReport.setSaleDate(rs.getString("saledate"));
+                            setGetLoanDueReport.setSaleid(rs.getString("SaleID"));
+                            setGetLoanDueReport.setPayableAmt(rs.getString("PayableAmt"));
+                            setGetLoanDueReport.setCoustomerPh(rs.getString("CustomerPhoneNo"));
+                            setGetLoanDueReport.setCoustomerName(rs.getString("CustomerName"));
+                            setGetLoanDueReport.setItemID(rs.getString("ItemID"));
+                            setGetLoanDueReport.setQuantity(rs.getString("Quantity"));
+                            setGetLoanDueReport.setSalePrice(rs.getString("SalePrice"));
+                            setGetLoanDueReport.setItemName(rs.getString("ItemName"));
+                            setGetLoanDueReport.setBatchNo(rs.getString("BatchNo"));
+                            totalAmount=totalAmount+Double.parseDouble(rs.getString("PayableAmt"));
                             mArrayListSellReport.add(setGetLoanDueReport);
+
                         }
+
                         adapterSellReport = new AdapterSellReport(SellReportActivity.this, mArrayListSellReport);
                         mRv_loanDueReport.setAdapter(adapterSellReport);
                         mPb_proggress.setVisibility(View.GONE);
+                        mTV_buyerNameTextView.setText(String.valueOf(totalAmount));
+                        adapterSellReport.notifyDataSetChanged();
+
                     } else {
                         mPb_proggress.setVisibility(View.GONE);
                         Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
@@ -208,7 +226,7 @@ import java.util.Calendar;
             } catch (Exception ex) {
                 mPb_proggress.setVisibility(View.GONE);
                 Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
-            }*/
+            }
         }
 
 
@@ -258,6 +276,10 @@ import java.util.Calendar;
 
                     mTv_tDate.setText(dayOfMonth + "-" + month + "-" + year);
                     tdate = Integer.parseInt(Integer.toString(year) + String.format("%02d", month) + String.format("%02d", dayOfMonth));
+
+                    totalAmount=0.0;
+                    mArrayListSellReport.clear();
+                    getCollReport( tdate, GlobalStore.GlobalValue.getUserName());
                 }
             }, currentYear, currentMonth, currentDay);
             mCalendar.set(currentYear, currentMonth, currentDay);
@@ -266,7 +288,87 @@ import java.util.Calendar;
             datePickerDialog.show();
         }
 
-        @Override
+
+
+       public void getCollReport( int tDate, String username) {
+           mTV_buyerNameTextView.setText("0");
+           mPb_proggress.setVisibility(View.VISIBLE);
+           cn = new SqlManager().getSQLConnection();
+           mArrayListSellReport.clear();
+           SetGetSellReport setGetLoanDueReport = null;
+
+
+           setGetLoanDueReport = new SetGetSellReport();
+         /*   for  (int i = 1; i <= 5; i++) {
+                setGetLoanDueReport.setProductName("Pav Bhaji Masala");
+                setGetLoanDueReport.setProductDetails("Sunrise Pav Bhaji Masala is a spice blend that captures the authentic flavours of our famous street food, pav bhaji.");
+                setGetLoanDueReport.setProductId("45834");
+                setGetLoanDueReport.setBillNo("57297");
+                setGetLoanDueReport.setDate("2025/10/10");
+                setGetLoanDueReport.setAmount("120");
+                setGetLoanDueReport.setBuyer("Saikat");
+                setGetLoanDueReport.setBuyer("Saikat");
+                setGetLoanDueReport.setProductQuantity("12");
+                mArrayListSellReport.add(setGetLoanDueReport);
+            }
+
+
+
+
+
+            adapterSellReport = new AdapterSellReport(SellReportActivity.this, mArrayListSellReport);
+            mRv_loanDueReport.setAdapter(adapterSellReport);
+            mPb_proggress.setVisibility(View.GONE);
+*/
+
+           try {
+               if (cn != null) {
+                   CallableStatement smt = cn.prepareCall("{call ADROID_GetSellRepor_datewiset(?,?)}");
+                   smt.setString("@UserValue", username);
+                   smt.setInt("@date", tDate);
+
+                   // smt.setString("@arrCode", GlobalStore.GlobalValue.getUserName());
+                   //smt.setString("@MemberCode", memberCode);
+                   smt.execute();
+                   ResultSet rs = smt.getResultSet();
+                   if (rs.isBeforeFirst()) {
+                       while (rs.next()) {
+                           setGetLoanDueReport = new SetGetSellReport();
+                           setGetLoanDueReport.setSaleDate(rs.getString("saledate"));
+                           setGetLoanDueReport.setSaleid(rs.getString("SaleID"));
+                           setGetLoanDueReport.setPayableAmt(rs.getString("PayableAmt"));
+                           setGetLoanDueReport.setCoustomerPh(rs.getString("CustomerPhoneNo"));
+                           setGetLoanDueReport.setCoustomerName(rs.getString("CustomerName"));
+                           setGetLoanDueReport.setItemID(rs.getString("ItemID"));
+                           setGetLoanDueReport.setQuantity(rs.getString("Quantity"));
+                           setGetLoanDueReport.setSalePrice(rs.getString("SalePrice"));
+                           setGetLoanDueReport.setItemName(rs.getString("ItemName"));
+                           setGetLoanDueReport.setBatchNo(rs.getString("BatchNo"));
+                           totalAmount=totalAmount+Double.parseDouble(rs.getString("PayableAmt"));
+                           mArrayListSellReport.add(setGetLoanDueReport);
+                           mTV_buyerNameTextView.setText(String.valueOf(totalAmount));
+                       }
+
+                       adapterSellReport = new AdapterSellReport(SellReportActivity.this, mArrayListSellReport);
+                       mRv_loanDueReport.setAdapter(adapterSellReport);
+                       mPb_proggress.setVisibility(View.GONE);
+                       adapterSellReport.notifyDataSetChanged();
+
+                   } else {
+                       mPb_proggress.setVisibility(View.GONE);
+                       Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+                   }
+               } else {
+                   mPb_proggress.setVisibility(View.GONE);
+                   Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show();
+               }
+           } catch (Exception ex) {
+               mPb_proggress.setVisibility(View.GONE);
+               Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
+           }
+       }
+
+       @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case android.R.id.home:
