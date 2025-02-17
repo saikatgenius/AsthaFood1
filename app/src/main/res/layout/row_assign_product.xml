@@ -54,7 +54,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Product Name"
-                            android:textColor="@android:color/primary_text_dark_nodisable"
+                            android:textColor="@color/purple_200"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             tools:text="Sample Product" />
@@ -223,6 +223,56 @@
                             tools:text="Assign Quantity: " />
                         <TextView
                             android:id="@+id/billNumberTextView"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="67890"
+                            android:textColor="@color/yellow"
+                            android:textSize="14sp"
+                            tools:text="67890" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+
+                        <!-- Product ID -->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Sell  Quantity : "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="Sell  Quantity : " />
+                        <TextView
+                            android:id="@+id/sell_quenty"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text=" 12345"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text=" 12345" />
+
+                        <!-- Bill Number -->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Remaining  Quantity :"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="Remaining Quantity: " />
+                        <TextView
+                            android:id="@+id/assing_Qnty"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"

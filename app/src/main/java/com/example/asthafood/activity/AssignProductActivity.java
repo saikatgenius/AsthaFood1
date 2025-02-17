@@ -84,7 +84,10 @@ public class AssignProductActivity extends AppCompatActivity implements View.OnC
          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
          mRv_loanDueReport.setLayoutManager(linearLayoutManager);
 
-         getLoanDueReport(GlobalStore.GlobalValue.getUserName());
+
+         /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+         String todayDate = sdf.format(new Date());*/
+         getLoanDueReport(GlobalStore.GlobalValue.getUserName(),"todayDate");
      }
 
      private void setViewReferences() {
@@ -148,7 +151,7 @@ public class AssignProductActivity extends AppCompatActivity implements View.OnC
 
 
 
-     public void getLoanDueReport(String empcode) {
+     public void getLoanDueReport(String empcode, String date) {
          mPb_proggress.setVisibility(View.VISIBLE);
          cn = new SqlManager().getSQLConnection();
          mArrayListSellReport.clear();
@@ -162,6 +165,7 @@ public class AssignProductActivity extends AppCompatActivity implements View.OnC
                  CallableStatement smt = cn.prepareCall("{call ADROID_GetAssignProduct(?)}");
                  smt.setString("@UserName", empcode);
 
+
                  // smt.setString("@arrCode", GlobalStore.GlobalValue.getUserName());
                  //smt.setString("@MemberCode", memberCode);
                  smt.execute();
@@ -170,12 +174,14 @@ public class AssignProductActivity extends AppCompatActivity implements View.OnC
                      while (rs.next()) {
                          setGetAssignProduct = new SetGetAssignProduct();
                          setGetAssignProduct.setProductName(rs.getString("ItemName"));
-                         setGetAssignProduct.setProductDetails(rs.getString("ItemName"));
+                        // setGetAssignProduct.setProductDetails(rs.getString("ItemName"));
                          setGetAssignProduct.setProductId(rs.getString("ProductID"));
                          setGetAssignProduct.setBillNo(rs.getString("AssingQnty"));
                          setGetAssignProduct.setDate(rs.getString("BatchNo"));
                          setGetAssignProduct.setAmount(rs.getString("EmployeeSellPrice"));
                          setGetAssignProduct.setProductQuantity(rs.getString("MRP"));
+                         setGetAssignProduct.setReamingQuenty(rs.getString("RemaningQnty"));
+                         setGetAssignProduct.setSellQnty(rs.getString("SellQnty"));
 
                          String formattedDate = formatDate(rs.getString("DateOfEntry"));
                          setGetAssignProduct.setBuyer(formattedDate);
@@ -196,7 +202,7 @@ public class AssignProductActivity extends AppCompatActivity implements View.OnC
          } catch (Exception ex) {
              mPb_proggress.setVisibility(View.GONE);
              Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
-             Log.e("Exception",""+ex);
+             Log.e("Exception2",""+ex);
          }
      }
 

@@ -42,6 +42,8 @@ public class AdapterAssignproduct extends RecyclerView.Adapter<AdapterAssignprod
         holder.mTv_amountTextView.setText(arrayList.get(position).getAmount());
         holder.mTv_buyerNameTextView.setText(arrayList.get(position).getBuyer());
         holder.mTv_quantity.setText(arrayList.get(position).getProductQuantity());
+        holder.mTv_sell_quantity.setText(arrayList.get(position).getSellQnty());
+        holder.mTv_rem_quantity.setText(arrayList.get(position).getReamingQuenty());
     }
 
     @Override
@@ -59,6 +61,8 @@ public class AdapterAssignproduct extends RecyclerView.Adapter<AdapterAssignprod
         TextView mTv_amountTextView;
         TextView mTv_buyerNameTextView;
         TextView mTv_quantity;
+        TextView mTv_sell_quantity;
+        TextView mTv_rem_quantity;
 
 
         public DueReportViewHolder(View itemView) {
@@ -72,6 +76,9 @@ public class AdapterAssignproduct extends RecyclerView.Adapter<AdapterAssignprod
             mTv_amountTextView = itemView.findViewById(R.id.amountTextView);
             mTv_buyerNameTextView = itemView.findViewById(R.id.buyerNameTextView);
             mTv_quantity = itemView.findViewById(R.id.quantity);
+            mTv_sell_quantity= itemView.findViewById(R.id.sell_quenty);
+          mTv_rem_quantity= itemView.findViewById(R.id.assing_Qnty);
+
 
         }
     }
