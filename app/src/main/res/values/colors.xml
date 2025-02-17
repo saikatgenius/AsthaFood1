@@ -9,8 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E32527</color>
     <color name="theme_color">#E4334C75</color>
-    <color name="yellow">#FFEB3B</color>
+    <color name="yellow">#F4E457</color>
     <color name="light_orange">#FF9800</color>
+    <color name="trans">#00FFFFFF</color>
 
 
 
@@ -41,6 +42,8 @@
     <color name="actionBtnForeColor">#ffffff</color>
 
     <color name="darkGreen">#347339</color>
+    <color name="Green">#37ED49</color>
+    <color name="blue">#2196F3</color>
     <color name="backMain">#FFFFFF</color>
 
     <color name="notSoWhiteBackground">#e4e4e4</color>

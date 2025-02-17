@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/trans"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_20mdp"
         android:padding="@dimen/_10mdp"
         app:shapeAppearanceOverlay="@style/TopRoundedCardStyle"
         >
@@ -29,9 +31,9 @@
             <ImageView
                 android:id="@+id/ivProductImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/testimage" />
+                android:src="@drawable/food" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Product Name"
+                    android:textColor="@color/light_orange"
                     android:layout_weight="1"
                     android:textSize="28sp"
                     android:textStyle="bold"
@@ -72,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="$99.99"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     
                     android:textStyle="bold" />
@@ -94,6 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$99.99"
+                    android:textColor="@color/Green"
                     android:layout_weight="1"
                     android:textSize="16sp"
                     
@@ -117,6 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$99.99"
+                    android:textColor="@color/yellow"
                     android:layout_weight="1"
                     android:textSize="16sp"
                     
@@ -140,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$99.99"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:textSize="16sp"
                     
@@ -163,6 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$99.99"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:textSize="16sp"
                     
@@ -186,6 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$99.99"
+                    android:textColor="@color/blue"
                     android:layout_weight="1"
                     android:textSize="16sp"
                     
@@ -211,7 +220,7 @@
                     android:text="$99.99"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </LinearLayout>
 
