@@ -5,13 +5,15 @@
         android:title="Home" />
 
     <item
+        android:id="@+id/nav_sell"
+        android:icon="@drawable/sell_new"
+        android:title="Sell" />
+
+    <item
         android:id="@+id/nav_report"
         android:icon="@drawable/report"
         android:title="Report" />
-    <item
-        android:id="@+id/nav_return"
-        android:icon="@drawable/sell_new"
-        android:title="Sell" />
+
 
     <item android:id="@+id/menu"
         android:icon="@color/theme_color"
@@ -19,11 +21,11 @@
         <menu>
 
             <item
-                android:id="@+id/nav_request_product"
+                android:id="@+id/nav_contact_us"
                 android:icon="@drawable/contact_us"
                 android:title="Contaus US" />
             <item
-                android:id="@+id/nav_sell"
+                android:id="@+id/nav_profile"
                 android:icon="@drawable/profile"
                 android:title="Profile" />
         </menu>

@@ -84,7 +84,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -97,7 +97,7 @@
 
                     <TextView
                         android:id="@+id/tv_activity_main_employee_code"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center|start"
@@ -105,8 +105,16 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:textColor="@color/colorBlack" />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLogout"
+                        android:layout_width="@dimen/_30mdp"
+                        android:background="@drawable/power"
+                        android:layout_marginRight="@dimen/_8mdp"
+                        android:layout_height="@dimen/_30mdp"
 
+                        android:layout_gravity="center" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -150,6 +158,8 @@
                        />
                 </LinearLayout>
             </LinearLayout>
+
+
 
         </LinearLayout>
 

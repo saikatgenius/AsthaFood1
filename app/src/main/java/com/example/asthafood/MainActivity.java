@@ -1,6 +1,9 @@
 package com.example.asthafood;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +13,9 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
@@ -36,9 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
+    private AppCompatButton btn_Logout;
     private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product,Btn_ll_activity_main_assign_product;
     private TextView user_naem,UserId;
-
+    private SharedPreferences sharedPreferencesarranger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         user_naem.setText("Welcome "+GlobalStore.GlobalValue.getUserOriginalName());  //
         UserId.setText(GlobalStore.GlobalValue.getUserName());
-
+        sharedPreferencesarranger = getSharedPreferences("ARRANGERLOGIN", Context.MODE_PRIVATE);
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+            } else if (id == R.id.nav_sell) {
+                Intent i = new Intent(MainActivity.this, ProductSellActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
             return true;
         });
@@ -81,18 +92,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
                // finish();
-            } else if (id == R.id.nav_request_product) {
-
             } else if (id == R.id.nav_sell) {
+                Intent intent=new Intent(MainActivity.this, ProductSellActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+            } else if (id == R.id.nav_report) {
                 Intent i = new Intent(MainActivity.this, SellReportActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
               //  Toast.makeText(this, "Sell", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_report) {
-                Toast.makeText(this, "Report", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_return) {
-                Toast.makeText(this, "Return", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_contact_us) {
+                Toast.makeText(this, "Contact Us", Toast.LENGTH_SHORT).show();
+            }else if (id == R.id.nav_profile) {
+                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -106,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_add_shopkeeper.setOnClickListener(this);
         Btn_ll_activity_main_sell_report.setOnClickListener(this);
         Btn_ll_activity_main_sell_product.setOnClickListener(this);
+        btn_Logout.setOnClickListener(this);
 
     }
 
@@ -120,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_add_shopkeeper=findViewById(R.id.add_shopkeeper);
         Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
         Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
+        btn_Logout=findViewById(R.id.btnLogout);
 
     }
 
@@ -165,7 +181,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
            finish();
 
+       }else if (v==btn_Logout) {
+
+           showLogoutDialog();
+
+
+
        }
 
     }
+
+    private void showLogoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Logout Confirmation");
+        builder.setMessage("Are you sure you want to logout?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences.Editor editor = sharedPreferencesarranger.edit();
+                editor.clear(); // Removes all saved data
+                editor.apply();
+
+                // Redirect to Login Page
+                Intent intent = new Intent(MainActivity.this, LoginOptionsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear backstack
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Close the dialog if "No" is clicked
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
