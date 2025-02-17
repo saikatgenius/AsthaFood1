@@ -75,5 +75,31 @@ public class SetGetAssignProduct {
 
     String ProductName,ProductQuantity,ProductPrice,ProductDetails,BillNo,Amount,Buyer,date,ProductId;
 
+    public String getReamingQuenty() {
+        return ReamingQuenty;
+    }
+
+    public void setReamingQuenty(String reamingQuenty) {
+        ReamingQuenty = reamingQuenty;
+    }
+
+    public String getSellQnty() {
+        return SellQnty;
+    }
+
+    public void setSellQnty(String sellQnty) {
+        SellQnty = sellQnty;
+    }
+
+    public String getRemaningQnty() {
+        return RemaningQnty;
+    }
+
+    public void setRemaningQnty(String remaningQnty) {
+        RemaningQnty = remaningQnty;
+    }
+
+    String ReamingQuenty,SellQnty,RemaningQnty;
+
 
 }
