@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,15 @@ public class RequestProductSubmitActivity extends AppCompatActivity {
        // mToolbarTitle.setText("Sell Product");
         mToolbarTitle.setText("Product Category");
         getAllCategory();
+
+        binding.submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RequestProductSubmitActivity.this, RequestCartItemActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+            }
+        });
 
 
 

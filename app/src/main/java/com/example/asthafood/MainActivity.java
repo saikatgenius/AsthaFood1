@@ -165,10 +165,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
        } else if (v==btn_activity_main_request_product) {
-         /*  Intent intent=new Intent(MainActivity.this, RequestProductSubmitActivity.class);
+           Intent intent=new Intent(MainActivity.this, RequestProductSubmitActivity.class);
            startActivity(intent);
            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-           finish();*/
+           finish();
 
 
        } else if (v==Btn_add_shopkeeper) {

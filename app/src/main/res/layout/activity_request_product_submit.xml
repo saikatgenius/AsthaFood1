@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -10,14 +10,26 @@
     tools:context=".activity.RequestProductSubmitActivity">
 
     <include layout="@layout/custom_toolbar" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_itemcategory"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="match_parent">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_50font_mdp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bottom_background"
+        android:text="Go To Request Cart" />
 
-</LinearLayout>
+
+
+</RelativeLayout>
