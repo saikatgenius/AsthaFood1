@@ -1,0 +1,58 @@
+package com.example.asthafood.adapters
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.example.asthafood.R
+import com.example.asthafood.Util.GlobalReqProductList
+import com.example.asthafood.Util.ReqProductList
+import com.example.asthafood.mssql.models.ItemCategoryItems
+import com.example.asthafood.mssql.models.SellProductDetailsModel
+
+class CategoryItemsAdapter (val items: List<ItemCategoryItems>, val context: Context) :
+    RecyclerView.Adapter<CategoryItemsViewHolder>()   {
+
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryItemsViewHolder (
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.row_req_item_pro, parent, false)
+    )
+
+    override fun onBindViewHolder(holder: CategoryItemsViewHolder, position: Int) {
+
+        holder.Name.text = items[position].productName.toString()
+        holder.Code.text = items[position].productID.toString()
+
+        holder.AddPro.setOnClickListener{
+           val reqProductList  =  ReqProductList();
+
+           reqProductList.id = items[position].productID.toString()
+           reqProductList.name = items[position].productName.toString()
+           reqProductList.qunt = holder.Qnty.text.toString().toDouble()
+           GlobalReqProductList.ReqData.add(reqProductList)
+            Toast.makeText(context, "Product Added to Request List", Toast.LENGTH_LONG).show()
+
+        }
+    }
+
+    override fun getItemCount() = items.size
+
+    override fun getItemViewType(position: Int) = position
+
+    override fun getItemId(position: Int) = position.toLong()
+}
+
+class CategoryItemsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var Name: TextView = itemView.findViewById<TextView?>(R.id.tv_name12)
+    var Code = itemView.findViewById<TextView?>(com.example.asthafood.R.id.Code)
+    var Qnty = itemView.findViewById<EditText?>(com.example.asthafood.R.id.etSellingQnty)
+    var AddPro = itemView.findViewById<RelativeLayout?>(com.example.asthafood.R.id.add)
+}

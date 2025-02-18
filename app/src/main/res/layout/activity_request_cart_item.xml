@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.RequestProductItems">
+    tools:context=".activity.RequestCartItemActivity">
 
     <include layout="@layout/custom_toolbar" />
 
@@ -26,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bottom_background"
-        android:text="Go To Request Cart" />
+        android:text="Send Request" />
 
 
 
