@@ -133,6 +133,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         SubmitData(arrayList,TotalPrice);
                         if (AddShopKeeperFlag){
                             SubmitShopKeeper();
+
                         }
 
                     }else{
@@ -300,7 +301,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     }).show();
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(ProductSellActivity.this);
-                    builder.setCancelable(false);
+                    builder.setCancelable(false);.
                     builder.setTitle("Unable to enter Data");
                     builder.setMessage("Product Sale UnSuccessfully. ");
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
