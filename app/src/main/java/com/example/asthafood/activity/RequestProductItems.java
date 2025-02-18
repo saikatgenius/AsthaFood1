@@ -1,5 +1,6 @@
 package com.example.asthafood.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -8,8 +9,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
 import com.example.asthafood.databinding.ActivityRequestProductItemsBinding;
+import com.google.android.exoplayer2.util.Log;
 
 public class RequestProductItems extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class RequestProductItems extends AppCompatActivity {
         binding = ActivityRequestProductItemsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         CategoryNo = getIntent().getStringExtra("categoryNo");
+        Log.e("CategoryNo",""+CategoryNo);
 
         getAllCategoryItem();
 
@@ -33,5 +37,14 @@ public class RequestProductItems extends AppCompatActivity {
     private void getAllCategoryItem() {
 
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(RequestProductItems.this, RequestProductSubmitActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 }
