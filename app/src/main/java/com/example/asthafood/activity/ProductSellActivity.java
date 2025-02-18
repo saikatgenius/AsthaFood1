@@ -133,6 +133,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         SubmitData(arrayList,TotalPrice);
                         if (AddShopKeeperFlag){
                             SubmitShopKeeper();
+
                         }
 
                     }else{
