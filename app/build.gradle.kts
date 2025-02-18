@@ -65,5 +65,7 @@ dependencies {
     implementation("net.sourceforge.jtds:jtds:1.3.1")
     implementation ("com.github.CanHub:Android-Image-Cropper:4.3.1")
 
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
 
 }

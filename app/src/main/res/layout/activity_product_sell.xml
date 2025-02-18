@@ -106,20 +106,42 @@
 
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10mdp"
+        android:orientation="horizontal">
         <EditText
-            android:layout_marginTop="@dimen/_10mdp"
             android:id="@+id/shopkeeper_address"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/_10mdp"
             android:hint="Enter ShopKeeper Address"
             android:textSize="14sp"
+            android:layout_weight="1"
             android:paddingHorizontal="8dp"
             android:paddingVertical="2dp"
             android:textColor="@color/colorBlack"
             android:background="@drawable/border_background"
             android:layout_height="@dimen/_40mdp">
         </EditText>
+        <EditText
+            android:id="@+id/shop_name"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_10mdp"
+            android:hint="Enter Shop Name"
+            android:textSize="14sp"
+            android:layout_weight="1.2"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/border_background"
+            android:layout_height="@dimen/_40mdp">
+        </EditText>
+
+    </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:gravity="center"
@@ -156,7 +178,7 @@
                 android:layout_weight="0.6"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="InStock"
+                android:text="Avl.\nQnty"
                 android:textColor="@color/colorRed"
                 android:textSize="10dp"
                 />

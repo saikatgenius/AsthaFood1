@@ -74,11 +74,8 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 
 
                      }else{
-                         Toast.makeText(
-                             context,
-                             "Not Enough Quantity",
-                             Toast.LENGTH_LONG
-                         ).show()
+                         Toast.makeText(context, "Not Enough Quantity", Toast.LENGTH_LONG).show()
+                         holder.SellQnty.error = "Not Enough Quantity"
                      }
 
                  } else {

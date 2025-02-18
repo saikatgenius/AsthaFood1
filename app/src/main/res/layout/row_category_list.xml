@@ -8,17 +8,22 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_category"
         android:layout_width="match_parent"
+        android:backgroundTint="@color/theme_color"
         android:layout_height="wrap_content"
         android:elevation="@dimen/_20mdp"
         app:cardCornerRadius="@dimen/_20mdp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
-                android:src="@drawable/category_bg"
-                android:layout_width="match_parent"
+                android:layout_width="115dp"
+                android:layout_height="96dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="27dp"
                 android:scaleType="fitXY"
-                android:layout_height="@dimen/_130mdp"/>
+                android:src="@drawable/product_icon" />
+
             <TextView
                 android:id="@+id/tv_category_name"
                 android:layout_width="wrap_content"
@@ -27,7 +32,8 @@
                 android:layout_centerInParent="true"
                 android:layout_alignParentStart="true"
                 android:text="dcvcwcwc"
-                android:textSize="@dimen/_20font_mdp"
+                android:background="#00334C75"
+                android:textSize="@dimen/_15font_mdp"
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite"/>
         </RelativeLayout>

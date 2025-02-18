@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/backMain"
+    android:background="@drawable/app_bg_final"
     tools:context=".LoginOptionsActivity">
 
     <FrameLayout
-        android:background="@color/theme_color"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:text="AshtaFood"/>
 

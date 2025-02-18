@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
+    private  LinearLayout btn_activity_main_request_product;
     private AppCompatButton btn_Logout;
     private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product,Btn_ll_activity_main_assign_product;
     private TextView user_naem,UserId;
@@ -53,14 +54,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setViewReferences();
         bindEventHandlers();
 
-        user_naem.setText("Welcome "+GlobalStore.GlobalValue.getUserOriginalName());  //
+        user_naem.setText(GlobalStore.GlobalValue.getUserOriginalName());  //
         UserId.setText(GlobalStore.GlobalValue.getUserName());
         sharedPreferencesarranger = getSharedPreferences("ARRANGERLOGIN", Context.MODE_PRIVATE);
 
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+       // setSupportActionBar(toolbar);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_ll_activity_main_sell_report.setOnClickListener(this);
         Btn_ll_activity_main_sell_product.setOnClickListener(this);
         btn_Logout.setOnClickListener(this);
+        btn_activity_main_request_product.setOnClickListener(this);
+
 
     }
 
@@ -136,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
         Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
         btn_Logout=findViewById(R.id.btnLogout);
+        btn_activity_main_request_product=findViewById(R.id.ll_activity_main_request_product);
 
     }
 
@@ -160,7 +164,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            finish();
 
 
-       } else if (v==UserId) {
+       } else if (v==btn_activity_main_request_product) {
+         /*  Intent intent=new Intent(MainActivity.this, RequestProductSubmitActivity.class);
+           startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();*/
 
 
        } else if (v==Btn_add_shopkeeper) {
@@ -208,6 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear backstack
                 startActivity(intent);
                 finish();
+
+
             }
         });
 

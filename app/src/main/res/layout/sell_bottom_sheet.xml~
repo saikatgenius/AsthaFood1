@@ -10,7 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
+<<<<<<< HEAD
         app:cardCornerRadius="@dimen/_30mdp"
+=======
+        app:cardCornerRadius="@dimen/_20mdp"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
         android:padding="@dimen/_10mdp"
         app:shapeAppearanceOverlay="@style/TopRoundedCardStyle"
         >
@@ -25,7 +29,11 @@
                 android:layout_width="50dp"
                 android:layout_height="@dimen/_2mdp"
                 android:background="@color/colorBlackHint"
+<<<<<<< HEAD
                 android:layout_marginVertical="20dp"
+=======
+                android:layout_marginVertical="10dp"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
                 android:layout_gravity="center"/>
 
             <ImageView
@@ -48,7 +56,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Product Name"
+<<<<<<< HEAD
                     android:textColor="@color/light_orange"
+=======
+                    android:textColor="@color/black"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
                     android:layout_weight="1"
                     android:textSize="28sp"
                     android:textStyle="bold"
@@ -56,6 +68,13 @@
 
 
             </LinearLayout>
+<<<<<<< HEAD
+=======
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_height="1dp"/>
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
             <LinearLayout
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"

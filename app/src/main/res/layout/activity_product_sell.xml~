@@ -9,7 +9,11 @@
     android:background="@color/theme_color"
     tools:context=".activity.ProductSellActivity">
 
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,6 +22,60 @@
         <include layout="@layout/custom_toolbar" />
         <LinearLayout
             android:layout_width="match_parent"
+<<<<<<< HEAD
+=======
+            android:layout_marginHorizontal="@dimen/_10mdp"
+            android:layout_height="50dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_weight=".4"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/txtSearchShopkeeper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_white"
+                    android:elevation="8dp"
+                    android:hint="Search MobileNo or Name..."
+                    android:maxLines="1"
+                    android:padding="9.5dp"
+                    android:textColor="@color/textLoanRenewal"
+                    android:textColorHint="@color/hintLoanRenewal"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <Button
+                    android:id="@+id/btnSearchShopkepper"
+                    android:layout_width="100dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/button_background_buttons"
+                    android:elevation="6dp"
+                    android:text="Search"
+                    android:textColor="#fff" />
+            </LinearLayout>
+        </LinearLayout>
+        <Spinner
+            android:visibility="gone"
+            android:id="@+id/sp_activity_get_shopkeeper_list"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_5mdp"
+            android:layout_height="50dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10mdp"
             android:orientation="horizontal">
@@ -43,6 +101,10 @@
                 android:hint="Enter ShopKeeper Phone"
                 android:textSize="14sp"
                 android:inputType="phone"
+<<<<<<< HEAD
+=======
+                android:maxLength="10"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
                 android:layout_marginHorizontal="@dimen/_10mdp"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
@@ -54,20 +116,53 @@
 
 
         </LinearLayout>
+<<<<<<< HEAD
         <EditText
             android:layout_marginTop="@dimen/_10mdp"
+=======
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10mdp"
+        android:orientation="horizontal">
+        <EditText
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
             android:id="@+id/shopkeeper_address"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/_10mdp"
             android:hint="Enter ShopKeeper Address"
             android:textSize="14sp"
+<<<<<<< HEAD
+=======
+            android:layout_weight="1"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
             android:paddingHorizontal="8dp"
             android:paddingVertical="2dp"
             android:textColor="@color/colorBlack"
             android:background="@drawable/border_background"
             android:layout_height="@dimen/_40mdp">
         </EditText>
+<<<<<<< HEAD
+=======
+        <EditText
+            android:id="@+id/shop_name"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_10mdp"
+            android:hint="Enter Shop Name"
+            android:textSize="14sp"
+            android:layout_weight="1.2"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/border_background"
+            android:layout_height="@dimen/_40mdp">
+        </EditText>
+
+    </LinearLayout>
+
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
         <LinearLayout
             android:layout_width="match_parent"
             android:gravity="center"
@@ -115,7 +210,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+<<<<<<< HEAD
                 android:text="Price"
+=======
+                android:text="Price\n(GST Incl.)"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
                 android:textColor="@color/colorBlack"
                 android:textSize="10dp" />
 
@@ -151,7 +250,11 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="50dp"
+=======
+        android:layout_height="wrap_content"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="40dp"
         app:cardCornerRadius="@dimen/_20mdp"
@@ -164,6 +267,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/_8mdp"
             android:orientation="horizontal">
+<<<<<<< HEAD
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
@@ -183,12 +287,101 @@
                 android:layout_marginEnd="@dimen/_12font_mdp"
                 android:layout_gravity="center"
                 android:gravity="center" />
+=======
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Total Price :"
+                        android:textSize="@dimen/_10font_mdp"
+                        android:layout_weight="1.2"
+                        android:gravity="center"
+
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Total Price"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/_12font_mdp"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
+                </LinearLayout>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Total GST :"
+                        android:textSize="@dimen/_10font_mdp"
+                        android:layout_weight="1.2"
+                        android:gravity="center"
+
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:id="@+id/gst"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Total Price"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/_12font_mdp"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Grand Total :"
+                        android:textSize="@dimen/_10font_mdp"
+                        android:layout_weight="1.2"
+                        android:gravity="center"
+
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:id="@+id/grandTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Total Price"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/_12font_mdp"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/getTotal"
                 android:layout_width="match_parent"
+<<<<<<< HEAD
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+=======
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1.5"
+>>>>>>> a68119dae707d230dff564843a3139154fee3397
                 android:background="@drawable/bottom_background"
                 android:text="GET Amount"
                 />
