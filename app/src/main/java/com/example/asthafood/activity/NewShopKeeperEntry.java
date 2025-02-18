@@ -84,20 +84,20 @@ public class NewShopKeeperEntry extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_CheckIfUpdateAvailable(?,?,?,?,?)}");
-                smt.setString("@ShopkeeperName",shopkeeperName);
-                smt.setString("@ShopName",shopName);
-                smt.setString("@ShopkeeperAddress", shopkeeperAddress);
-                smt.setString("@ShopkeeperPhone", shopkeeperPhone);
-                smt.registerOutParameter("@ShopkeeperCode",java.sql.Types.VARCHAR);
-                smt.registerOutParameter("@IsError", Types.INTEGER);
+                CallableStatement smt = cn.prepareCall("{call ADROID_AddShopkeeper(?,?,?,?,?,?)}");
+                smt.setString("@Name",shopkeeperName);
+                smt.setString("@Phone",shopkeeperPhone);
+                smt.setString("@Address", shopkeeperAddress);
+                smt.setString("@ShopName", shopName);
+                smt.registerOutParameter("@ShopkepperID",java.sql.Types.VARCHAR);
+                smt.registerOutParameter("@isError", Types.INTEGER);
                 smt.executeUpdate();
-                if (smt.getInt("@IsError") == 0) {
+                if (smt.getInt("@isError") == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(NewShopKeeperEntry.this);
 //                                                TempDataBean.NewMemberErrorCode++;
                     builder.setCancelable(false);
                     builder.setTitle("Successful");
-                    builder.setMessage("Shopkeeper Saved Successfully.\n\nThe temporary Shopkeeper Code is " + smt.getString("@ShopkeeperCode"));
+                    builder.setMessage("Shopkeeper Saved Successfully.\n\nThe temporary Shopkeeper Code is " + smt.getString("@ShopkepperID"));
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -113,7 +113,7 @@ public class NewShopKeeperEntry extends AppCompatActivity {
 
 
                 }else{
-                    if (smt.getInt("@IsError") == 1) {
+                    if (smt.getInt("@isError") == 1) {
                         Toast.makeText(NewShopKeeperEntry.this, "Shopkeeper Already exist", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getApplicationContext(), "Save Failed", Toast.LENGTH_LONG).show();

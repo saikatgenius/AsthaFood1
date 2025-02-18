@@ -127,7 +127,8 @@ public class ProductSellActivity extends AppCompatActivity {
                 if (TotalPrice==Double.parseDouble(binding.grandTotal.getText().toString()) && binding.grandTotal.getText() != ""){
                     if (!binding.shopkeeperName.getText().toString().isEmpty() &&
                             !binding.shopkeeperAddress.getText().toString().isEmpty() &&
-                            !binding.shopkeeperPhone.getText().toString().isEmpty())
+                            !binding.shopkeeperPhone.getText().toString().isEmpty() &&
+                            !binding.shopName.getText().toString().isEmpty())
                     {
                         SubmitData(arrayList,TotalPrice);
                         if (AddShopKeeperFlag){
@@ -139,6 +140,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         binding.shopkeeperName.requestFocus();
                         binding.shopkeeperAddress.requestFocus();
                         binding.shopkeeperPhone.requestFocus();
+                        binding.shopName.requestFocus();
                     }
                 }else{
                     Toast.makeText(ProductSellActivity.this,"Please Click GetAmount First",Toast.LENGTH_LONG).show();
@@ -153,10 +155,11 @@ public class ProductSellActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_AddShopkeeper(?,?,?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call ADROID_AddShopkeeper(?,?,?,?,?,?)}");
                 smt.setString("@Name", binding.shopkeeperName.getText().toString());
                 smt.setString("@Phone", binding.shopkeeperPhone.getText().toString());
                 smt.setString("@Address", binding.shopkeeperAddress.getText().toString());
+                smt.setString("@ShopName", binding.shopName.getText().toString());
                 smt.registerOutParameter("@ShopkepperID", java.sql.Types.VARCHAR);
                 smt.registerOutParameter("@isError", java.sql.Types.INTEGER);
                 smt.executeUpdate();
@@ -166,7 +169,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     Toast.makeText(this, "Generated Shopkeeper ID", Toast.LENGTH_SHORT).show();
                     Log.d("ShopkeeperID", "Generated Shopkeeper ID: " + shopkeeperID);
                 }else{
-                    Toast.makeText(this, "New Shopkeeper Add Faild", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "New Shopkeeper Add Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception ex) {

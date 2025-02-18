@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_22font_mdp"
+                android:textSize="@dimen/_20font_mdp"
                 android:layout_marginTop="@dimen/_30font_mdp" />
 
             <EditText
@@ -45,9 +45,10 @@
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter ShopKeeper Name"
                 android:textSize="14sp"
+                android:textColorHint="@color/black"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/_25mdp"
                 android:background="@drawable/border_background"
                 android:layout_height="@dimen/_40mdp">
@@ -56,11 +57,12 @@
             <EditText
                 android:id="@+id/shop_name"
                 android:layout_width="match_parent"
-                android:textColor="@color/red"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter Shop Name"
                 android:textSize="14sp"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="5dp"
                 android:layout_marginTop="@dimen/_20font_mdp"
@@ -71,11 +73,12 @@
             <EditText
                 android:id="@+id/shopkeeper_address"
                 android:layout_width="match_parent"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter Shop Address"
                 android:textSize="14sp"
+                android:textColorHint="@color/black"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="5dp"
                 android:layout_marginTop="@dimen/_20font_mdp"
@@ -86,10 +89,11 @@
             <EditText
                 android:id="@+id/shopkeeper_phone"
                 android:layout_width="match_parent"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:hint="Enter Phone Number"
+                android:textColorHint="@color/black"
                 android:textSize="14sp"
                 android:paddingHorizontal="8dp"
                 android:inputType="phone"
@@ -108,6 +112,7 @@
                 android:layout_marginHorizontal="@dimen/_20mdp"
                 android:layout_marginTop="@dimen/_20font_mdp"
                 android:text="Submit"
+                android:textColor="@color/white"
                />
 
         </LinearLayout>
