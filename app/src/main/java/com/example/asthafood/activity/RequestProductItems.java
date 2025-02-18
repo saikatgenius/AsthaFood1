@@ -24,6 +24,13 @@ public class RequestProductItems extends AppCompatActivity {
         setContentView(binding.getRoot());
         CategoryNo = getIntent().getStringExtra("categoryNo");
 
+        getAllCategoryItem();
+
+
+
+    }
+
+    private void getAllCategoryItem() {
 
 
     }
