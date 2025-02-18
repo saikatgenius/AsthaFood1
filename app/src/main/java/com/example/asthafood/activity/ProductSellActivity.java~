@@ -193,7 +193,6 @@ public class ProductSellActivity extends AppCompatActivity {
                         binding.shopkeeperName.setText(rs.getString("Name"));
                         binding.shopkeeperPhone.setText(rs.getString("Phone"));
                         binding.shopkeeperAddress.setText(rs.getString("Address"));
-                        binding.shopName.setText(rs.getString("ShopName"));
 
                     }
                 }else{
