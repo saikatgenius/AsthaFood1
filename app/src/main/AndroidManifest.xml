@@ -55,6 +55,9 @@
             android:name=".activity.SellBillActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.SellBillDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.EmployeeLoginActivity"
             android:exported="false" />
         <activity

@@ -13,18 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asthafood.R;
 import com.example.asthafood.activity.SellBillActivity;
-import com.example.asthafood.activity.SellBillDetailsActivity;
 import com.example.asthafood.mssql.models.SetGetBillReport;
-import com.example.asthafood.mssql.models.SetGetSellReport;
+import com.example.asthafood.mssql.models.SetGetSellDetailsReport;
 
 import java.util.ArrayList;
 
-public class AdapterBillReport extends RecyclerView.Adapter<AdapterBillReport.DueReportViewHolder> {
+public class AdapterBillDetailsReport extends RecyclerView.Adapter<AdapterBillDetailsReport.DueReportViewHolder> {
 
     private Context context;
-    private ArrayList<SetGetBillReport> arrayList;
+    private ArrayList<SetGetSellDetailsReport> arrayList;
 
-    public AdapterBillReport(Context context, ArrayList<SetGetBillReport> arrayList) {
+    public AdapterBillDetailsReport(Context context, ArrayList<SetGetSellDetailsReport> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -32,7 +31,7 @@ public class AdapterBillReport extends RecyclerView.Adapter<AdapterBillReport.Du
     @NonNull
     @Override
     public DueReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_bill_report, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_bill_details_report, parent, false);
         return new DueReportViewHolder(view);
     }
 
@@ -49,7 +48,7 @@ public class AdapterBillReport extends RecyclerView.Adapter<AdapterBillReport.Du
         holder.Btn_productLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, SellBillDetailsActivity.class);
+                Intent intent=new Intent(context, SellBillActivity.class);
                 intent.putExtra("CoustomerName",arrayList.get(position).getCoustomerName());
                 intent.putExtra("PayableAmt",arrayList.get(position).getPayableAmt());
                 intent.putExtra("Saleid",arrayList.get(position).getSaleid());

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/theme_color"
     android:fitsSystemWindows="true"
-    tools:context=".activity.SellBillActivity"
+    tools:context=".activity.SellBillDetailsActivity"
     android:orientation="vertical">
 
     <include layout="@layout/custom_toolbar" />
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="2"
-
+            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/_2mdp"
             android:layout_marginVertical="@dimen/_10mdp"
             android:background="@drawable/background_white">
@@ -201,11 +201,23 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
+      <androidx.appcompat.widget.AppCompatButton
+          android:layout_width="wrap_content"
+          android:layout_gravity="center"
+          android:text="Download and share"
+          android:id="@+id/download"
+          android:visibility="gone"
+          android:padding="@dimen/_15mdp"
+          android:layout_marginHorizontal="@dimen/_10mdp"
+          android:textSize="@dimen/_15mdp"
+          android:background="@drawable/border_background_button"
+          android:layout_height="wrap_content">
 
+      </androidx.appcompat.widget.AppCompatButton>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:visibility="gone"
+
             android:layout_height="@dimen/_40mdp">
             <TextView
 
@@ -230,7 +242,7 @@
                 android:layout_gravity="center"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="18sp"
-                tools:text=" Jon " />
+                tools:text="  " />
 
         </LinearLayout>
 

@@ -1,14 +1,18 @@
 package com.example.asthafood.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
      private TextView mToolbarTitle,mTV_buyerNameTextView;
 
      private TextView mTv_fDate;
+
+     private  EditText Edt_txtSearchShopkeeper;
      private TextView mTv_tDate;
      private EditText mEt_loanCode;
      private AppCompatButton mBtn_show;
@@ -46,7 +52,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
      private ProgressBar mPb_proggress;
 
      private EditText mEt_enterOfficeId;
-     private Button mBtn_showAll;
+     private Button mBtn_showAll,btn_SearchShopkepper;
 
      // vars
      private int fdate = 0;
@@ -57,10 +63,15 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
      private  Double totalAmount=0.0;
 
      private Connection cn;
+     private Spinner activity_get_shopkeeper_list;
 
      private ArrayList<SetGetBillReport> mArrayListSellReport;
      private RecyclerView mRv_loanDueReport;
      private AdapterBillReport adapterSellReport;
+
+
+    private ArrayList<String> arrayList_SCode = new ArrayList<>();
+    private ArrayList<String> arrayList_SCodeName = new ArrayList<>();
 
      @Override
      protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +87,13 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
              getSupportActionBar().setDisplayHomeAsUpEnabled(true);
              getSupportActionBar().setDisplayShowHomeEnabled(true);
          }
-         mToolbarTitle.setText("Bill Report");
+         mToolbarTitle.setText("Bill Report DayWise");
 
          mArrayListSellReport = new ArrayList<>();
          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
          mRv_loanDueReport.setLayoutManager(linearLayoutManager);
          mArrayListSellReport.clear();
-         getLoanDueReport(1, 2, GlobalStore.GlobalValue.getUserName());
+       //  getLoanDueReport(1, 2, GlobalStore.GlobalValue.getUserName());
 
 
 
@@ -103,23 +114,76 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
          //mEt_enterOfficeId = findViewById(R.id.et_activity_agent_loan_due_report_enter_office_id);
          mBtn_showAll = findViewById(R.id.btn_activity_agent_loan_due_report_show_all);
          mTV_buyerNameTextView=findViewById(R.id.totalamt);
+         Edt_txtSearchShopkeeper=findViewById(R.id.txtSearchShopkeeper);
+         btn_SearchShopkepper=findViewById(R.id.btnSearchShopkepper);
+         activity_get_shopkeeper_list=findViewById(R.id.sp_activity_get_shopkeeper_list);
      }
 
      private void bindEventHandlers() {
          mTv_tDate.setOnClickListener(this);
          mBtn_showAll.setOnClickListener(this);
+         btn_SearchShopkepper.setOnClickListener(this);
      }
 
      @Override
      public void onClick(View v) {
          if (v == mTv_tDate) {
              selectTDate();
+         } else if (v==btn_SearchShopkepper) {
+             if (!Edt_txtSearchShopkeeper.getText().toString().isEmpty()){
+                 arrayList_SCode.clear();
+                 arrayList_SCodeName.clear();
+                 arrayList_SCode.add("");
+                 arrayList_SCodeName.add("---Select ShoopKeeper---");
+                 getShopkeeperID(Edt_txtSearchShopkeeper.getText().toString());
+
+             }else{
+                 Toast.makeText(SellBillActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
+                 Edt_txtSearchShopkeeper.requestFocus();
+             }
          }
      }
 
+    private void getShopkeeperID(String Value) {
+        final ProgressDialog progressDialog = new ProgressDialog(SellBillActivity.this,
+                ProgressDialog.THEME_HOLO_DARK);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+        Connection cn = new SqlManager().getSQLConnection();
+        try {
+            if (cn != null) {
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?)}");
+                smt.setString("@date","20250217");
+
+                smt.execute();
+                ResultSet rs = smt.getResultSet();
+                if (rs.isBeforeFirst()){
+                    while (rs.next()) {
+                        arrayList_SCode.add(rs.getString("Phone"));
+                        arrayList_SCodeName.add(rs.getString("Name")+"-"+rs.getString("Phone"));
+                    }
+                    activity_get_shopkeeper_list.setVisibility(View.VISIBLE);
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter(SellBillActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
+                    activity_get_shopkeeper_list.setAdapter(arrayAdapter);
+                    progressDialog.dismiss();
+                }else{
+                    progressDialog.dismiss();
+                    Toast.makeText(SellBillActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
+                }
+
+            }else{
+                progressDialog.dismiss();
+            }
+        } catch (Exception e) {
+            progressDialog.dismiss();
+            Log.d("bbc", "getShopkeeperDetails: "+e);
+        }
 
 
-     public void getLoanDueReport(int fDate, int tDate, String username) {
+    }
+
+
+    public void getLoanDueReport(int fDate, int tDate, String username) {
          mTV_buyerNameTextView.setText("0");
          mPb_proggress.setVisibility(View.VISIBLE);
          cn = new SqlManager().getSQLConnection();
@@ -241,8 +305,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?,?)}");
-                smt.setString("@UserValue", username);
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?)}");
                 smt.setInt("@date", tDate);
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
@@ -254,11 +317,11 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
                         setGetBillReport.setPayableAmt(rs.getString("PayableAmt"));
                         setGetBillReport.setCoustomerPh(rs.getString("CustomerPhoneNo"));
                         setGetBillReport.setCoustomerName(rs.getString("CustomerName"));
-                        setGetBillReport.setItemID(rs.getString("ItemID"));
+                     /*   setGetBillReport.setItemID(rs.getString("ItemID"));
                         setGetBillReport.setQuantity(rs.getString("Quantity"));
                         setGetBillReport.setSalePrice(rs.getString("SalePrice"));
                         setGetBillReport.setItemName(rs.getString("ItemName"));
-                        setGetBillReport.setBatchNo(rs.getString("BatchNo"));
+                        setGetBillReport.setBatchNo(rs.getString("BatchNo"));*/
                         totalAmount=totalAmount+Double.parseDouble(rs.getString("PayableAmt"));
                         mArrayListSellReport.add(setGetBillReport);
 
@@ -281,6 +344,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
         } catch (Exception ex) {
             mPb_proggress.setVisibility(View.GONE);
             Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
+            Log.e("Exception1", "" + ex);
         }
     }
 
