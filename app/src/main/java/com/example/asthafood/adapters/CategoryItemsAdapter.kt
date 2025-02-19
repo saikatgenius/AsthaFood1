@@ -35,14 +35,20 @@ class CategoryItemsAdapter (val items: ArrayList<ItemCategoryItems>, val context
         holder.Code.text = items[position].productID.toString()
 
         holder.AddPro.setOnClickListener{
-           val reqProductList  =  ReqProductList();
-           reqProductList.id = items[position].productID.toString()
-           reqProductList.name = items[position].productName.toString()
-           reqProductList.qunt = holder.Qnty.text.toString().toDouble()
-           GlobalReqProductList.ReqData.add(reqProductList)
-           Toast.makeText(context, "Product Added to Request List", Toast.LENGTH_LONG).show()
-            holder.imageClick.visibility = View.VISIBLE
-            holder.buttonText.text = "Added"
+            if(holder.Qnty.text.toString().isNotEmpty() && holder.Qnty.text.toString().toDouble()>0.0 ){
+                val reqProductList  =  ReqProductList();
+                reqProductList.id = items[position].productID.toString()
+                reqProductList.name = items[position].productName.toString()
+                reqProductList.qunt = holder.Qnty.text.toString().toDouble()
+                GlobalReqProductList.ReqData.add(reqProductList)
+                Toast.makeText(context, "Product Added to Request List", Toast.LENGTH_LONG).show()
+                holder.imageClick.visibility = View.VISIBLE
+                holder.buttonText.text = "Added"
+            }else{
+                Toast.makeText(context, "Please Enter Quantity", Toast.LENGTH_LONG).show()
+                holder.Qnty.error = "Please Enter Quantity"
+            }
+
 
         }
 
@@ -57,7 +63,7 @@ class CategoryItemsAdapter (val items: ArrayList<ItemCategoryItems>, val context
                 holder.imageClick.visibility = View.GONE
                 holder.buttonText.text = "Add To Queue"
                 GlobalReqProductList.ReqData.removeIf { it.id ==items[position].productID }
-                notifyDataSetChanged()
+//                notifyDataSetChanged()
             }
         })
 
