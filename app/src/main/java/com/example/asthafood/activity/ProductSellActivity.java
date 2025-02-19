@@ -363,7 +363,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            builder.setCancelable(true);
+                            //builder.setCancelable(true);
                             binding.submit.setVisibility(View.GONE);
                             binding.DownloadAndShare.setVisibility(View.VISIBLE);
                             progressDialog.dismiss();
@@ -460,7 +460,9 @@ public class ProductSellActivity extends AppCompatActivity {
             leftRows.addCell(new Paragraph("SELLER ID ", fontBold14));
             leftRows.addCell(":");
 
-
+            leftRows.addCell(new Paragraph("BUYER NAME ", fontBold14));
+            leftRows.addCell(":");
+            leftRows.addCell("" + binding.shopkeeperName.getText().toString() + "\t\t\n\n");
 
 
             leftRows.addCell("" + GlobalStore.GlobalValue.getUserName() + "\t\t\n\n");
