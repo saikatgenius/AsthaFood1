@@ -1,10 +1,13 @@
 package com.example.asthafood.adapters
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -16,7 +19,7 @@ import com.example.asthafood.Util.ReqProductList
 import com.example.asthafood.mssql.models.ItemCategoryItems
 import com.example.asthafood.mssql.models.SellProductDetailsModel
 
-class CategoryItemsAdapter (val items: List<ItemCategoryItems>, val context: Context) :
+class CategoryItemsAdapter (val items: ArrayList<ItemCategoryItems>, val context: Context) :
     RecyclerView.Adapter<CategoryItemsViewHolder>()   {
 
 
@@ -33,14 +36,31 @@ class CategoryItemsAdapter (val items: List<ItemCategoryItems>, val context: Con
 
         holder.AddPro.setOnClickListener{
            val reqProductList  =  ReqProductList();
-
            reqProductList.id = items[position].productID.toString()
            reqProductList.name = items[position].productName.toString()
            reqProductList.qunt = holder.Qnty.text.toString().toDouble()
            GlobalReqProductList.ReqData.add(reqProductList)
            Toast.makeText(context, "Product Added to Request List", Toast.LENGTH_LONG).show()
+            holder.imageClick.visibility = View.VISIBLE
+            holder.buttonText.text = "Added"
 
         }
+
+        holder.Qnty.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                holder.imageClick.visibility = View.GONE
+                holder.buttonText.text = "Add To Queue"
+                GlobalReqProductList.ReqData.removeIf { it.id ==items[position].productID }
+                notifyDataSetChanged()
+            }
+        })
+
     }
 
     override fun getItemCount() = items.size
@@ -53,6 +73,13 @@ class CategoryItemsAdapter (val items: List<ItemCategoryItems>, val context: Con
 class CategoryItemsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var Name: TextView = itemView.findViewById<TextView?>(R.id.tv_name12)
     var Code = itemView.findViewById<TextView?>(com.example.asthafood.R.id.Code)
-    var Qnty = itemView.findViewById<EditText?>(com.example.asthafood.R.id.etSellingQnty)
-    var AddPro = itemView.findViewById<RelativeLayout?>(com.example.asthafood.R.id.add)
+    var Qnty = itemView.findViewById<EditText?>(R.id.etSellingQnty)
+    var AddPro = itemView.findViewById<RelativeLayout?>(R.id.add)
+
+
+    var imageClick = itemView.findViewById<ImageView?>(com.example.asthafood.R.id.imageClick)
+    var buttonText = itemView.findViewById<TextView?>(com.example.asthafood.R.id.buttonText)
+
+
+
 }

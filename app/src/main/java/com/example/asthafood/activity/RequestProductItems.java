@@ -3,10 +3,13 @@ package com.example.asthafood.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -30,7 +33,8 @@ import java.util.ArrayList;
 public class RequestProductItems extends AppCompatActivity {
 
     ActivityRequestProductItemsBinding binding;
-
+    private Toolbar mToolbar;
+    private TextView mToolbarTitle;
     String CategoryNo = "";
 
     ItemCategoryItems itemCategoryItems;
@@ -46,6 +50,16 @@ public class RequestProductItems extends AppCompatActivity {
         Log.e("CategoryNo",""+CategoryNo);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         binding.rvItemcategory.setLayoutManager(linearLayoutManager);
+        mToolbar = findViewById(R.id.custom_toolbar);
+        mToolbarTitle = findViewById(R.id.toolbar_title);
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        // mToolbarTitle.setText("Sell Product");
+        mToolbarTitle.setText("Product Category Items ");
         getAllCategoryItem();
 
         binding.submit.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +108,19 @@ public class RequestProductItems extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+                startActivity(new Intent(RequestProductItems.this, RequestProductSubmitActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onBackPressed() {
