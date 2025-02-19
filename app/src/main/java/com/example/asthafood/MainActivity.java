@@ -29,6 +29,7 @@ import com.example.asthafood.activity.AssignProductActivity;
 import com.example.asthafood.activity.NewShopKeeperEntry;
 import com.example.asthafood.activity.ProductSellActivity;
 import com.example.asthafood.activity.RequestProductSubmitActivity;
+import com.example.asthafood.activity.SellBillActivity;
 import com.example.asthafood.activity.SellReportActivity;
 import com.example.asthafood.bean.GlobalStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private  LinearLayout btn_activity_main_request_product;
+    private  LinearLayout btn_activity_main_request_product,BTN_ll_activity_main_bill;
     private AppCompatButton btn_Logout;
     private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product,Btn_ll_activity_main_assign_product;
     private TextView user_naem,UserId;
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_ll_activity_main_sell_product.setOnClickListener(this);
         btn_Logout.setOnClickListener(this);
         btn_activity_main_request_product.setOnClickListener(this);
+        BTN_ll_activity_main_bill.setOnClickListener(this);
 
 
     }
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
         btn_Logout=findViewById(R.id.btnLogout);
         btn_activity_main_request_product=findViewById(R.id.ll_activity_main_request_product);
+        BTN_ll_activity_main_bill=findViewById(R.id.ll_activity_main_bill);
 
     }
 
@@ -194,6 +197,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            showLogoutDialog();
 
 
+
+       } else if (v==BTN_ll_activity_main_bill) {
+           Intent intent=new Intent(MainActivity.this, SellBillActivity.class);
+           startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();
 
        }
 

@@ -52,6 +52,9 @@
             android:name=".activity.NewShopKeeperEntry"
             android:exported="false" />
         <activity
+            android:name=".activity.SellBillActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.EmployeeLoginActivity"
             android:exported="false" />
         <activity
