@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context=".activity.RequestProductSubmitActivity">
 
     <include layout="@layout/custom_toolbar" />
@@ -17,16 +18,17 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="80dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_50font_mdp">
+        android:layout_marginBottom="80dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submit"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="20dp"
         android:background="@drawable/bottom_background"
         android:text="Go To Request Cart" />
 
