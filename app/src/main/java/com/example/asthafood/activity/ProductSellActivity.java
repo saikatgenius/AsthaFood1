@@ -311,10 +311,6 @@ public class ProductSellActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //builder.setCancelable(true);
                             downloadSavingStatement(arrayList,billno);
-//                            Intent i = new Intent(ProductSellActivity.this, ProductSellActivity.class);
-//                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-//                            startActivity(i);
-//                            finish();
                             progressDialog.dismiss();
                         }
                     }).show();
@@ -352,22 +348,15 @@ public class ProductSellActivity extends AppCompatActivity {
 
     private void
     downloadSavingStatement(ArrayList<SellProductDetailsModel> arrayList,String billno) {
-        // File myExternalFile = null;
-
         Log.e("arrayList1",""+ arrayList.get(0).getProductID());
-
-
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
         document.setPageSize(new Rectangle(850, 890));
         long time = System.currentTimeMillis();
-
-//        String accCode = code;
 
         try {
 
             String fileName = "";
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-//                fileName= getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/" + ("SAStatement_" + accCode + "_" + time + ".pdf");// + ".pdf";
                 fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + ("BILL" + "_" + time + ".pdf");// + ".pdf";
             } else {
                 fileName = Environment.getExternalStorageDirectory().toString() + "/" + ("BILL" + "_" + time + ".pdf");//"test" + ".pdf";
@@ -391,12 +380,10 @@ public class ProductSellActivity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-
-            // Creating image instance from byte array
             Image img = Image.getInstance(byteArray);
             img.setAlignment(Element.ALIGN_CENTER);
             img.scaleAbsolute(100, 70); // Adjust image size
-//            document.add(img);
+
 
             Font hf = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
             hf.setStyle(Font.UNDERLINE);
@@ -411,7 +398,6 @@ public class ProductSellActivity extends AppCompatActivity {
             com.itextpdf.text.pdf.PdfPTable leftRows = new com.itextpdf.text.pdf.PdfPTable(3);
             leftRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
             leftRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-            //leftRows.getDefaultCell();
             com.itextpdf.text.pdf.PdfPTable rightRows = new com.itextpdf.text.pdf.PdfPTable(3);
             rightRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
             rightRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
@@ -431,8 +417,9 @@ public class ProductSellActivity extends AppCompatActivity {
             leftRows.addCell(new Paragraph("SELLER NAME ", fontBold14));
             leftRows.addCell(":");
             leftRows.addCell("" + GlobalStore.GlobalValue.getUserOriginalName() + "\t\t\n\n");
-            leftRows.addCell(new Paragraph("Start and End Date ", fontBold14));
+            leftRows.addCell(new Paragraph("Bill No", fontBold14));
             leftRows.addCell(":");
+            leftRows.addCell("" + billno + "\t\t\n\n");
 
             com.itextpdf.text.pdf.PdfPTable totalRows = new com.itextpdf.text.pdf.PdfPTable(7);
             totalRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -448,10 +435,6 @@ public class ProductSellActivity extends AppCompatActivity {
 
             for (int i = 0 ; i<arrayList.size();i++){
                 if (arrayList.get(i).getSellingQnty()>0){
-                  /*  arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
-                            + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()
-                            +";";*/
-
                     Log.e("arrayList51",""+ arrayList.get(i).getProductID());
                     document.open();
                     Log.e("arrayList21",""+ arrayList.get(i).getProductID());
@@ -470,13 +453,6 @@ public class ProductSellActivity extends AppCompatActivity {
                 }
 
             }
-
-
-
-
-
-           //leftRows.addCell("" + mBtn_fromDate.getText().toString() + " to " + mBtn_toDate.getText().toString() + "\t\t\n\n");
-
             rightRows.addCell("");
             rightRows.addCell("");
             PdfPCell imgcell = new PdfPCell(img);
@@ -486,61 +462,14 @@ public class ProductSellActivity extends AppCompatActivity {
             rightRows.addCell("");
             rightRows.addCell("");
             rightRows.addCell("");
-
-         /*   rightRows.addCell(new Paragraph("Account Branch ", fontBold14));
-            rightRows.addCell(":");
-            rightRows.addCell("" + GlobalStore.GlobalValue.getOfficeName() + "\n\n");
-            rightRows.addCell(new Paragraph("Branch Address ", fontBold14));
-            rightRows.addCell(":");
-            rightRows.addCell("" + GlobalStore.GlobalValue.getOfficeAddress() + "\n\n");
-*/
             com.itextpdf.text.pdf.PdfPTable tableRows = new com.itextpdf.text.pdf.PdfPTable(6);
             tableRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
             tableRows.setWidthPercentage(100f);
-          /*  tableRows.addCell(new Paragraph("SL No.", fontBoldt_head));
-            tableRows.addCell(new Paragraph("Acc. No.", fontBoldt_head));
-            tableRows.addCell(new Paragraph("Member Name", fontBoldt_head));
-            tableRows.addCell(new Paragraph("Transaction Date", fontBoldt_head));
-            tableRows.addCell(new Paragraph("Deposit Amount", fontBoldt_head));
-            tableRows.addCell(new Paragraph("Withdraw Amount", fontBoldt_head));*/
-            tableRows.setHeaderRows(1);
 
-            //double balance = 0.0;
+            tableRows.setHeaderRows(1);
             double depobalance = 0.0;
             double withdrawbalance = 0.0;
             int indx = 1;
-
-
-          /*  for (int i = 0 ; i<arrayList.size();i++){
-                if (arrayList.get(i).getSellingQnty()>0){
-                 *//*   arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
-                            + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()
-                            +";";*//*
-
-                    Log.e("arrayList5",""+ arrayList.get(i).getProductID());
-                    document.open();
-                    Log.e("arrayList2",""+ arrayList.get(i).getProductID());
-
-//                balance += Double.parseDouble(setGetLoanEMI.getDepositAmount());
-                    tableRows.addCell("" + (i + 1));
-                    tableRows.addCell("" + arrayList.get(i).getProductID());
-                    tableRows.addCell("" + arrayList.get(i).getProductName());
-                    tableRows.addCell("" + arrayList.get(i).getSellingQnty());
-                    tableRows.addCell("" + arrayList.get(i).getSellingQntyFinalPrice());
-                    tableRows.addCell("" + arrayList.get(i).getBatchNo());
-                    tableRows.addCell("" + arrayList.get(i).getExpiryDate());
-                    tableRows.addCell("" + arrayList.get(i).getMRP());
-                    Log.e("arrayList9",""+ arrayList.get(i).getProductID());
-
-                }
-
-            }*/
-
-
-           // totalRows.addCell(new Paragraph("" + mBtn_fromDate.getText().toString() + " to " + mBtn_toDate.getText().toString()));
-         /*   totalRows.addCell(new Paragraph("" + depobalance));
-            totalRows.addCell(new Paragraph("" + withdrawbalance));
-            totalRows.addCell(new Paragraph("" + (depobalance - withdrawbalance)));*/
 
             com.itextpdf.text.pdf.PdfPTable containerTable = new com.itextpdf.text.pdf.PdfPTable(2);
             containerTable.setWidthPercentage(100);
@@ -552,16 +481,7 @@ public class ProductSellActivity extends AppCompatActivity {
             document.add(totalRows);
             document.add(new Paragraph("\n"));
             document.add(tableRows);
-//           document.add(tableRows2);
             Paragraph content2 = new Paragraph();
-            /*content2.add(new Paragraph("\nIMPORTANT MESSAGE\n", fontMiniStatement2));
-            content2.add(new Paragraph("*Unless the constituent notifies the patidar online center immediately of any discrepancy found by him in this statement, it will be taken that he\n" +
-                    "has found the account correct.\n" +
-                    "*The closing balance as shown/displayed includes not only the credit balance and / or overdraft limit, but also funds which are under clearing.\n" +
-                    "It excludes the amount marked as lien, if any. Hence the closing balance displayed may not be effective available balance, For any\n" +
-                    "further clarifications, please contact the Branch.\n" +
-                    "*Transaction Date is the effective date of Credit/Debit in the account.\n" +
-                    "*This is a system generated output and requires no signature.\n", fontAccountNo3));*/
             Paragraph p1 = new Paragraph("------- End of the BILL -------\n", fontAccountNo3);
             Paragraph p5 = new Paragraph("Total Amount : "+balance, fontAccountNo3);
             p1.setAlignment(Element.ALIGN_CENTER);
@@ -570,11 +490,14 @@ public class ProductSellActivity extends AppCompatActivity {
             content2.add(p1);
             document.add(content2);
             document.close();
-//            PdfWriter.getInstance(document, new FileOutputStream(myExternalFile));
 
             Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
             shrarefile(fileName);
+            Intent i = new Intent(ProductSellActivity.this, ProductSellActivity.class);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            startActivity(i);
+            finish();
         } catch (DocumentException e) {
             Toast.makeText(this, "2." + e.toString(), Toast.LENGTH_SHORT).show();
             Log.d("err1", e.toString());
