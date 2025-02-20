@@ -363,7 +363,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            builder.setCancelable(true);
+                            //builder.setCancelable(true);
                             binding.submit.setVisibility(View.GONE);
                             binding.DownloadAndShare.setVisibility(View.VISIBLE);
                             progressDialog.dismiss();
@@ -460,7 +460,9 @@ public class ProductSellActivity extends AppCompatActivity {
             leftRows.addCell(new Paragraph("SELLER ID ", fontBold14));
             leftRows.addCell(":");
 
-
+            leftRows.addCell(new Paragraph("BUYER NAME ", fontBold14));
+            leftRows.addCell(":");
+            leftRows.addCell("" + binding.shopkeeperName.getText().toString() + "\t\t\n\n");
 
 
             leftRows.addCell("" + GlobalStore.GlobalValue.getUserName() + "\t\t\n\n");
@@ -564,11 +566,12 @@ public class ProductSellActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(intent, "Share PDF"));
 
-            
+
         } else {
             // Handle the case where the file doesn't exist
             // Show a message or log an error
         }
+
     }
 
     private void getProducts(String userName) {
@@ -633,4 +636,13 @@ public class ProductSellActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Intent i = new Intent(ProductSellActivity.this, ProductSellActivity.class);
+//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//        startActivity(i);
+//        finishAffinity();
+//    }
 }
