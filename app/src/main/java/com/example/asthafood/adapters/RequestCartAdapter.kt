@@ -22,8 +22,9 @@ class RequestCartAdapter(val items: ArrayList<ReqProductList>, val context: Cont
     override fun onBindViewHolder(holder: RequestCartAdapterViewHolder, position: Int) {
 
         holder.Name.text = items[position].name.toString()
-        holder.Code.text = items[position].id.toString()
+        holder.Code.text = items[position].batchNo.toString()
         holder.Qnty.text = items[position].qunt.toString()
+        holder.Price.text = "₹" + items[position].price.toString()
 
         holder.AddPro.setOnClickListener {
             items.removeIf { it.id ==items[position].id }
@@ -45,6 +46,7 @@ class RequestCartAdapter(val items: ArrayList<ReqProductList>, val context: Cont
 class RequestCartAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var Name: TextView = itemView.findViewById<TextView?>(R.id.tv_name12)
     var Code = itemView.findViewById<TextView?>(com.example.asthafood.R.id.Code)
+    var Price = itemView.findViewById<TextView?>(R.id.priceEmp)
     var Qnty = itemView.findViewById<TextView?>(com.example.asthafood.R.id.etSellingQnty)
     var AddPro = itemView.findViewById<RelativeLayout?>(com.example.asthafood.R.id.add)
 }

@@ -46,6 +46,23 @@ public class AdapterBillDetailsReport extends RecyclerView.Adapter<AdapterBillDe
         holder.mTv_productname.setText(arrayList.get(position).getItemName());
         holder.mTv_batchno.setText(arrayList.get(position).getSaleid());
         holder.mTv_productIdTextView.setText(arrayList.get(position).getItemID());
+        holder.Btn_productLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, SellBillActivity.class);
+                intent.putExtra("CoustomerName",arrayList.get(position).getCoustomerName());
+                intent.putExtra("PayableAmt",arrayList.get(position).getPayableAmt());
+                intent.putExtra("Saleid",arrayList.get(position).getSaleid());
+                intent.putExtra("CoustomerPh",arrayList.get(position).getCoustomerPh());
+                context.startActivity(intent);
+
+            }
+        });
+
+
+
+
+
     }
 
     @Override

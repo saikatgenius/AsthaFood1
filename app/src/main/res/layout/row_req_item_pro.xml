@@ -37,6 +37,17 @@
             android:textSize="10dp"
             android:textStyle="bold"
             />
+        <TextView
+            android:id="@+id/priceEmp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:gravity="center"
+            android:hint="id"
+            android:textColor="@color/colorBlack"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            />
 
 
 

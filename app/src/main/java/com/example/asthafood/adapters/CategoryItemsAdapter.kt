@@ -32,13 +32,16 @@ class CategoryItemsAdapter (val items: ArrayList<ItemCategoryItems>, val context
     override fun onBindViewHolder(holder: CategoryItemsViewHolder, position: Int) {
 
         holder.Name.text = items[position].productName.toString()
-        holder.Code.text = items[position].productID.toString()
+        holder.Code.text = items[position].batchNo.toString()
+        holder.Price.text = "₹" + items[position].price.toString()
 
         holder.AddPro.setOnClickListener{
             if(holder.Qnty.text.toString().isNotEmpty() && holder.Qnty.text.toString().toDouble()>0.0 ){
                 val reqProductList  =  ReqProductList();
                 reqProductList.id = items[position].productID.toString()
                 reqProductList.name = items[position].productName.toString()
+                reqProductList.batchNo = items[position].batchNo.toString()
+                reqProductList.price = items[position].price.toString()
                 reqProductList.qunt = holder.Qnty.text.toString().toDouble()
                 GlobalReqProductList.ReqData.add(reqProductList)
                 Toast.makeText(context, "Product Added to Request List", Toast.LENGTH_LONG).show()
@@ -63,7 +66,6 @@ class CategoryItemsAdapter (val items: ArrayList<ItemCategoryItems>, val context
                 holder.imageClick.visibility = View.GONE
                 holder.buttonText.text = "Add To Queue"
                 GlobalReqProductList.ReqData.removeIf { it.id ==items[position].productID }
-//                notifyDataSetChanged()
             }
         })
 
@@ -77,8 +79,9 @@ class CategoryItemsAdapter (val items: ArrayList<ItemCategoryItems>, val context
 }
 
 class CategoryItemsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var Name: TextView = itemView.findViewById<TextView?>(R.id.tv_name12)
+    var Name = itemView.findViewById<TextView?>(R.id.tv_name12)
     var Code = itemView.findViewById<TextView?>(com.example.asthafood.R.id.Code)
+    var Price = itemView.findViewById<TextView?>(R.id.priceEmp)
     var Qnty = itemView.findViewById<EditText?>(R.id.etSellingQnty)
     var AddPro = itemView.findViewById<RelativeLayout?>(R.id.add)
 
