@@ -243,7 +243,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
             rightRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
 
-            PdfPCell c1 = new PdfPCell(new PdfPCell(new Paragraph("BILL  ASTHA FOOD\n\n", hf)));
+            PdfPCell c1 = new PdfPCell(new PdfPCell(new Paragraph("BILL \n\n", hf)));
             c1.setColspan(3);
             c1.setBorder(Rectangle.NO_BORDER);
             leftRows.addCell(c1);
@@ -260,7 +260,6 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
             leftRows.addCell(new Paragraph("Bill No", fontBold14));
             leftRows.addCell(":");
             leftRows.addCell("" + saleid + "\t\t\n\n");
-
 
             com.itextpdf.text.pdf.PdfPTable totalRows = new com.itextpdf.text.pdf.PdfPTable(7);
             totalRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);

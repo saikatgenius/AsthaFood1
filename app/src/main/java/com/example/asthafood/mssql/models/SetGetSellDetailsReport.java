@@ -167,4 +167,14 @@ public class SetGetSellDetailsReport {
 
     String Expary="";
 
+    public String getItemDetails() {
+        return ItemDetails;
+    }
+
+    public void setItemDetails(String itemDetails) {
+        ItemDetails = itemDetails;
+    }
+
+    String ItemDetails="";
+
 }
