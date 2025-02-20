@@ -333,7 +333,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
                     adapterSellReport.notifyDataSetChanged();
 
                 } else {
-                    adapterSellReport.notifyDataSetChanged();
+                   // adapterSellReport.notifyDataSetChanged();
                     mPb_proggress.setVisibility(View.GONE);
                     Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
                 }

@@ -453,7 +453,7 @@ public class ProductSellActivity extends AppCompatActivity {
             rightRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
 
-            PdfPCell c1 = new PdfPCell(new PdfPCell(new Paragraph("BILL \n\n", hf)));
+            PdfPCell c1 = new PdfPCell(new PdfPCell(new Paragraph("BILL  ASTHA FOOD\n\n", hf)));
             c1.setColspan(3);
             c1.setBorder(Rectangle.NO_BORDER);
             leftRows.addCell(c1);

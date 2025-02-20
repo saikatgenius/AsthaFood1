@@ -40,11 +40,12 @@ public class AdapterBillDetailsReport extends RecyclerView.Adapter<AdapterBillDe
         //holder.mTv_productNameTextView.setText(arrayList.get(position).getItemName());
         holder.mTv_amountTextView.setText(arrayList.get(position).getPayableAmt());
         holder.mTv_sellDateTextView.setText(arrayList.get(position).getSaleDate());
-        holder.mTv_buyerNameTextView.setText(arrayList.get(position).getCoustomerName());
+        holder.mTv_buyerNameTextView.setText(arrayList.get(position).getBuyer());
         holder.mTv_quantity.setText(arrayList.get(position).getCoustomerPh());
-       // holder.mTv_productDetails.setText(arrayList.get(position).getSaleDate());
-       // holder.mTv_productIdTextView.setText(arrayList.get(position).getItemID());
+        holder.mTv_productDetails.setText(arrayList.get(position).getItemDetails());
+        holder.mTv_productname.setText(arrayList.get(position).getItemName());
         holder.mTv_batchno.setText(arrayList.get(position).getSaleid());
+        holder.mTv_productIdTextView.setText(arrayList.get(position).getItemID());
         holder.Btn_productLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +81,7 @@ public class AdapterBillDetailsReport extends RecyclerView.Adapter<AdapterBillDe
         TextView mTv_buyerNameTextView;
         TextView mTv_batchno;
         TextView mTv_quantity;
+        TextView mTv_productname;
         LinearLayout Btn_productLinearLayout;
 
 
@@ -95,6 +97,7 @@ public class AdapterBillDetailsReport extends RecyclerView.Adapter<AdapterBillDe
             mTv_buyerNameTextView = itemView.findViewById(R.id.buyerNameTextView);
             mTv_quantity = itemView.findViewById(R.id.quantity);
             Btn_productLinearLayout = itemView.findViewById(R.id.productLinearLayout);
+            mTv_productname = itemView.findViewById(R.id.productname);
 
         }
     }
