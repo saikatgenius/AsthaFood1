@@ -18,6 +18,27 @@ public class ItemCategoryItems {
         ProductID = productID;
     }
 
-    String ProductName , ProductID;
+    String ProductName;
+    String ProductID;
+
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
+    }
+
+    String Price;
+
+    public String getBatchNo() {
+        return BatchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        BatchNo = batchNo;
+    }
+
+    String BatchNo;
 
 }

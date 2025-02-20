@@ -106,7 +106,7 @@ public class RequestProductSubmitActivity extends AppCompatActivity {
                 while (rs.next()) {
                     itemCategory = new ItemCategory();
                     itemCategory.setCategoriName(rs.getString("CategoryName"));
-                    itemCategory.setCategoriyNo(rs.getString("CategoryId"));
+                    itemCategory.setCategoriyNo(rs.getString("CategoryNo"));
                     arrayList.add(itemCategory);
                 }
 

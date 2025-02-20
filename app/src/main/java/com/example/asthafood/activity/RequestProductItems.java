@@ -90,7 +90,9 @@ public class RequestProductItems extends AppCompatActivity {
                 while (rs.next()) {
                     itemCategoryItems = new ItemCategoryItems();
                     itemCategoryItems.setProductID(rs.getString("ItemID"));
-                    itemCategoryItems.setProductName(rs.getString("ItemName"));
+                    itemCategoryItems.setProductName(rs.getString("ItemID"));
+                    itemCategoryItems.setPrice(rs.getString("EmpSalePrice"));
+                    itemCategoryItems.setBatchNo(rs.getString("BatchNo"));
                     arrayList.add(itemCategoryItems);
                 }
                 categoryItemsAdapter = new CategoryItemsAdapter( arrayList,RequestProductItems.this);
