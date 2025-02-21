@@ -182,14 +182,14 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:visibility="gone"
+
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/_10mdp"
         android:background="@drawable/bottom_background"
-        android:text="SEND REQUEST"
+        android:text="SELL PRODUCT"
         />
 
 </RelativeLayout>

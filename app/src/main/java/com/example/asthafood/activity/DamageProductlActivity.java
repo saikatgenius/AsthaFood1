@@ -59,17 +59,12 @@ public class DamageProductlActivity extends AppCompatActivity {
     int TotalPrice =0;
     double TotalGST =0.0;
     double ProductOriginalTotal =0.0;
-    String BillNo = "";
-
-    private  boolean AddShopKeeperFlag = true;
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
     SellProductDetailsModel sellProductDetailsModel;
     private ArrayList<SellProductDetailsModel> arrayList=new ArrayList<>();
     SellProductDetailsAdapter sellProductDetailsAdapter;
 
-    private ArrayList<String> arrayList_SCode = new ArrayList<>();
-    private ArrayList<String> arrayList_SCodeName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +83,10 @@ public class DamageProductlActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        mToolbarTitle.setText("Sell Product");
+        mToolbarTitle.setText("Damage Product");
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+
+
         binding.rvproductDetails.setLayoutManager(linearLayoutManager);
         getProducts(GlobalStore.GlobalValue.getUserName());
 
