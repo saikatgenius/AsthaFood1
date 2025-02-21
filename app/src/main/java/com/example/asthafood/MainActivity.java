@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ReportFragment;
 
 import com.example.asthafood.activity.AssignProductActivity;
+import com.example.asthafood.activity.DamageProductlActivity;
 import com.example.asthafood.activity.NewShopKeeperEntry;
 import com.example.asthafood.activity.ProductSellActivity;
 import com.example.asthafood.activity.RequestProductSubmitActivity;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private  LinearLayout btn_activity_main_request_product,BTN_ll_activity_main_bill;
+    private  LinearLayout btn_activity_main_request_product,BTN_ll_activity_main_bill,Btn_damage_product;
     private AppCompatButton btn_Logout;
     private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product,Btn_ll_activity_main_assign_product;
     private TextView user_naem,UserId;
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Logout.setOnClickListener(this);
         btn_activity_main_request_product.setOnClickListener(this);
         BTN_ll_activity_main_bill.setOnClickListener(this);
+        Btn_damage_product.setOnClickListener(this);
 
 
     }
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Logout=findViewById(R.id.btnLogout);
         btn_activity_main_request_product=findViewById(R.id.ll_activity_main_request_product);
         BTN_ll_activity_main_bill=findViewById(R.id.ll_activity_main_bill);
+        Btn_damage_product=findViewById(R.id.damage_product);
 
     }
 
@@ -200,6 +203,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
        } else if (v==BTN_ll_activity_main_bill) {
            Intent intent=new Intent(MainActivity.this, SellBillActivity.class);
+           startActivity(intent);
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+           finish();
+
+       }else if (v==Btn_damage_product) {
+           Intent intent=new Intent(MainActivity.this, DamageProductlActivity.class);
            startActivity(intent);
            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
            finish();

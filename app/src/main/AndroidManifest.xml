@@ -67,6 +67,9 @@
             android:name=".UpdateAppActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.DamageProductlActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
