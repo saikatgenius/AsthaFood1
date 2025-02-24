@@ -64,7 +64,17 @@ public class SellProductDetailsModel {
     String AssingQnty;
     String SellQunty;
     String ReturnQunt;
-    String Price ;
+    String Price;
+
+    public String getVoucherNo() {
+        return VoucherNo;
+    }
+
+    public void setVoucherNo(String voucherNo) {
+        VoucherNo = voucherNo;
+    }
+
+    String VoucherNo;
     int RemainingQuntity;
 
     public int getSellingQnty() {

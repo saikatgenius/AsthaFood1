@@ -326,7 +326,7 @@ public class ProductSellActivity extends AppCompatActivity {
             if (arrayList.get(i).getSellingQnty()>0){
                 collectionList +=
                         arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
-                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()
+                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()+","+arrayList.get(i).getVoucherNo()
                                 +";";
                 Log.d("ergergerg" + "", collectionList);
             }
@@ -596,13 +596,14 @@ public class ProductSellActivity extends AppCompatActivity {
                         sellProductDetailsModel.setMRP(rs.getString("MRP"));
                         sellProductDetailsModel.setExpiryDate(rs.getString("ExpiryDate"));
                         sellProductDetailsModel.setGST(rs.getString("TotalGST"));
+                        sellProductDetailsModel.setVoucherNo(rs.getString("VoucherNo"));
 
                         sellProductDetailsModel.setIsNew(rs.getString("NewProduct"));
                         arrayList.add(sellProductDetailsModel);
                     }
 
                 }
-                sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,ProductSellActivity.this);
+                sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,ProductSellActivity.this,"ProductSell");
                 binding.rvproductDetails.setAdapter(sellProductDetailsAdapter);
 
             } else {

@@ -16,13 +16,14 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthafood.R
+import com.example.asthafood.activity.ReturnProductActivity
 
 import com.example.asthafood.databinding.SellBottomSheetBinding
 import com.example.asthafood.mssql.models.SellProductDetailsModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
-class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val context: Context) :
+class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val context: Context,val Tag : String ) :
     RecyclerView.Adapter<SellProductViewHolder>()  {
 
 
@@ -34,6 +35,14 @@ class SellProductDetailsAdapter(val items: List<SellProductDetailsModel>, val co
 
      @SuppressLint("SuspiciousIndentation", "ResourceAsColor")
      override fun onBindViewHolder(holder: SellProductViewHolder, position: Int) {
+
+
+         if (Tag=="ReturnProduct"){
+             holder.SellQnty.visibility= View.GONE
+         }else{
+             holder.SellQnty.visibility= View.VISIBLE
+         }
+
 
          if (items[position].isNew=="1"){
              holder.mainLL.setBackgroundResource(R.drawable.green_white)
