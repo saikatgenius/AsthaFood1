@@ -21,6 +21,7 @@ public class SqlManager {
             conn= DriverManager.getConnection(connString);
         }
 
+
         catch(Exception ex){
             conn = null;
         }

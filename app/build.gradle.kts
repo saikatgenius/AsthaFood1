@@ -28,8 +28,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures{
         buildConfig = true
@@ -67,6 +67,11 @@ dependencies {
     implementation ("com.github.CanHub:Android-Image-Cropper:4.3.1")
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+   // implementation ("com.github.barteksc:android-pdf-viewer:2.8.2")
+    //implementation (" com.github.DImuthuUpe:AndroidPdfViewer:2.8.2")
+
+
 
 
 }

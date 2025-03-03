@@ -121,6 +121,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
      private void bindEventHandlers() {
          mTv_tDate.setOnClickListener(this);
+         mTv_fDate.setOnClickListener(this);
          mBtn_showAll.setOnClickListener(this);
          btn_SearchShopkepper.setOnClickListener(this);
      }
@@ -128,7 +129,15 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
      @Override
      public void onClick(View v) {
          if (v == mTv_tDate) {
-             selectTDate();
+
+             if (!mTv_fDate.getText().toString().isEmpty()) {
+                 selectTDate(fdate);
+             }else {
+                 Toast.makeText(SellBillActivity.this,"Please Enter From Date",Toast.LENGTH_LONG).show();
+                 mTv_fDate.requestFocus();
+             }
+
+
          } else if (v==btn_SearchShopkepper) {
              if (!Edt_txtSearchShopkeeper.getText().toString().isEmpty()){
                  arrayList_SCode.clear();
@@ -141,6 +150,9 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
                  Toast.makeText(SellBillActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
                  Edt_txtSearchShopkeeper.requestFocus();
              }
+         } else if (v==mTv_fDate) {
+
+             selectFDate();
          }
      }
 
@@ -153,7 +165,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
         try {
             if (cn != null) {
                 CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?)}");
-                smt.setString("@date","20250217");
+                smt.setString("@date",Value);
 
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
@@ -255,6 +267,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
                  mTv_fDate.setText(dayOfMonth + "-" + month + "-" + year);
                  fdate = Integer.parseInt(Integer.toString(year) + String.format("%02d", month) + String.format("%02d", dayOfMonth));
+
              }
          }, currentYear, currentMonth, currentDay);
          mCalendar.set(currentYear, currentMonth, currentDay);
@@ -263,7 +276,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
          datePickerDialog.show();
      }
 
-     private void selectTDate() {
+     private void selectTDate(int fdate) {
          Calendar c = Calendar.getInstance();
          mYear = c.get(Calendar.YEAR);
          mMonth = c.get(Calendar.MONTH);
@@ -285,7 +298,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
                  totalAmount=0.0;
                  mArrayListSellReport.clear();
-                 getCollReport( tdate, GlobalStore.GlobalValue.getUserName());
+                 getCollReport( tdate, fdate,GlobalStore.GlobalValue.getUserName());
              }
          }, currentYear, currentMonth, currentDay);
          mCalendar.set(currentYear, currentMonth, currentDay);
@@ -296,7 +309,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-    public void getCollReport( int tDate, String username) {
+    public void getCollReport( int tDate,int fDate, String username) {
         mTV_buyerNameTextView.setText("0");
         mPb_proggress.setVisibility(View.VISIBLE);
         cn = new SqlManager().getSQLConnection();
@@ -305,14 +318,15 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?)}");
-                smt.setInt("@date", tDate);
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?,?)}");
+                smt.setInt("@fdate", fDate);
+                smt.setInt("@tdate", tDate);
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
                         setGetBillReport = new SetGetBillReport();
-                        setGetBillReport.setSaleDate(rs.getString("saledate"));
+                        setGetBillReport.setSaleDate(rs.getString("saleDate"));
                         setGetBillReport.setSaleid(rs.getString("SaleID"));
                         setGetBillReport.setPayableAmt(rs.getString("PayableAmt"));
                         setGetBillReport.setCoustomerPh(rs.getString("CustomerPhoneNo"));
@@ -331,6 +345,7 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
                     mRv_loanDueReport.setAdapter(adapterSellReport);
                     mPb_proggress.setVisibility(View.GONE);
                     adapterSellReport.notifyDataSetChanged();
+
 
                 } else {
                    // adapterSellReport.notifyDataSetChanged();

@@ -2,6 +2,7 @@ package com.example.asthafood.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class AdapterBillReport extends RecyclerView.Adapter<AdapterBillReport.Du
                 intent.putExtra("Saleid",arrayList.get(position).getSaleid());
                 intent.putExtra("CoustomerPh",arrayList.get(position).getCoustomerPh());
                 context.startActivity(intent);
+
+                Log.e("Saleid",""+arrayList.get(position).getSaleid());
 
             }
         });

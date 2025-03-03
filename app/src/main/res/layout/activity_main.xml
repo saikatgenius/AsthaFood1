@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
+     android:fitsSystemWindows="true"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -15,11 +16,12 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:visibility="gone"
+
             android:id="@+id/toolbar"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/theme_color"
+            android:background="@null"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,14 +30,14 @@
             android:gravity="center"
             android:layout_marginHorizontal="4dp"
             android:background="@drawable/main_top_banner"
-            android:layout_marginTop="5dp"
+
             android:layout_marginBottom="5dp">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_image"
                 android:layout_width="100dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/app_logo"
+                android:src="@drawable/ic_app_logo"
                 android:layout_height="70dp" />
 
             <LinearLayout
@@ -79,6 +81,8 @@
                         android:textStyle="italic | bold" />
 
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -430,6 +434,8 @@
                 <LinearLayout
                     android:id="@+id/ll_activity_main_sell_report"
                     android:layout_width="match_parent"
+
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 

@@ -3,13 +3,23 @@
     <style name="Base.Theme.AsthaFood" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+
     </style>
+
+
+
+
 
     <style name="Theme.AsthaFood" parent="Base.Theme.AsthaFood" />
     <style name="ToolbarTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize color of navigation drawer icon and back arrow -->
         <item name="colorControlNormal">@color/colorWhite</item>
     </style>
+
+
+    
+
 
     <style name="TextLabelCustom">
         <!-- Hint color and label color in FALSE state -->

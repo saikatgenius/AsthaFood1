@@ -194,10 +194,31 @@
         </LinearLayout>
 
 
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:visibility="gone"
+              android:layout_height="match_parent">
 
+             <!-- <com.github.barteksc.pdfviewer.PDFView
+                  android:id="@+id/pdfView"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"/>-->
+
+
+          </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/pdfImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:scaleType="fitCenter"
+            android:contentDescription="PDF Preview" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_activity_loan_due_report"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
@@ -209,7 +230,7 @@
           android:visibility="gone"
           android:padding="@dimen/_15mdp"
           android:layout_marginHorizontal="@dimen/_10mdp"
-          android:textSize="@dimen/_15mdp"
+          android:textSize="@dimen/_14mdp"
           android:background="@drawable/border_background_button"
           android:layout_height="wrap_content">
 

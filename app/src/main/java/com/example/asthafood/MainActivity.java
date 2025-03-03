@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        drawerLayout.addDrawerListener(toggle);
 //        toggle.syncState();
 
+
+
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             int id = item.getItemId();
@@ -86,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return true;
         });
+
+
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
