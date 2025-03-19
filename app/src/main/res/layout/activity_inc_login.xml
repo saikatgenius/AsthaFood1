@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E4334C75"
+    android:fitsSystemWindows="true"
+    tools:context=".IncActivities.IncLoginActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:background="@drawable/app_bg_final"
+        android:orientation="vertical"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center">
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center">
+
+
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_app_logo"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="2"
+            android:gravity="center"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="~ Incentive Login ~"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.example.asthafood.Util.NoChangingBackgroundTextInputLayout
+                android:id="@+id/til_activity_login_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:gravity="bottom"
+                android:theme="@style/TextLabelCustom"
+                app:errorEnabled="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Username"
+                    android:textColorHint="@color/white"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingEnd="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="4dp"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:background="@drawable/border_background_trans" />
+            </com.example.asthafood.Util.NoChangingBackgroundTextInputLayout>
+
+
+            <com.example.asthafood.Util.NoChangingBackgroundTextInputLayout
+                android:id="@+id/til_activity_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:gravity="bottom"
+                android:theme="@style/TextLabelCustom"
+                app:errorEnabled="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Password"
+                    android:textColorHint="@color/white"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingEnd="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="4dp"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:background="@drawable/border_background_trans"/>
+            </com.example.asthafood.Util.NoChangingBackgroundTextInputLayout>
+
+
+            <CheckBox
+                android:id="@+id/check_box_arranger_login_remember_me"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Remember Me"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnlogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorLogoRed"
+                    android:paddingBottom="15dp"
+                    android:paddingEnd="50dp"
+                    android:paddingStart="50dp"
+                    android:paddingTop="15dp"
+                    android:text="Login"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_open_genius_technology_links"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/splash_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_activity_login_developed_by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Developed by Genius Technology"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

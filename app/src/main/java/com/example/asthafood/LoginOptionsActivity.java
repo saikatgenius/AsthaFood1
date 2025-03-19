@@ -15,17 +15,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.asthafood.IncActivities.IncDashboardActivity;
+import com.example.asthafood.IncActivities.IncLoginActivity;
 import com.example.asthafood.activity.EmployeeLoginActivity;
 import com.example.asthafood.dl.LoginManagement;
 
 public class LoginOptionsActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView mTv_memberLogin;
     private TextView mTv_associateLogin;
-    private TextView mTv_adminLogin;
+    private TextView mTv_IncLogin;
     private TextView mTv_aboutUS;
 
     private SharedPreferences sharedPreferencesArranger;
+    private SharedPreferences sharedPreferencesInc;
     private Boolean rememberStatusArranger = false;
+    private Boolean rememberStatusInc = false;
 
 
     @Override
@@ -40,6 +44,9 @@ public class LoginOptionsActivity extends AppCompatActivity implements View.OnCl
         sharedPreferencesArranger = getSharedPreferences("ARRANGERLOGIN", Context.MODE_PRIVATE);
         rememberStatusArranger = sharedPreferencesArranger.getString("REMEMBER", "").equals("TRUE");
 
+        sharedPreferencesInc = getSharedPreferences("INCLOGIN", Context.MODE_PRIVATE);
+        rememberStatusInc = sharedPreferencesInc.getString("REMEMBER", "").equals("TRUE");
+
         SharedPreferences sharedPreferences_loginSelection=getSharedPreferences("LoginSelection", MODE_PRIVATE);
         String selection = sharedPreferences_loginSelection.getString("IsMemberLogin","");
 
@@ -53,7 +60,7 @@ public class LoginOptionsActivity extends AppCompatActivity implements View.OnCl
         mTv_memberLogin = findViewById(R.id.tv_login_options_activity_member_login);
         mTv_associateLogin = findViewById(R.id.tv_login_options_activity_associate_login);
 
-        mTv_adminLogin = findViewById(R.id.tv_login_options_activity_admin_login);
+        mTv_IncLogin = findViewById(R.id.tv_login_options_activity_inc_login);
 
         mTv_aboutUS = findViewById(R.id.tv_login_options_activity_about_company);
     }
@@ -62,7 +69,7 @@ public class LoginOptionsActivity extends AppCompatActivity implements View.OnCl
 
         mTv_associateLogin.setOnClickListener(this);
         mTv_memberLogin.setOnClickListener(this);
-        mTv_adminLogin.setOnClickListener(this);
+        mTv_IncLogin.setOnClickListener(this);
         mTv_aboutUS.setOnClickListener(this);
     }
 
@@ -87,6 +94,31 @@ public class LoginOptionsActivity extends AppCompatActivity implements View.OnCl
 
             } else {
                 startActivity(new Intent(LoginOptionsActivity.this, EmployeeLoginActivity.class));
+                finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        }
+
+
+        if (v == mTv_IncLogin) {
+            if (rememberStatusInc) {
+
+                LoginManagement um = new LoginManagement();
+                String username = sharedPreferencesInc.getString("USERNAME", "");
+                String password = sharedPreferencesInc.getString("PASSWORD", "");
+
+                if (um.isLoginINCSuccessful(username, password)) {
+                    startActivity(new Intent(LoginOptionsActivity.this, IncDashboardActivity.class));
+                    finish();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                } else {
+                    startActivity(new Intent(LoginOptionsActivity.this, IncLoginActivity.class));
+                    finish();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+
+            } else {
+                startActivity(new Intent(LoginOptionsActivity.this, IncLoginActivity.class));
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }

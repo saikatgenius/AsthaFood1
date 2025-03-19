@@ -55,4 +55,44 @@ public class LoginManagement {
         }
         return rValue;
     }
+
+    // INC Login
+    public boolean isLoginINCSuccessful(String userName, String password){
+        boolean rValue=false;
+        String ut="";
+        AppData ad;
+        try{
+            if (cn != null){
+                CallableStatement smt=cn.prepareCall("{call ADROID_Inc_LoginValidation(?,?)}");
+                smt.setString(1,userName);
+                smt.setString(2,password);
+                smt.execute();
+                ResultSet rs=smt.getResultSet();
+                while(rs.next()){
+                    ad = new AppData();
+                    ad.setUserName(rs.getString("UserName"));
+                    ad.setArrangerMemberCode(rs.getString("MemberCode"));
+                    ad.setUserOriginalName(rs.getString("UserOriginalName"));
+                    ad.setUserTypeID(rs.getInt("UserTypeID"));
+                    ad.setOfficeID(rs.getString("OfficeID"));
+                    ad.setAddress(rs.getString("Address"));
+                    ad.setMemberDob(rs.getString("ArrangerDOB"));
+                    GlobalStore.GlobalValue = ad;
+                    rValue=true;
+                }
+            }
+        }catch(Exception ex){
+            rValue = false;
+        }
+        finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    //
+                }
+            }
+        }
+        return rValue;
+    }
 }

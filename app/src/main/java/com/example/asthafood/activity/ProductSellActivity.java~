@@ -191,7 +191,7 @@ public class ProductSellActivity extends AppCompatActivity {
         binding.DownloadAndShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadSavingStatement1(arrayList,BillNo);
+                downloadSavingStatement(arrayList,BillNo);
             }
         });
 
@@ -565,7 +565,7 @@ public class ProductSellActivity extends AppCompatActivity {
 
 
 
-    private void downloadSavingStatement1(ArrayList<SellProductDetailsModel> arrayList, String billno) {
+    private void downloadSavingStatement1(ArrayList<SellProductDetailsModel> arrayList, String billno, String partyName, String address) {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
         document.setPageSize(new Rectangle(595, 842)); // A4 size
         long time = System.currentTimeMillis();
@@ -910,36 +910,7 @@ public class ProductSellActivity extends AppCompatActivity {
 
 
 
-    private String numberToWords(int number) {
-        String[] units = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
-        String[] tens = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
 
-        if (number == 0) {
-            return "Zero";
-        }
-
-        if (number < 20) {
-            return units[number];
-        }
-
-        if (number < 100) {
-            return tens[number / 10] + (number % 10 != 0 ? " " + units[number % 10] : "");
-        }
-
-        if (number < 1000) {
-            return units[number / 100] + " Hundred" + (number % 100 != 0 ? " and " + numberToWords(number % 100) : "");
-        }
-
-        if (number < 100000) {
-            return numberToWords(number / 1000) + " Thousand" + (number % 1000 != 0 ? " " + numberToWords(number % 1000) : "");
-        }
-
-        if (number < 10000000) {
-            return numberToWords(number / 100000) + " Lakh" + (number % 100000 != 0 ? " " + numberToWords(number % 100000) : "");
-        }
-
-        return numberToWords(number / 10000000) + " Crore" + (number % 10000000 != 0 ? " " + numberToWords(number % 10000000) : "");
-    }
 
 
 

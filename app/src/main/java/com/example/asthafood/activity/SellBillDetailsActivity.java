@@ -136,7 +136,6 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
          mRv_loanDueReport.setLayoutManager(linearLayoutManager);
          mArrayListSellReport.clear();
-       //  getLoanDueReport(1, 2, GlobalStore.GlobalValue.getUserName());
 
 
          Intent intent=getIntent();
@@ -149,7 +148,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
          Log.e("Saleid1",""+saleid);
          Log.e("bill_id1",""+bill_id);
 
-         downloadSavingStatement(mArrayListSellReport, bill_id, saleid, "Customer Address");
+         downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
 
      }
 
@@ -198,10 +197,6 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                  Edt_txtSearchShopkeeper.requestFocus();
              }
          } else if (v == Btn_download) {
-
-
-           //  downloadSavingStatement(mArrayListSellReport);
-            // downloadSavingStatement(mArrayListSellReport, bill_id, saleid, "Customer Address");
 
              Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
              Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
@@ -743,169 +738,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
 
         return numberToWords(number / 10000000) + " Crore" + (number % 10000000 != 0 ? " " + numberToWords(number % 10000000) : "");
     }
-/*    private void downloadSavingStatement(ArrayList<SetGetSellDetailsReport> arrayList) {
 
-        String billno="";
-        Log.e("arrayList1",""+ arrayList.get(0).getProductId());
-        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-        document.setPageSize(new Rectangle(850, 890));
-        long time = System.currentTimeMillis();
-
-        try {
-
-            String fileName = "";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-                fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + ("BILL" + "_" + time + ".pdf");// + ".pdf";
-            } else {
-                fileName = Environment.getExternalStorageDirectory().toString() + "/" + ("BILL" + "_" + time + ".pdf");//"test" + ".pdf";
-            }
-
-
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
-
-            Font font = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
-            Paragraph headingPara = new Paragraph(getString(R.string.app_name), font);
-            headingPara.setAlignment(Element.ALIGN_CENTER);
-            headingPara.setSpacingAfter(20f);
-
-            document.open();
-
-            com.itextpdf.text.pdf.PdfPTable containerTable1 = new com.itextpdf.text.pdf.PdfPTable(1);
-            containerTable1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-            containerTable1.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.app_logo);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            Image img = Image.getInstance(byteArray);
-            img.setAlignment(Element.ALIGN_CENTER);
-            img.scaleAbsolute(100, 70); // Adjust image size
-
-
-            Font hf = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
-            hf.setStyle(Font.UNDERLINE);
-
-            Font fontMiniStatement2 = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
-            fontMiniStatement2.setStyle(Font.UNDERLINE);
-            Font fontAccountNo3 = FontFactory.getFont(FontFactory.HELVETICA, 14);
-            Font fontBold14 = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
-            Font fontBoldt_head = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-
-
-            com.itextpdf.text.pdf.PdfPTable leftRows = new com.itextpdf.text.pdf.PdfPTable(3);
-            leftRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-            leftRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-            com.itextpdf.text.pdf.PdfPTable rightRows = new com.itextpdf.text.pdf.PdfPTable(3);
-            rightRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-            rightRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-
-            PdfPCell c1 = new PdfPCell(new PdfPCell(new Paragraph("BILL  ASTHA FOOD\n\n", hf)));
-            c1.setColspan(3);
-            c1.setBorder(Rectangle.NO_BORDER);
-            leftRows.addCell(c1);
-            leftRows.addCell(new Paragraph("SELLER ID ", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + GlobalStore.GlobalValue.getUserName() + "\t\t\n\n");
-            leftRows.addCell(new Paragraph("BUYER NAME ", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + BuyerName + "\t\t\n\n");
-
-            leftRows.addCell(new Paragraph("SELLER NAME ", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + GlobalStore.GlobalValue.getUserOriginalName() + "\t\t\n\n");
-            leftRows.addCell(new Paragraph("Bill No", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + saleid + "\t\t\n\n");
-
-
-            com.itextpdf.text.pdf.PdfPTable totalRows = new com.itextpdf.text.pdf.PdfPTable(7);
-            totalRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            totalRows.addCell(new Paragraph("ProductID", fontBoldt_head));
-            totalRows.addCell(new Paragraph("ProductName", fontBoldt_head));
-            totalRows.addCell(new Paragraph("SellingQnty", fontBoldt_head));
-            totalRows.addCell(new Paragraph("Price", fontBoldt_head));
-            totalRows.addCell(new Paragraph("BatchNo", fontBoldt_head));
-            totalRows.addCell(new Paragraph("ExpiryDate", fontBoldt_head));
-            totalRows.addCell(new Paragraph("MRP", fontBoldt_head));
-
-            Double balance=0.0;
-
-            for (int i = 0 ; i<arrayList.size();i++){
-               // if (arrayList.get(i).getSellingQnty()>0){
-                  //  Log.e("arrayList51",""+ arrayList.get(i).getProductID());
-                    document.open();
-                  //  Log.e("arrayList21",""+ arrayList.get(i).getProductID());
-
-                    balance +=  Double.valueOf(arrayList.get(i).getPayableAmt());
-
-                    totalRows.addCell("" + arrayList.get(i).getItemID());
-                    totalRows.addCell("" + arrayList.get(i).getItemName());
-                    totalRows.addCell("" + arrayList.get(i).getCoustomerName());
-                    totalRows.addCell("" + arrayList.get(i).getPayableAmt());
-                    totalRows.addCell("" + arrayList.get(i).getCoustomerPh());
-                    totalRows.addCell("" + arrayList.get(i).getExpary());
-                    totalRows.addCell("" + arrayList.get(i).getBatchNo());
-
-
-                //}
-
-            }
-            rightRows.addCell("");
-            rightRows.addCell("");
-            PdfPCell imgcell = new PdfPCell(img);
-            imgcell.setColspan(2);
-            imgcell.setBorder(Rectangle.NO_BORDER);
-            rightRows.addCell(imgcell);
-            rightRows.addCell("");
-            rightRows.addCell("");
-            rightRows.addCell("");
-            com.itextpdf.text.pdf.PdfPTable tableRows = new com.itextpdf.text.pdf.PdfPTable(6);
-            tableRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            tableRows.setWidthPercentage(100f);
-
-            tableRows.setHeaderRows(1);
-            double depobalance = 0.0;
-            double withdrawbalance = 0.0;
-            int indx = 1;
-
-            com.itextpdf.text.pdf.PdfPTable containerTable = new com.itextpdf.text.pdf.PdfPTable(2);
-            containerTable.setWidthPercentage(100);
-            containerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-            containerTable.addCell(leftRows);
-            containerTable.addCell(rightRows);
-            document.add(containerTable);
-            document.add(new Paragraph("\n"));
-            document.add(totalRows);
-            document.add(new Paragraph("\n"));
-            document.add(tableRows);
-            Paragraph content2 = new Paragraph();
-            Paragraph p1 = new Paragraph("------- End of the BILL -------\n", fontAccountNo3);
-            Paragraph p5 = new Paragraph("Total Amount : "+balance, fontAccountNo3);
-            p1.setAlignment(Element.ALIGN_CENTER);
-            p5.setAlignment(Element.ALIGN_RIGHT);
-            content2.add(p5);
-            content2.add(p1);
-            document.add(content2);
-            document.close();
-
-            Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
-            shrarefile(fileName);
-           *//* Intent i = new Intent(SellBillDetailsActivity.this, ProductSellActivity.class);
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            startActivity(i);
-            finish();*//*
-        } catch (DocumentException e) {
-            Toast.makeText(this, "2." + e.toString(), Toast.LENGTH_SHORT).show();
-            Log.d("err1", e.toString());
-            e.printStackTrace();
-        } catch (Exception e) {
-            Log.d("err2", e.toString());
-            Toast.makeText(this, "3." + e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     private void shrarefile(String fileName) {
         File file = new File(fileName);
@@ -1028,12 +861,6 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                         Log.e("ItemDetails",""+rs.getString("ItemDetails"));
                         setGetSellDetailsReport.setBuyer(BuyerName);
                         bill_id=rs.getString("SaleID");
-
-
-                        /* setGetBillReport.setQuantity(rs.getString("Quantity"));
-                        setGetBillReport.setSalePrice(rs.getString("SalePrice"));
-
-                        setGetBillReport.setBatchNo(rs.getString("BatchNo"));*/
                         totalAmount=totalAmount+Double.parseDouble(rs.getString("salePrice"));
                         mArrayListSellReport.add(setGetSellDetailsReport);
 
@@ -1045,10 +872,8 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                     adapterSellReport = new AdapterBillDetailsReport(SellBillDetailsActivity.this, mArrayListSellReport);
                     mRv_loanDueReport.setAdapter(adapterSellReport);
                     mPb_proggress.setVisibility(View.GONE);
-                   // adapterSellReport.notifyDataSetChanged();
 
                 } else {
-                   // adapterSellReport.notifyDataSetChanged();
                     mPb_proggress.setVisibility(View.GONE);
                     Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
                 }

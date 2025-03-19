@@ -84,13 +84,13 @@
 
 
                 <TextView
-                    android:id="@+id/tv_login_options_activity_admin_login"
+                    android:id="@+id/tv_login_options_activity_inc_login"
                     android:layout_width="250dp"
                     android:layout_height="60dp"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/border_background_trans"
                     android:gravity="center"
-                    android:text="---------------"
+                    android:text="Incentive Login"
                     android:textColor="@color/white"
 
                     android:textStyle="bold" />
