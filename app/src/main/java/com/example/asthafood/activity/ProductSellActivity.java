@@ -168,7 +168,7 @@ public class ProductSellActivity extends AppCompatActivity {
                             !binding.shopkeeperPhone.getText().toString().isEmpty() &&
                             !binding.shopName.getText().toString().isEmpty())
                     {
-                        SubmitData(arrayList,TotalPrice);
+                        SubmitData(arrayList,(TotalPrice+TotalGST),TotalPrice);
                         if (AddShopKeeperFlag){
                             SubmitShopKeeper();
 
@@ -326,13 +326,16 @@ public class ProductSellActivity extends AppCompatActivity {
 
     }
 
-    private void SubmitData(ArrayList<SellProductDetailsModel> arrayList, double totalPrice) {
+    private void SubmitData(ArrayList<SellProductDetailsModel> arrayList, double totalPriceWGst,double TotalPrice) {
         String collectionList = "";
         for (int i = 0 ; i<arrayList.size();i++){
             if (arrayList.get(i).getSellingQnty()>0){
                 collectionList +=
                         arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
-                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()+","+arrayList.get(i).getVoucherNo()
+                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+","
+                                +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()+","+arrayList.get(i).getVoucherNo()+","
+                                +arrayList.get(i).getGST()+","+arrayList.get(i).getGstPrice()+","+arrayList.get(i).getSellPrice()+","
+                                +arrayList.get(i).getPrice()
                                 +";";
                 Log.d("ergergerg" + "", collectionList);
             }
@@ -345,13 +348,14 @@ public class ProductSellActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP_OLD(?,?,?,?,?,?,?,?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP_OLD(?,?,?,?,?,?,?,?,?,?,?)}");
                 smt.setString("@UserName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CollectionList",collectionList);
                 smt.setString("@CustomerName",binding.shopkeeperName.getText().toString());
                 smt.setString("@CustomerPhn",binding.shopkeeperPhone.getText().toString());
                 smt.setString("@CustomerAddrs",binding.shopkeeperAddress.getText().toString());
-                smt.setString("@TotalAmount",String.valueOf(totalPrice));
+                smt.setString("@TotalAmountWithGst",String.valueOf(totalPriceWGst));
+                smt.setString("@TotalAmount",String.valueOf(TotalPrice));
 
                 smt.setString("@GSTAmount",String.valueOf(TotalGST));
 

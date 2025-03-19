@@ -1,4 +1,4 @@
-package com.example.asthafood.activity;
+package com.example.asthafood.IncActivities;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -19,25 +19,26 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
-import com.example.asthafood.Util.GlobalReqProductList;
 import com.example.asthafood.adapters.PreviewItemAdapter;
-import com.example.asthafood.adapters.RequestCartAdapter;
 import com.example.asthafood.adapters.SellProductDetailsAdapter;
 import com.example.asthafood.bean.GlobalStore;
+import com.example.asthafood.databinding.ActivityIncProductSellBinding;
 import com.example.asthafood.databinding.ActivityProductSellBinding;
 import com.example.asthafood.databinding.PreviewBottomSheetBinding;
-import com.example.asthafood.databinding.SellBottomSheetBinding;
 import com.example.asthafood.mssql.SqlManager;
 import com.example.asthafood.mssql.models.SellProductDetailsModel;
-import com.example.asthafood.mssql.models.SetGetSellDetailsReport;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -61,9 +62,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ProductSellActivity extends AppCompatActivity {
-
-    ActivityProductSellBinding binding;
+public class IncProductSellActivity extends AppCompatActivity {
+    ActivityIncProductSellBinding binding;
     double TotalPrice =0.0;
     double TotalGST =0.0;
     double ProductOriginalTotal =0.0;
@@ -82,7 +82,7 @@ public class ProductSellActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProductSellBinding.inflate(getLayoutInflater());
+        binding = ActivityIncProductSellBinding.inflate(getLayoutInflater());
 
 
 
@@ -113,7 +113,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     getShopkeeperID(binding.txtSearchShopkeeper.getText().toString());
 
                 }else{
-                    Toast.makeText(ProductSellActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
+                    Toast.makeText(IncProductSellActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
                     binding.txtSearchShopkeeper.requestFocus();
                 }
 
@@ -168,21 +168,21 @@ public class ProductSellActivity extends AppCompatActivity {
                             !binding.shopkeeperPhone.getText().toString().isEmpty() &&
                             !binding.shopName.getText().toString().isEmpty())
                     {
-                        SubmitData(arrayList,TotalPrice);
+                        SubmitData(arrayList,(TotalPrice+TotalGST),TotalPrice);
                         if (AddShopKeeperFlag){
                             SubmitShopKeeper();
 
                         }
 
                     }else{
-                        Toast.makeText(ProductSellActivity.this,"Please Fill All ShopkeeperDetails",Toast.LENGTH_LONG).show();
+                        Toast.makeText(IncProductSellActivity.this,"Please Fill All ShopkeeperDetails",Toast.LENGTH_LONG).show();
                         binding.shopkeeperName.requestFocus();
                         binding.shopkeeperAddress.requestFocus();
                         binding.shopkeeperPhone.requestFocus();
                         binding.shopName.requestFocus();
                     }
                 }else{
-                    Toast.makeText(ProductSellActivity.this,"Please Click GetAmount First",Toast.LENGTH_LONG).show();
+                    Toast.makeText(IncProductSellActivity.this,"Please Click GetAmount First",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -191,7 +191,7 @@ public class ProductSellActivity extends AppCompatActivity {
         binding.DownloadAndShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadSavingStatement(arrayList,BillNo);
+                downloadSavingStatement1(arrayList,BillNo);
             }
         });
 
@@ -201,11 +201,11 @@ public class ProductSellActivity extends AppCompatActivity {
                 PreviewItemAdapter previewItemAdapter;
                 ArrayList<SellProductDetailsModel> arrayListNew=new ArrayList<>();
 
-                BottomSheetDialog dialog =new  BottomSheetDialog(ProductSellActivity.this);
-                PreviewBottomSheetBinding binding = PreviewBottomSheetBinding.inflate(LayoutInflater.from(ProductSellActivity.this));
+                BottomSheetDialog dialog =new  BottomSheetDialog(IncProductSellActivity.this);
+                PreviewBottomSheetBinding binding = PreviewBottomSheetBinding.inflate(LayoutInflater.from(IncProductSellActivity.this));
                 dialog.setContentView(binding.getRoot());
 
-                LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(ProductSellActivity.this);
+                LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(IncProductSellActivity.this);
                 binding.rvproductDetails.setLayoutManager(linearLayoutManager1);
 
                 for (int i = 0 ; i<arrayList.size();i++){
@@ -214,7 +214,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     }
                 }
 
-                previewItemAdapter = new PreviewItemAdapter(arrayListNew,ProductSellActivity.this);
+                previewItemAdapter = new PreviewItemAdapter(arrayListNew,IncProductSellActivity.this);
                 binding.rvproductDetails.setAdapter(previewItemAdapter);
 
 
@@ -229,6 +229,7 @@ public class ProductSellActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void SubmitShopKeeper() {
         Connection cn = new SqlManager().getSQLConnection();
@@ -276,7 +277,7 @@ public class ProductSellActivity extends AppCompatActivity {
 
                     }
                 }else{
-                    Toast.makeText(ProductSellActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
+                    Toast.makeText(IncProductSellActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
                 }
 
             }else{
@@ -290,7 +291,7 @@ public class ProductSellActivity extends AppCompatActivity {
     }
 
     private void getShopkeeperID(String Value) {
-        final ProgressDialog progressDialog = new ProgressDialog(ProductSellActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(IncProductSellActivity.this,
                 ProgressDialog.THEME_HOLO_DARK);
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
@@ -307,12 +308,12 @@ public class ProductSellActivity extends AppCompatActivity {
                         arrayList_SCodeName.add(rs.getString("Name")+"-"+rs.getString("Phone"));
                     }
                     binding.spActivityGetShopkeeperList.setVisibility(View.VISIBLE);
-                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter(ProductSellActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter(IncProductSellActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
                     binding.spActivityGetShopkeeperList.setAdapter(arrayAdapter);
                     progressDialog.dismiss();
                 }else{
                     progressDialog.dismiss();
-                    Toast.makeText(ProductSellActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
+                    Toast.makeText(IncProductSellActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
                 }
 
             }else{
@@ -326,33 +327,36 @@ public class ProductSellActivity extends AppCompatActivity {
 
     }
 
-    private void SubmitData(ArrayList<SellProductDetailsModel> arrayList, double totalPrice) {
+    private void SubmitData(ArrayList<SellProductDetailsModel> arrayList, double totalPriceWGst,double TotalPrice) {
         String collectionList = "";
         for (int i = 0 ; i<arrayList.size();i++){
             if (arrayList.get(i).getSellingQnty()>0){
                 collectionList +=
                         arrayList.get(i).getProductID()+","+arrayList.get(i).getProductName() + "," + arrayList.get(i).getSellingQnty()
-                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+"," +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()+","+arrayList.get(i).getVoucherNo()
+                                + "," + arrayList.get(i).getSellingQntyFinalPrice()+"," +arrayList.get(i).getBatchNo()+","
+                                +arrayList.get(i).getExpiryDate()+"," +arrayList.get(i).getMRP()+","+arrayList.get(i).getVoucherNo()+","
+                            +arrayList.get(i).getGST()+","+arrayList.get(i).getGstPrice()+","+arrayList.get(i).getSellPrice()+","
+                                +arrayList.get(i).getPrice()
                                 +";";
                 Log.d("ergergerg" + "", collectionList);
             }
 
         }
-        final ProgressDialog progressDialog = new ProgressDialog(ProductSellActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(IncProductSellActivity.this,
                 ProgressDialog.THEME_HOLO_DARK);
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_TEMP_OLD(?,?,?,?,?,?,?,?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call USP_ADROID_INSERT_SELLING_PRO_INC(?,?,?,?,?,?,?,?,?,?,?)}");
                 smt.setString("@UserName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CollectionList",collectionList);
                 smt.setString("@CustomerName",binding.shopkeeperName.getText().toString());
                 smt.setString("@CustomerPhn",binding.shopkeeperPhone.getText().toString());
                 smt.setString("@CustomerAddrs",binding.shopkeeperAddress.getText().toString());
-                smt.setString("@TotalAmount",String.valueOf(totalPrice));
-
+                smt.setString("@TotalAmountWithGst",String.valueOf(totalPriceWGst));
+                smt.setString("@TotalAmount",String.valueOf(TotalPrice));
                 smt.setString("@GSTAmount",String.valueOf(TotalGST));
 
                 smt.registerOutParameter("@ReturnVoucherNo",java.sql.Types.VARCHAR);
@@ -360,9 +364,9 @@ public class ProductSellActivity extends AppCompatActivity {
                 smt.registerOutParameter("@ErrorCode",java.sql.Types.INTEGER);
                 smt.executeUpdate();
                 int ReturnERRORCode  = smt.getInt("@ErrorCode");
-                 BillNo=smt.getString("@SaleID");
+                BillNo=smt.getString("@SaleID");
                 if (ReturnERRORCode==0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductSellActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(IncProductSellActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Successful");
                     builder.setMessage("Product Sale Successfully. ");
@@ -376,7 +380,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         }
                     }).show();
                 }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductSellActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(IncProductSellActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Unable to enter Data");
                     builder.setMessage("Product Sale UnSuccessfully. ");
@@ -384,7 +388,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //builder.setCancelable(true);
-                            Intent i = new Intent(ProductSellActivity.this, ProductSellActivity.class);
+                            Intent i = new Intent(IncProductSellActivity.this, IncProductSellActivity.class);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             startActivity(i);
                             finish();
@@ -402,170 +406,8 @@ public class ProductSellActivity extends AppCompatActivity {
         }
     }
 
-    private void
-    downloadSavingStatement(ArrayList<SellProductDetailsModel> arrayList,String billno) {
-        Log.e("arrayList1",""+ arrayList.get(0).getProductID());
-        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-        document.setPageSize(new Rectangle(850, 890));
-        long time = System.currentTimeMillis();
-
-        try {
-
-            String fileName = "";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-                fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + ("BILL" + "_" + time + ".pdf");// + ".pdf";
-            } else {
-                fileName = Environment.getExternalStorageDirectory().toString() + "/" + ("BILL" + "_" + time + ".pdf");//"test" + ".pdf";
-            }
-
-
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
-
-            Font font = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
-            Paragraph headingPara = new Paragraph(getString(R.string.app_name), font);
-            headingPara.setAlignment(Element.ALIGN_CENTER);
-            headingPara.setSpacingAfter(20f);
-
-            document.open();
-
-            com.itextpdf.text.pdf.PdfPTable containerTable1 = new com.itextpdf.text.pdf.PdfPTable(1);
-            containerTable1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-            containerTable1.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.app_logo);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            Image img = Image.getInstance(byteArray);
-            img.setAlignment(Element.ALIGN_CENTER);
-            img.scaleAbsolute(100, 70); // Adjust image size
-
-
-            Font hf = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
-            hf.setStyle(Font.UNDERLINE);
-
-            Font fontMiniStatement2 = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
-            fontMiniStatement2.setStyle(Font.UNDERLINE);
-            Font fontAccountNo3 = FontFactory.getFont(FontFactory.HELVETICA, 14);
-            Font fontBold14 = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
-            Font fontBoldt_head = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-
-
-            com.itextpdf.text.pdf.PdfPTable leftRows = new com.itextpdf.text.pdf.PdfPTable(3);
-            leftRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-            leftRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-            com.itextpdf.text.pdf.PdfPTable rightRows = new com.itextpdf.text.pdf.PdfPTable(3);
-            rightRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-            rightRows.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-
-            PdfPCell c1 = new PdfPCell(new PdfPCell(new Paragraph("BILL  ASTHA FOOD\n\n", hf)));
-            c1.setColspan(3);
-            c1.setBorder(Rectangle.NO_BORDER);
-            leftRows.addCell(c1);
-            leftRows.addCell(new Paragraph("SELLER ID ", fontBold14));
-            leftRows.addCell(":");
-
-            leftRows.addCell(new Paragraph("BUYER NAME ", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + binding.shopkeeperName.getText().toString() + "\t\t\n\n");
-
-
-            leftRows.addCell("" + GlobalStore.GlobalValue.getUserName() + "\t\t\n\n");
-            leftRows.addCell(new Paragraph("SELLER NAME ", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + GlobalStore.GlobalValue.getUserOriginalName() + "\t\t\n\n");
-            leftRows.addCell(new Paragraph("Bill No", fontBold14));
-            leftRows.addCell(":");
-            leftRows.addCell("" + billno + "\t\t\n\n");
-
-            com.itextpdf.text.pdf.PdfPTable totalRows = new com.itextpdf.text.pdf.PdfPTable(7);
-            totalRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            totalRows.addCell(new Paragraph("ProductID", fontBoldt_head));
-            totalRows.addCell(new Paragraph("ProductName", fontBoldt_head));
-            totalRows.addCell(new Paragraph("SellingQnty", fontBoldt_head));
-            totalRows.addCell(new Paragraph("Price", fontBoldt_head));
-            totalRows.addCell(new Paragraph("BatchNo", fontBoldt_head));
-            totalRows.addCell(new Paragraph("ExpiryDate", fontBoldt_head));
-            totalRows.addCell(new Paragraph("MRP", fontBoldt_head));
-
-            Double balance=0.0;
-
-            for (int i = 0 ; i<arrayList.size();i++){
-                if (arrayList.get(i).getSellingQnty()>0){
-                    Log.e("arrayList51",""+ arrayList.get(i).getProductID());
-                    document.open();
-                    Log.e("arrayList21",""+ arrayList.get(i).getProductID());
-
-                  balance +=  arrayList.get(i).getSellingQntyFinalPrice();
-
-                    totalRows.addCell("" + arrayList.get(i).getProductID());
-                    totalRows.addCell("" + arrayList.get(i).getProductName());
-                    totalRows.addCell("" + arrayList.get(i).getSellingQnty());
-                    totalRows.addCell("" + arrayList.get(i).getSellingQntyFinalPrice());
-                    totalRows.addCell("" + arrayList.get(i).getBatchNo());
-                    totalRows.addCell("" + arrayList.get(i).getExpiryDate());
-                    totalRows.addCell("" + arrayList.get(i).getMRP());
-
-
-                }
-
-            }
-            rightRows.addCell("");
-            rightRows.addCell("");
-            PdfPCell imgcell = new PdfPCell(img);
-            imgcell.setColspan(2);
-            imgcell.setBorder(Rectangle.NO_BORDER);
-            rightRows.addCell(imgcell);
-            rightRows.addCell("");
-            rightRows.addCell("");
-            rightRows.addCell("");
-            com.itextpdf.text.pdf.PdfPTable tableRows = new com.itextpdf.text.pdf.PdfPTable(6);
-            tableRows.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            tableRows.setWidthPercentage(100f);
-
-            tableRows.setHeaderRows(1);
-            double depobalance = 0.0;
-            double withdrawbalance = 0.0;
-            int indx = 1;
-
-            com.itextpdf.text.pdf.PdfPTable containerTable = new com.itextpdf.text.pdf.PdfPTable(2);
-            containerTable.setWidthPercentage(100);
-            containerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-            containerTable.addCell(leftRows);
-            containerTable.addCell(rightRows);
-            document.add(containerTable);
-            document.add(new Paragraph("\n"));
-            document.add(totalRows);
-            document.add(new Paragraph("\n"));
-            document.add(tableRows);
-            Paragraph content2 = new Paragraph();
-            Paragraph p1 = new Paragraph("------- End of the BILL -------\n", fontAccountNo3);
-            Paragraph p5 = new Paragraph("Total Amount : "+balance, fontAccountNo3);
-            p1.setAlignment(Element.ALIGN_CENTER);
-            p5.setAlignment(Element.ALIGN_RIGHT);
-            content2.add(p5);
-            content2.add(p1);
-            document.add(content2);
-            document.close();
-
-            Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
-            shrarefile(fileName);
-        } catch (DocumentException e) {
-            Toast.makeText(this, "2." + e.toString(), Toast.LENGTH_SHORT).show();
-            Log.d("err1", e.toString());
-            e.printStackTrace();
-        } catch (Exception e) {
-            Log.d("err2", e.toString());
-            Toast.makeText(this, "3." + e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-
-
-    private void downloadSavingStatement1(ArrayList<SellProductDetailsModel> arrayList, String billno, String partyName, String address) {
+    
+    private void downloadSavingStatement1(ArrayList<SellProductDetailsModel> arrayList, String billno) {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
         document.setPageSize(new Rectangle(595, 842)); // A4 size
         long time = System.currentTimeMillis();
@@ -908,24 +750,39 @@ public class ProductSellActivity extends AppCompatActivity {
         }
     }
 
+    
+    private String numberToWords(int number) {
+        String[] units = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+        String[] tens = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
 
+        if (number == 0) {
+            return "Zero";
+        }
 
+        if (number < 20) {
+            return units[number];
+        }
 
+        if (number < 100) {
+            return tens[number / 10] + (number % 10 != 0 ? " " + units[number % 10] : "");
+        }
 
+        if (number < 1000) {
+            return units[number / 100] + " Hundred" + (number % 100 != 0 ? " and " + numberToWords(number % 100) : "");
+        }
 
+        if (number < 100000) {
+            return numberToWords(number / 1000) + " Thousand" + (number % 1000 != 0 ? " " + numberToWords(number % 1000) : "");
+        }
 
+        if (number < 10000000) {
+            return numberToWords(number / 100000) + " Lakh" + (number % 100000 != 0 ? " " + numberToWords(number % 100000) : "");
+        }
 
+        return numberToWords(number / 10000000) + " Crore" + (number % 10000000 != 0 ? " " + numberToWords(number % 10000000) : "");
+    }
 
-
-
-
-
-
-
-
-
-
-
+    
     private void shrarefile(String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
@@ -947,7 +804,7 @@ public class ProductSellActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellItems(?)}");
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellItems_Inc(?)}");
                 smt.setString("@UserName",userName);
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
@@ -960,7 +817,7 @@ public class ProductSellActivity extends AppCompatActivity {
                         sellProductDetailsModel.setAssingQnty(rs.getString("AssingQnty"));
                         sellProductDetailsModel.setSellQunty(rs.getString("SellQnty"));
                         sellProductDetailsModel.setReturnQunt(rs.getString("ReturnQnty"));
-                        sellProductDetailsModel.setPrice(rs.getString("EmployeeSellPrice"));
+                        sellProductDetailsModel.setPrice(rs.getString("IncEmpSellPrice"));
                         sellProductDetailsModel.setRemainingQuntity(rs.getInt("RemianingQnty"));
                         sellProductDetailsModel.setProductName(rs.getString("ProductName"));
                         sellProductDetailsModel.setMRP(rs.getString("MRP"));
@@ -973,7 +830,7 @@ public class ProductSellActivity extends AppCompatActivity {
                     }
 
                 }
-                sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,ProductSellActivity.this,"ProductSell");
+                sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList,IncProductSellActivity.this,"ProductSell");
                 binding.rvproductDetails.setAdapter(sellProductDetailsAdapter);
 
             } else {
@@ -990,7 +847,7 @@ public class ProductSellActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // todo: goto back activity from here
-                startActivity(new Intent(ProductSellActivity.this, MainActivity.class));
+                startActivity(new Intent(IncProductSellActivity.this, IncDashboardActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
@@ -1002,7 +859,7 @@ public class ProductSellActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(ProductSellActivity.this, MainActivity.class));
+        startActivity(new Intent(IncProductSellActivity.this, IncDashboardActivity.class));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

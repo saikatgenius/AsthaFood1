@@ -56,16 +56,9 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
         setViewReferences();
         bindEventHandlers();
 
-        user_naem.setText(GlobalStore.GlobalValue.getUserOriginalName());  //
+        user_naem.setText(GlobalStore.GlobalValue.getUserOriginalName());
         UserId.setText(GlobalStore.GlobalValue.getUserName());
         sharedPreferencesInc = getSharedPreferences("INCLOGIN", Context.MODE_PRIVATE);
-
-        // setSupportActionBar(toolbar);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawerLayout.addDrawerListener(toggle);
-//        toggle.syncState();
-
-
 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -198,7 +191,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
 
         } else if (v==Btn_ll_activity_main_sell_product) {
 
-            Intent intent=new Intent(IncDashboardActivity.this, ProductSellActivity.class);
+            Intent intent=new Intent(IncDashboardActivity.this, IncProductSellActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
