@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_assign_product"
+        android:icon="@drawable/ic_app_logo"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_sell"
+        android:icon="@drawable/sell_new"
+        android:title="Sell" />
+
+    <item
+        android:id="@+id/nav_report"
+        android:icon="@drawable/report"
+        android:title="Report" />
+
+
+    <item android:id="@+id/menu"
+        android:icon="@color/theme_color"
+        android:title="Others">
+        <menu>
+
+            <item
+                android:id="@+id/nav_contact_us"
+                android:icon="@drawable/contact_us"
+                android:title="Contaus US" />
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/profile"
+                android:title="Profile" />
+        </menu>
+
+
+    </item>
+
+
+
+
+</menu>

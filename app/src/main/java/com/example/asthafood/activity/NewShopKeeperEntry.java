@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.asthafood.BuildConfig;
+import com.example.asthafood.IncActivities.IncDashboardActivity;
 import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
 import com.example.asthafood.databinding.ActivityNewShopKeeperEntryBinding;
@@ -25,6 +26,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.Objects;
 
 public class NewShopKeeperEntry extends AppCompatActivity {
 
@@ -134,8 +136,23 @@ public class NewShopKeeperEntry extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        startActivity(new Intent(NewShopKeeperEntry.this, MainActivity.class));
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        finish();
+
+
+
+        Intent intent=getIntent();
+        String Activityname=intent.getStringExtra("activityname");
+
+
+        if (Objects.equals(Activityname, "IncDashboardActivity")){
+            startActivity(new Intent(NewShopKeeperEntry.this, IncDashboardActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+        }else {
+            startActivity(new Intent(NewShopKeeperEntry.this, MainActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+        }
+
+
     }
 }

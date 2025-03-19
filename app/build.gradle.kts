@@ -28,8 +28,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures{
         buildConfig = true
@@ -50,10 +50,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation (libs.exoplayer)
-
     implementation (libs.circleimageview)
     implementation ("com.google.android.material:material:1.12.0")
-
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.itextpdf:itextg:5.5.10")
     implementation("de.hdodenhof:circleimageview:3.1.0")

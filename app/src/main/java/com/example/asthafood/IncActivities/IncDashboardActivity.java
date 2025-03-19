@@ -1,21 +1,274 @@
 package com.example.asthafood.IncActivities;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.example.asthafood.LoginOptionsActivity;
 
 import com.example.asthafood.R;
+import com.example.asthafood.activity.AssignProductActivity;
+import com.example.asthafood.activity.DamageProductlActivity;
+import com.example.asthafood.activity.NewShopKeeperEntry;
+import com.example.asthafood.activity.ProductSellActivity;
+import com.example.asthafood.activity.RequestProductSubmitActivity;
+import com.example.asthafood.activity.ReturnProductActivity;
+import com.example.asthafood.activity.SellBillActivity;
+import com.example.asthafood.activity.SellReportActivity;
+import com.example.asthafood.bean.GlobalStore;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
-public class IncDashboardActivity extends AppCompatActivity {
+public class IncDashboardActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private BottomNavigationView bottomNavigationView;
+    private Toolbar toolbar;
+    private LinearLayout btn_activity_main_request_product,BTN_ll_activity_main_bill,Btn_damage_product,return_product;
+    private AppCompatButton btn_Logout;
+    private LinearLayout assign_product,Btn_add_shopkeeper,Btn_ll_activity_main_sell_report,Btn_ll_activity_main_sell_product,Btn_ll_activity_main_assign_product;
+    private TextView user_naem,UserId;
+    private SharedPreferences sharedPreferencesInc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inc_dashboard);
+        setViewReferences();
+        bindEventHandlers();
+
+        user_naem.setText(GlobalStore.GlobalValue.getUserOriginalName());  //
+        UserId.setText(GlobalStore.GlobalValue.getUserName());
+        sharedPreferencesInc = getSharedPreferences("INCLOGIN", Context.MODE_PRIVATE);
+
+        // setSupportActionBar(toolbar);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
+
+
+
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Already in HomePage", Toast.LENGTH_SHORT).show();
+
+            } else if (id == R.id.nav_report) {
+
+
+                Intent i = new Intent(IncDashboardActivity.this, SellReportActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+
+
+
+            } else if (id == R.id.nav_sell) {
+                Intent i = new Intent(IncDashboardActivity.this, ProductSellActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+            }
+            return true;
+        });
+
+
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_assign_product) {
+                Toast.makeText(this, "Already in Home", Toast.LENGTH_SHORT).show();
+                /*Intent i = new Intent(IncDashboardActivity.this, RequestProductSubmitActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
+                // finish();
+            } else if (id == R.id.nav_sell) {
+                Intent intent=new Intent(IncDashboardActivity.this, ProductSellActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+            } else if (id == R.id.nav_report) {
+                Intent i = new Intent(IncDashboardActivity.this, SellReportActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                //  Toast.makeText(this, "Sell", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_contact_us) {
+                Toast.makeText(this, "Contact Us", Toast.LENGTH_SHORT).show();
+            }else if (id == R.id.nav_profile) {
+                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+            }
+
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
 
     }
+
+    private void bindEventHandlers() {
+        assign_product.setOnClickListener(this);
+        Btn_add_shopkeeper.setOnClickListener(this);
+        Btn_ll_activity_main_sell_report.setOnClickListener(this);
+        Btn_ll_activity_main_sell_product.setOnClickListener(this);
+        btn_Logout.setOnClickListener(this);
+        btn_activity_main_request_product.setOnClickListener(this);
+        BTN_ll_activity_main_bill.setOnClickListener(this);
+        Btn_damage_product.setOnClickListener(this);
+        return_product.setOnClickListener(this);
+
+
+    }
+
+    private void setViewReferences() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        toolbar = findViewById(R.id.toolbar);
+        assign_product=findViewById(R.id.ll_activity_main_assign_product);
+        user_naem=findViewById(R.id.tv_activity_main_welcome_message);
+        UserId=findViewById(R.id.tv_activity_main_employee_code);
+        Btn_add_shopkeeper=findViewById(R.id.add_shopkeeper);
+        Btn_ll_activity_main_sell_report=findViewById(R.id.ll_activity_main_sell_report);
+        Btn_ll_activity_main_sell_product=findViewById(R.id.ll_activity_main_sell_product);
+        btn_Logout=findViewById(R.id.btnLogout);
+        btn_activity_main_request_product=findViewById(R.id.ll_activity_main_request_product);
+        BTN_ll_activity_main_bill=findViewById(R.id.ll_activity_main_bill);
+        Btn_damage_product=findViewById(R.id.damage_product);
+        return_product=findViewById(R.id.return_product);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v==assign_product){
+            // Toast.makeText(this, "Assign Product", Toast.LENGTH_SHORT).show();
+
+            Intent intent=new Intent(IncDashboardActivity.this, IncAssignProductActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+
+        } else if (v==btn_activity_main_request_product) {
+            Intent intent=new Intent(IncDashboardActivity.this, RequestProductSubmitActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+
+        } else if (v==Btn_add_shopkeeper) {
+            Intent intent=new Intent(IncDashboardActivity.this, NewShopKeeperEntry.class);
+            intent.putExtra("activityname","IncDashboardActivity");
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+        } else if (v==Btn_ll_activity_main_sell_product) {
+
+            Intent intent=new Intent(IncDashboardActivity.this, ProductSellActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+        } else if (v==Btn_ll_activity_main_sell_report) {
+            Intent intent=new Intent(IncDashboardActivity.this, SellReportActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+        }else if (v==btn_Logout) {
+
+            showLogoutDialog();
+
+
+
+        } else if (v==BTN_ll_activity_main_bill) {
+            Intent intent=new Intent(IncDashboardActivity.this, SellBillActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+        }else if (v==Btn_damage_product) {
+            Intent intent=new Intent(IncDashboardActivity.this, DamageProductlActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+        }
+
+        else if (v==return_product) {
+            Intent intent=new Intent(IncDashboardActivity.this, ReturnProductActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
+        }
+
+    }
+
+    private void showLogoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Logout Confirmation");
+        builder.setMessage("Are you sure you want to logout?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences.Editor editor = sharedPreferencesInc.edit();
+                editor.clear(); // Removes all saved data
+                editor.apply();
+
+                // Redirect to Login Page
+                Intent intent = new Intent(IncDashboardActivity.this, LoginOptionsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear backstack
+                startActivity(intent);
+                finish();
+
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Close the dialog if "No" is clicked
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
