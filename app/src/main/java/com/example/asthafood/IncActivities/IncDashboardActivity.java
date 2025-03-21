@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.example.asthafood.LoginOptionsActivity;
 
 import com.example.asthafood.R;
+import com.example.asthafood.Util.GlobalReqProductList;
 import com.example.asthafood.activity.AssignProductActivity;
 import com.example.asthafood.activity.DamageProductlActivity;
 import com.example.asthafood.activity.NewShopKeeperEntry;
@@ -79,7 +80,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
 
 
             } else if (id == R.id.nav_sell) {
-                Intent i = new Intent(IncDashboardActivity.this, ProductSellActivity.class);
+                Intent i = new Intent(IncDashboardActivity.this, IncProductSellActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
@@ -99,7 +100,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
                 // finish();
             } else if (id == R.id.nav_sell) {
-                Intent intent=new Intent(IncDashboardActivity.this, ProductSellActivity.class);
+                Intent intent=new Intent(IncDashboardActivity.this, IncProductSellActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
@@ -176,7 +177,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
 
 
         } else if (v==btn_activity_main_request_product) {
-            Intent intent=new Intent(IncDashboardActivity.this, RequestProductSubmitActivity.class);
+            Intent intent=new Intent(IncDashboardActivity.this, IncRequestProductSubmitActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
@@ -214,7 +215,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
             finish();
 
         }else if (v==Btn_damage_product) {
-            Intent intent=new Intent(IncDashboardActivity.this, DamageProductlActivity.class);
+            Intent intent=new Intent(IncDashboardActivity.this, IncDamageProductlActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
@@ -222,7 +223,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
         }
 
         else if (v==return_product) {
-            Intent intent=new Intent(IncDashboardActivity.this, ReturnProductActivity.class);
+            Intent intent=new Intent(IncDashboardActivity.this, IncReturnProductActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
@@ -242,6 +243,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
                 SharedPreferences.Editor editor = sharedPreferencesInc.edit();
                 editor.clear(); // Removes all saved data
                 editor.apply();
+                GlobalReqProductList.ReqData.clear();
 
                 // Redirect to Login Page
                 Intent intent = new Intent(IncDashboardActivity.this, LoginOptionsActivity.class);

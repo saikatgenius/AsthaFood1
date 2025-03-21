@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".IncActivities.IncReturnProductActivity">
+
+
+    <include layout="@layout/custom_toolbar" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_20font_mdp"
+        android:text="---Your Products---"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="50dp">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="ProductName"
+                    android:layout_weight="1.2"
+                    android:textColor="@color/black"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:gravity="center"
+                    android:text="ProDuct\nCode"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+
+                    android:layout_width="5dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Product\nQnty"
+                    android:textColor="@color/colorRed"
+                    android:textSize="10dp"
+                    />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Price"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="10dp" />
+
+
+
+
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvproductDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/getTotal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bottom_background"
+            android:text="Submit Return"
+            />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/errorMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_20font_mdp"
+            android:text="No Products Left for Return "
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

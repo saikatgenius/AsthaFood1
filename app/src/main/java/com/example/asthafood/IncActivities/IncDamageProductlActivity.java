@@ -1,4 +1,4 @@
-package com.example.asthafood.activity;
+package com.example.asthafood.IncActivities;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -10,17 +10,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
+import com.example.asthafood.activity.DamageProductlActivity;
 import com.example.asthafood.adapters.PreviewItemAdapter;
 import com.example.asthafood.adapters.SellProductDetailsAdapter;
 import com.example.asthafood.bean.GlobalStore;
-import com.example.asthafood.databinding.ActivityDamageProductBinding;
+import com.example.asthafood.databinding.ActivityIncDamageProductlBinding;
 import com.example.asthafood.databinding.PreviewBottomSheetBinding;
 import com.example.asthafood.mssql.SqlManager;
 import com.example.asthafood.mssql.models.SellProductDetailsModel;
@@ -31,9 +36,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class DamageProductlActivity extends AppCompatActivity {
-
-    ActivityDamageProductBinding binding;
+public class IncDamageProductlActivity extends AppCompatActivity {
+    ActivityIncDamageProductlBinding binding;
     int TotalPrice =0;
     double TotalGST =0.0;
     double ProductOriginalTotal =0.0;
@@ -47,7 +51,7 @@ public class DamageProductlActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityDamageProductBinding.inflate(getLayoutInflater());
+        binding = ActivityIncDamageProductlBinding.inflate(getLayoutInflater());
 
 
 
@@ -107,11 +111,11 @@ public class DamageProductlActivity extends AppCompatActivity {
                 PreviewItemAdapter previewItemAdapter;
                 ArrayList<SellProductDetailsModel> arrayListNew=new ArrayList<>();
 
-                BottomSheetDialog dialog =new  BottomSheetDialog(DamageProductlActivity.this);
-                PreviewBottomSheetBinding binding = PreviewBottomSheetBinding.inflate(LayoutInflater.from(DamageProductlActivity.this));
+                BottomSheetDialog dialog =new  BottomSheetDialog(IncDamageProductlActivity.this);
+                PreviewBottomSheetBinding binding = PreviewBottomSheetBinding.inflate(LayoutInflater.from(IncDamageProductlActivity.this));
                 dialog.setContentView(binding.getRoot());
 
-                LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(DamageProductlActivity.this);
+                LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(IncDamageProductlActivity.this);
                 binding.rvproductDetails.setLayoutManager(linearLayoutManager1);
 
                 for (int i = 0 ; i<arrayList.size();i++){
@@ -120,7 +124,7 @@ public class DamageProductlActivity extends AppCompatActivity {
                     }
                 }
 
-                previewItemAdapter = new PreviewItemAdapter(arrayListNew, DamageProductlActivity.this);
+                previewItemAdapter = new PreviewItemAdapter(arrayListNew, IncDamageProductlActivity.this);
                 binding.rvproductDetails.setAdapter(previewItemAdapter);
 
 
@@ -137,11 +141,6 @@ public class DamageProductlActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     private void SubmitData(ArrayList<SellProductDetailsModel> arrayList) {
         String collectionList = "";
         for (int i = 0 ; i<arrayList.size();i++){
@@ -153,21 +152,21 @@ public class DamageProductlActivity extends AppCompatActivity {
             }
 
         }
-        final ProgressDialog progressDialog = new ProgressDialog(DamageProductlActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(IncDamageProductlActivity.this,
                 ProgressDialog.THEME_HOLO_DARK);
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_INSERT_DAMAGE_PRO(?,?,?)}");
+                CallableStatement smt = cn.prepareCall("{call ADROID_INSERT_DAMAGE_PRO_INC(?,?,?)}");
                 smt.setString("@UserName",GlobalStore.GlobalValue.getUserName());
                 smt.setString("@CollectionList",collectionList);
                 smt.registerOutParameter("@ErrorCode",java.sql.Types.INTEGER);
                 smt.executeUpdate();
                 int ReturnERRORCode  = smt.getInt("@ErrorCode");
                 if (ReturnERRORCode==0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(DamageProductlActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(IncDamageProductlActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Successful");
                     builder.setMessage("Damage Product Request Submit Successfully. ");
@@ -175,7 +174,7 @@ public class DamageProductlActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             progressDialog.dismiss();
-                            Intent i = new Intent(DamageProductlActivity.this, DamageProductlActivity.class);
+                            Intent i = new Intent(IncDamageProductlActivity.this, IncDamageProductlActivity.class);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             startActivity(i);
                             finish();
@@ -184,7 +183,7 @@ public class DamageProductlActivity extends AppCompatActivity {
                         }
                     }).show();
                 }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(DamageProductlActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(IncDamageProductlActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Unable to enter Data");
                     builder.setMessage("Damage Product Request Submit UnSuccessfully. ");
@@ -192,7 +191,7 @@ public class DamageProductlActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //builder.setCancelable(true);
-                            Intent i = new Intent(DamageProductlActivity.this, DamageProductlActivity.class);
+                            Intent i = new Intent(IncDamageProductlActivity.this, IncDamageProductlActivity.class);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             startActivity(i);
                             finish();
@@ -217,7 +216,7 @@ public class DamageProductlActivity extends AppCompatActivity {
         Connection cn = new SqlManager().getSQLConnection();
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellItems(?)}");
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellItems_Inc(?)}");
                 smt.setString("@UserName",userName);
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
@@ -230,7 +229,7 @@ public class DamageProductlActivity extends AppCompatActivity {
                         sellProductDetailsModel.setAssingQnty(rs.getString("AssingQnty"));
                         sellProductDetailsModel.setSellQunty(rs.getString("SellQnty"));
                         sellProductDetailsModel.setReturnQunt(rs.getString("ReturnQnty"));
-                        sellProductDetailsModel.setPrice(rs.getString("EmployeeSellPrice"));
+                        sellProductDetailsModel.setPrice(rs.getString("IncEmpSellPrice"));
                         sellProductDetailsModel.setRemainingQuntity(rs.getInt("RemianingQnty"));
                         sellProductDetailsModel.setProductName(rs.getString("ProductName"));
                         sellProductDetailsModel.setMRP(rs.getString("MRP"));
@@ -243,7 +242,7 @@ public class DamageProductlActivity extends AppCompatActivity {
                     }
 
                 }
-                sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList, DamageProductlActivity.this,"DamageProduct");
+                sellProductDetailsAdapter = new SellProductDetailsAdapter( arrayList, IncDamageProductlActivity.this,"DamageProduct");
                 binding.rvproductDetails.setAdapter(sellProductDetailsAdapter);
 
             } else {
@@ -260,7 +259,7 @@ public class DamageProductlActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // todo: goto back activity from here
-                startActivity(new Intent(DamageProductlActivity.this, MainActivity.class));
+                startActivity(new Intent(IncDamageProductlActivity.this, IncDashboardActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
@@ -272,7 +271,7 @@ public class DamageProductlActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(DamageProductlActivity.this, MainActivity.class));
+        startActivity(new Intent(IncDamageProductlActivity.this, IncDashboardActivity.class));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

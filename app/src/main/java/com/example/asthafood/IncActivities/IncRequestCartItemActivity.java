@@ -1,4 +1,4 @@
-package com.example.asthafood.activity;
+package com.example.asthafood.IncActivities;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -23,9 +23,11 @@ import com.example.asthafood.MainActivity;
 import com.example.asthafood.R;
 import com.example.asthafood.Util.GlobalReqProductList;
 import com.example.asthafood.Util.ReqProductList;
-import com.example.asthafood.adapters.CategoryItemsAdapter;
+import com.example.asthafood.activity.RequestCartItemActivity;
+import com.example.asthafood.activity.RequestProductSubmitActivity;
 import com.example.asthafood.adapters.RequestCartAdapter;
 import com.example.asthafood.bean.GlobalStore;
+import com.example.asthafood.databinding.ActivityIncRequestCartItemBinding;
 import com.example.asthafood.databinding.ActivityRequestCartItemBinding;
 import com.example.asthafood.mssql.SqlManager;
 
@@ -33,23 +35,23 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public class RequestCartItemActivity extends AppCompatActivity {
+public class IncRequestCartItemActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mToolbarTitle;
-    ActivityRequestCartItemBinding binding;
+    ActivityIncRequestCartItemBinding binding;
 
     RequestCartAdapter requestCartAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRequestCartItemBinding.inflate(getLayoutInflater());
+        binding = ActivityIncRequestCartItemBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         binding.rvItemcategory.setLayoutManager(linearLayoutManager);
 
-        requestCartAdapter = new RequestCartAdapter(GlobalReqProductList.ReqData,RequestCartItemActivity.this);
+        requestCartAdapter = new RequestCartAdapter(GlobalReqProductList.ReqData, IncRequestCartItemActivity.this);
         binding.rvItemcategory.setAdapter(requestCartAdapter);
 
 
@@ -70,27 +72,26 @@ public class RequestCartItemActivity extends AppCompatActivity {
                 if (GlobalReqProductList.ReqData.size()>0){
                     SubmitRequest(GlobalReqProductList.ReqData);
                 }else{
-                    Toast.makeText(RequestCartItemActivity.this, "No Request In Queue , Please Add Some Product", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(RequestCartItemActivity.this, RequestProductSubmitActivity.class);
+                    Toast.makeText(IncRequestCartItemActivity.this, "No Request In Queue , Please Add Some Product", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(IncRequestCartItemActivity.this, RequestProductSubmitActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
         });
 
-
-
     }
+
 
     private void SubmitRequest(ArrayList<ReqProductList> reqData) {
 
         String collectionList = "";
         for (int i = 0 ; i<reqData.size();i++){
             collectionList += reqData.get(i).getId()+","+reqData.get(i).getName() + "," + reqData.get(i).getQunt()+";";
-                Log.d("ergergerg" + "", collectionList);
+            Log.d("ergergerg" + "", collectionList);
         }
 
-        final ProgressDialog progressDialog = new ProgressDialog(RequestCartItemActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(IncRequestCartItemActivity.this,
                 ProgressDialog.THEME_HOLO_DARK);
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
@@ -105,7 +106,7 @@ public class RequestCartItemActivity extends AppCompatActivity {
                 smt.executeUpdate();
                 int ReturnERRORCode  = smt.getInt("@isError");
                 if (ReturnERRORCode==0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RequestCartItemActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(IncRequestCartItemActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Successful");
                     builder.setMessage("Product Request Successfully. ");
@@ -113,7 +114,7 @@ public class RequestCartItemActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //builder.setCancelable(true);
-                            Intent i = new Intent(RequestCartItemActivity.this, MainActivity.class);
+                            Intent i = new Intent(IncRequestCartItemActivity.this, MainActivity.class);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             startActivity(i);
                             finish();
@@ -122,7 +123,7 @@ public class RequestCartItemActivity extends AppCompatActivity {
                         }
                     }).show();
                 }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RequestCartItemActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(IncRequestCartItemActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Unable to enter Data");
                     builder.setMessage("Product Sale UnSuccessfully. ");
@@ -130,7 +131,7 @@ public class RequestCartItemActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //builder.setCancelable(true);
-                            Intent i = new Intent(RequestCartItemActivity.this, RequestCartItemActivity.class);
+                            Intent i = new Intent(IncRequestCartItemActivity.this, IncRequestCartItemActivity.class);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             startActivity(i);
                             finish();
@@ -157,7 +158,7 @@ public class RequestCartItemActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // todo: goto back activity from here
-                startActivity(new Intent(RequestCartItemActivity.this, RequestProductSubmitActivity.class));
+                startActivity(new Intent(IncRequestCartItemActivity.this, IncRequestProductSubmitActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
@@ -169,7 +170,7 @@ public class RequestCartItemActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(RequestCartItemActivity.this, RequestProductSubmitActivity.class));
+        startActivity(new Intent(IncRequestCartItemActivity.this, IncRequestProductSubmitActivity.class));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }

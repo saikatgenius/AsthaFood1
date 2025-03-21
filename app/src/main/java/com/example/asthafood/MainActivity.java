@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ReportFragment;
 
+import com.example.asthafood.Util.GlobalReqProductList;
 import com.example.asthafood.activity.AssignProductActivity;
 import com.example.asthafood.activity.DamageProductlActivity;
 import com.example.asthafood.activity.NewShopKeeperEntry;
@@ -244,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 SharedPreferences.Editor editor = sharedPreferencesarranger.edit();
                 editor.clear(); // Removes all saved data
                 editor.apply();
+                GlobalReqProductList.ReqData.clear();
 
                 // Redirect to Login Page
                 Intent intent = new Intent(MainActivity.this, LoginOptionsActivity.class);
