@@ -318,9 +318,10 @@ public class SellBillActivity extends AppCompatActivity implements View.OnClickL
 
         try {
             if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?,?)}");
+                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Details(?,?,?)}");
                 smt.setInt("@fdate", fDate);
                 smt.setInt("@tdate", tDate);
+                smt.setString("@UserName", GlobalStore.GlobalValue.getUserName());
                 smt.execute();
                 ResultSet rs = smt.getResultSet();
                 if (rs.isBeforeFirst()) {
