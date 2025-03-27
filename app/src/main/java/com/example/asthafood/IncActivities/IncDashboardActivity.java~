@@ -207,7 +207,7 @@ public class IncDashboardActivity extends AppCompatActivity implements View.OnCl
 
 
         } else if (v==BTN_ll_activity_main_bill) {
-            Intent intent=new Intent(IncDashboardActivity.this, IncSellBillActivity.class);
+            Intent intent=new Intent(IncDashboardActivity.this, SellBillActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();

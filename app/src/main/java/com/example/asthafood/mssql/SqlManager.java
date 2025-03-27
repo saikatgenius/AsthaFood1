@@ -22,6 +22,8 @@ public class SqlManager {
         }
 
 
+
+
         catch(Exception ex){
             conn = null;
         }

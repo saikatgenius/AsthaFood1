@@ -30,12 +30,16 @@ public class AdapterIncBillReport extends RecyclerView.Adapter<AdapterIncBillRep
     }
 
 
+
     @NonNull
     @Override
     public DueReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.row_bill_report, parent, false);
         return new DueReportViewHolder(view);
     }
+
+
+
 
     @Override
     public void onBindViewHolder(@NonNull DueReportViewHolder holder, int position) {

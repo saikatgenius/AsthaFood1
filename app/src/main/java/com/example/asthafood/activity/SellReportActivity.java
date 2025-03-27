@@ -38,7 +38,7 @@ import java.util.Calendar;
         // toolbar
         private Toolbar mToolbar;
         private TextView mToolbarTitle,mTV_buyerNameTextView;
-
+       private  Integer FROMDATE=0;
         private TextView mTv_fDate;
         private TextView mTv_tDate;
         private EditText mEt_loanCode;
@@ -83,7 +83,7 @@ import java.util.Calendar;
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             mRv_loanDueReport.setLayoutManager(linearLayoutManager);
             mArrayListSellReport.clear();
-            getLoanDueReport(1, 2, GlobalStore.GlobalValue.getUserName());
+           // getLoanDueReport(1, 2, GlobalStore.GlobalValue.getUserName());
 
 
 
@@ -109,12 +109,16 @@ import java.util.Calendar;
         private void bindEventHandlers() {
             mTv_tDate.setOnClickListener(this);
             mBtn_showAll.setOnClickListener(this);
+            mTv_fDate.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (v == mTv_tDate) {
                 selectTDate();
+            } else if (v==mTv_fDate) {
+                Log.e("TAG", "onClick: " + mTv_fDate);
+                selectFDate();
             }
         }
 
@@ -171,6 +175,7 @@ import java.util.Calendar;
                 Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
             }
         }
+
 
 
         private void selectFDate() {
@@ -242,9 +247,10 @@ import java.util.Calendar;
 
            try {
                if (cn != null) {
-                   CallableStatement smt = cn.prepareCall("{call ADROID_GetSellRepor_datewiset(?,?)}");
+                   CallableStatement smt = cn.prepareCall("{call ADROID_GetSellRepor_datewiset(?,?,?)}");
                    smt.setString("@UserValue", username);
                    smt.setInt("@date", tDate);
+                   smt.setInt("@Fdate", FROMDATE);
                    smt.execute();
                    ResultSet rs = smt.getResultSet();
                    if (rs.isBeforeFirst()) {
@@ -271,7 +277,7 @@ import java.util.Calendar;
                        adapterSellReport.notifyDataSetChanged();
 
                    } else {
-                       adapterSellReport.notifyDataSetChanged();
+                     //  adapterSellReport.notifyDataSetChanged();
                        mPb_proggress.setVisibility(View.GONE);
                        Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
                    }
@@ -282,6 +288,7 @@ import java.util.Calendar;
            } catch (Exception ex) {
                mPb_proggress.setVisibility(View.GONE);
                Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
+               Log.e("Error1", ex.getMessage());
            }
        }
 

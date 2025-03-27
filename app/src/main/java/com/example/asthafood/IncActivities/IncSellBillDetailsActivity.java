@@ -72,6 +72,7 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
     SellProductDetailsModel sellProductDetailsModel;
      private TextView mTv_fDate;
     String fileName="";
+    private ProgressDialog progressDialog;
      private  AppCompatButton Btn_download;
 
      private  EditText Edt_txtSearchShopkeeper;
@@ -127,18 +128,34 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
          mRv_loanDueReport.setLayoutManager(linearLayoutManager);
          mArrayListSellReport.clear();
 
+         Intent intent = getIntent();
+         saleid = intent.getStringExtra("Saleid");
+         bill_id = saleid;
+         BuyerName = intent.getStringExtra("CoustomerName");
+         // Initialize progress dialog
+         progressDialog = new ProgressDialog(this);
+         progressDialog.setMessage("Loading...");
+         progressDialog.setCancelable(false);
+         // Get bill data first
+         getCollReport(1, saleid);
+         Log.e("Saleid1", "" + saleid);
+         Log.e("bill_id1", "" + bill_id);
 
-         Intent intent=getIntent();
-        saleid= intent.getStringExtra("Saleid");
-         bill_id=saleid;
-         BuyerName=intent.getStringExtra("CoustomerName");
+         // Try to generate PDF, but don't crash if it fails
+         try {
+             // Only attempt to download if we have data
+             if (mArrayListSellReport != null && !mArrayListSellReport.isEmpty()) {
 
 
-         getCollReport(1,saleid);
-         Log.e("Saleid1",""+saleid);
-         Log.e("bill_id1",""+bill_id);
-
-         downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
+                 downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
+             } else {
+                 Log.w("PDF Generation", "No data to generate PDF");
+                 // Wait for getCollReport to finish
+             }
+         } catch (Exception e) {
+             Log.e("PDF Generation", "Error generating bill in onCreate", e);
+             Toast.makeText(this, "Could not generate bill: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+         }
 
      }
 
@@ -197,6 +214,8 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
      }
 
     private void downloadSavingStatement(ArrayList<SetGetSellDetailsReport> arrayList, String billNo, String partyName, String address) {
+
+        progressDialog.show();
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
         document.setPageSize(new Rectangle(595, 842)); // A4 size
         long time = System.currentTimeMillis();
@@ -242,29 +261,58 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
 
             // Add logo image below the text
             try {
-                // Load the app logo image
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.app_logo);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] bitmapData = stream.toByteArray();
-                Image logo = Image.getInstance(bitmapData);
+                // Load the app logo image with safer error handling
+                Bitmap bitmap = null;
+                try {
+                    bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.app_logo_bill);
+                    if (bitmap == null) {
+                        Log.e("PDF Generation", "Failed to decode app_logo resource");
+                        // Continue without the logo
+                    } else {
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        try {
+                            boolean compressed = bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            if (!compressed) {
+                                Log.e("PDF Generation", "Failed to compress bitmap");
+                                // Continue without the logo
+                            } else {
+                                byte[] bitmapData = stream.toByteArray();
+                                Image logo = Image.getInstance(bitmapData);
 
-                // Set the image size to fit within the cell (adjust width as needed)
-                float maxWidth = 60f; // Maximum width of the image
-                float ratio = logo.getWidth() / logo.getHeight();
-                logo.scaleToFit(maxWidth, maxWidth / ratio);
+                                // Set the image size to fit within the cell (adjust width as needed)
+                                float maxWidth = 60f; // Maximum width of the image
+                                float ratio = logo.getWidth() / logo.getHeight();
+                                logo.scaleToFit(maxWidth, maxWidth / ratio);
 
-                // Center the image
-                logo.setAlignment(Element.ALIGN_CENTER);
+                                // Center the image
+                                logo.setAlignment(Element.ALIGN_CENTER);
 
-                // Add some spacing after the text
-                logoText.setSpacingAfter(5f);
+                                // Add some spacing after the text
+                                logoText.setSpacingAfter(5f);
 
-                // Add the image to the cell
-                logoCell.addElement(logo);
+                                // Add the image to the cell
+                                logoCell.addElement(logo);
+                            }
+                        } catch (Exception e) {
+                            Log.e("PDF Generation", "Error compressing bitmap: " + e.getMessage());
+                            // Continue without the logo
+                        } finally {
+                            try {
+                                stream.close();
+                            } catch (Exception e) {
+                                Log.e("PDF Generation", "Error closing stream: " + e.getMessage());
+                            }
+                        }
+                    }
+                } catch (OutOfMemoryError oom) {
+                    Log.e("PDF Generation", "Out of memory when decoding logo", oom);
+                    // Handle out of memory error
+                    System.gc(); // Suggest garbage collection
+                    // Continue without the logo
+                }
             } catch (Exception e) {
-                e.printStackTrace();
-                // If image loading fails, just continue without the image
+                Log.e("PDF Generation", "Error adding logo to PDF: " + e.getMessage());
+                // Continue without the logo - don't let logo issues prevent bill generation
             }
 
             headerTable.addCell(logoCell);
@@ -534,12 +582,16 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
             showPdfInImageView(fileName);
             setupPdfImageViewZoom();
 
+            progressDialog.dismiss();
+
+
      /*   Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
         shrarefile(fileName);*/
 
         } catch (Exception e) {
             e.printStackTrace();
+            progressDialog.dismiss();
             Toast.makeText(this, "Error generating bill: " + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -548,40 +600,79 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
 
 
     // Add this function to display the PDF in an ImageView
+    // Improved showPdfInImageView method with better error handling
     private void showPdfInImageView(String pdfFilePath) {
+        ImageView pdfImageView = findViewById(R.id.pdfImageView);
+        ParcelFileDescriptor fileDescriptor = null;
+        PdfRenderer renderer = null;
+        PdfRenderer.Page page = null;
+
         try {
-            // Get a reference to your ImageView (assuming you have one in your layout)
-            ImageView pdfImageView = findViewById(R.id.pdfImageView);
+            File pdfFile = new File(pdfFilePath);
+            if (!pdfFile.exists() || !pdfFile.canRead()) {
+                Log.e("PDF View", "PDF file doesn't exist or can't be read: " + pdfFilePath);
+                Toast.makeText(this, "Can't access PDF file", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // Create a renderer for the PDF
-            ParcelFileDescriptor fileDescriptor = ParcelFileDescriptor.open(
-                    new File(pdfFilePath), ParcelFileDescriptor.MODE_READ_ONLY);
-            PdfRenderer renderer = new PdfRenderer(fileDescriptor);
+            fileDescriptor = ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY);
+            renderer = new PdfRenderer(fileDescriptor);
+
+            if (renderer.getPageCount() <= 0) {
+                Log.e("PDF View", "PDF has no pages");
+                Toast.makeText(this, "PDF has no pages to display", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // Render the first page
-            PdfRenderer.Page page = renderer.openPage(0);
+            page = renderer.openPage(0);
 
-            // Create a bitmap with the page dimensions
-            Bitmap bitmap = Bitmap.createBitmap(
-                    page.getWidth() * 2, page.getHeight() * 2, Bitmap.Config.ARGB_8888);
+            // Create a bitmap with the page dimensions (with error handling for large PDFs)
+            Bitmap bitmap;
+            try {
+                bitmap = Bitmap.createBitmap(
+                        page.getWidth() * 2, page.getHeight() * 2, Bitmap.Config.ARGB_8888);
+            } catch (OutOfMemoryError e) {
+                Log.e("PDF View", "Out of memory creating bitmap for PDF", e);
+                Toast.makeText(this, "PDF is too large to display", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            // Render the page onto the bitmap (with higher resolution)
+            // Render the page onto the bitmap
             page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
             // Set the bitmap to the ImageView
             pdfImageView.setImageBitmap(bitmap);
 
-            // Close the page and renderer
-            page.close();
-            renderer.close();
-            fileDescriptor.close();
-
-            // Make the ImageView visible (in case it was previously invisible)
+            // Make the ImageView visible
             pdfImageView.setVisibility(View.VISIBLE);
-
         } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error displaying PDF: " + e.toString(), Toast.LENGTH_SHORT).show();
+            Log.e("PDF View", "Error displaying PDF", e);
+            Toast.makeText(this, "Error displaying PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } finally {
+            // Close resources in reverse order
+            if (page != null) {
+                try {
+                    page.close();
+                } catch (Exception e) {
+                    Log.e("PDF View", "Error closing PDF page", e);
+                }
+            }
+            if (renderer != null) {
+                try {
+                    renderer.close();
+                } catch (Exception e) {
+                    Log.e("PDF View", "Error closing PDF renderer", e);
+                }
+            }
+            if (fileDescriptor != null) {
+                try {
+                    fileDescriptor.close();
+                } catch (Exception e) {
+                    Log.e("PDF View", "Error closing file descriptor", e);
+                }
+            }
         }
     }
 
@@ -730,18 +821,47 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
     }
 
 
+    // Improved shrarefile method with better error handling
+
+
+    // Helper method for safely getting string values from ResultSet
+    private String getStringOrEmpty(ResultSet rs, String columnName) {
+        try {
+            String value = rs.getString(columnName);
+            return value != null ? value : "";
+        } catch (Exception e) {
+            Log.e("ResultSet", "Error getting column " + columnName + ": " + e.getMessage());
+            return "";
+        }
+    }
     private void shrarefile(String fileName) {
-        File file = new File(fileName);
-        if (file.exists()) {
-            Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
+        try {
+            File file = new File(fileName);
+            if (!file.exists()) {
+                Toast.makeText(this, "PDF file not found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Uri uri = FileProvider.getUriForFile(
+                    this,
+                    getApplicationContext().getPackageName() + ".provider",
+                    file
+            );
+
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("application/pdf");
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(Intent.createChooser(intent, "Share PDF"));
-        } else {
-            // Handle the case where the file doesn't exist
-            // Show a message or log an error
+
+            // Verify that there are apps to handle this intent
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(Intent.createChooser(intent, "Share PDF"));
+            } else {
+                Toast.makeText(this, "No app available to share PDF", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e("ShareFile", "Error sharing PDF: " + e.getMessage(), e);
+            Toast.makeText(this, "Error sharing PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -822,61 +942,113 @@ public class IncSellBillDetailsActivity extends AppCompatActivity implements Vie
 
 
 
-    public void getCollReport( int tDate, String username) {
+    public void getCollReport(int tDate, String username) {
         mTV_buyerNameTextView.setText("0");
-        mPb_proggress.setVisibility(VISIBLE);
-        cn = new SqlManager().getSQLConnection();
-        mArrayListSellReport.clear();
-        SetGetSellDetailsReport setGetSellDetailsReport = null;
-         Log.e("Saleidd",""+username);
-        try {
-            if (cn != null) {
-                CallableStatement smt = cn.prepareCall("{call ADROID_GetSellBill_Datewise(?)}");
-                smt.setString("@Saleid", username);
-                smt.execute();
-                ResultSet rs = smt.getResultSet();
-                if (rs.isBeforeFirst()) {
-                    while (rs.next()) {
-                        setGetSellDetailsReport = new SetGetSellDetailsReport();
-                        setGetSellDetailsReport.setSaleDate(rs.getString("saledate"));
-                        setGetSellDetailsReport.setSaleid(rs.getString("SaleID"));
-                        setGetSellDetailsReport.setPayableAmt(rs.getString("salePrice"));
-                        setGetSellDetailsReport.setCoustomerPh(rs.getString("BatchNo"));
-                        setGetSellDetailsReport.setCoustomerName(rs.getString("Quantity"));
-                        setGetSellDetailsReport.setItemID(rs.getString("ItemID"));
-                        setGetSellDetailsReport.setItemName(rs.getString("ItemName"));
-                        setGetSellDetailsReport.setBatchNo(rs.getString("MRP"));
-                        setGetSellDetailsReport.setExpary(rs.getString("ExpiryDate"));
-                        setGetSellDetailsReport.setItemDetails(rs.getString("ItemDetails"));
-                        Log.e("ItemDetails",""+rs.getString("ItemDetails"));
-                        setGetSellDetailsReport.setBuyer(BuyerName);
-                        bill_id=rs.getString("SaleID");
-                        totalAmount=totalAmount+Double.parseDouble(rs.getString("salePrice"));
-                        mArrayListSellReport.add(setGetSellDetailsReport);
+        mPb_proggress.setVisibility(View.VISIBLE);
 
+        // Execute the database query on a background thread
+        new Thread(() -> {
+            Connection connection = null;
+            CallableStatement statement = null;
+            ResultSet resultSet = null;
 
-
-                    }
-                    Btn_download.setVisibility(VISIBLE);
-                    mTV_buyerNameTextView.setText(String.valueOf(totalAmount));
-                    adapterSellReport = new AdapterBillDetailsReport(IncSellBillDetailsActivity.this, mArrayListSellReport);
-                    mRv_loanDueReport.setAdapter(adapterSellReport);
-                    mPb_proggress.setVisibility(View.GONE);
-
-                } else {
-                    mPb_proggress.setVisibility(View.GONE);
-                    Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+            try {
+                connection = new SqlManager().getSQLConnection();
+                if (connection == null) {
+                    runOnUiThread(() -> {
+                        mPb_proggress.setVisibility(View.GONE);
+                        Toast.makeText(IncSellBillDetailsActivity.this, "Database connection failed", Toast.LENGTH_SHORT).show();
+                    });
+                    return;
                 }
-            } else {
-                mPb_proggress.setVisibility(View.GONE);
-                Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show();
+
+                statement = connection.prepareCall("{call ADROID_GetSellBill_Datewise(?)}");
+                statement.setString("@Saleid", username);
+                statement.execute();
+                resultSet = statement.getResultSet();
+
+                if (resultSet != null && resultSet.isBeforeFirst()) {
+                    mArrayListSellReport.clear();
+                    double total = 0.0;
+
+                    while (resultSet.next()) {
+                        SetGetSellDetailsReport report = new SetGetSellDetailsReport();
+
+                        // Safely get string values with null checks
+                        report.setSaleDate(getStringOrEmpty(resultSet, "saledate"));
+                        report.setSaleid(getStringOrEmpty(resultSet, "SaleID"));
+                        report.setPayableAmt(getStringOrEmpty(resultSet, "salePrice"));
+                        report.setCoustomerPh(getStringOrEmpty(resultSet, "BatchNo"));
+                        report.setCoustomerName(getStringOrEmpty(resultSet, "Quantity"));
+                        report.setItemID(getStringOrEmpty(resultSet, "ItemID"));
+                        report.setItemName(getStringOrEmpty(resultSet, "ItemName"));
+                        report.setBatchNo(getStringOrEmpty(resultSet, "MRP"));
+                        report.setExpary(getStringOrEmpty(resultSet, "ExpiryDate"));
+                        report.setItemDetails(getStringOrEmpty(resultSet, "ItemDetails"));
+                        report.setBuyer(BuyerName);
+                        Log.e("ItemName",""+getStringOrEmpty(resultSet, "ItemName"));
+
+                        // Safely parse double values
+                        try {
+                            String priceStr = getStringOrEmpty(resultSet, "salePrice");
+                            if (!priceStr.isEmpty()) {
+                                total += Double.parseDouble(priceStr);
+                            }
+                        } catch (NumberFormatException e) {
+                            Log.e("getCollReport", "Error parsing price: " + e.getMessage());
+                        }
+
+                        bill_id = getStringOrEmpty(resultSet, "SaleID");
+                        mArrayListSellReport.add(report);
+                    }
+
+                    final double finalTotal = total;
+                    runOnUiThread(() -> {
+                        Btn_download.setVisibility(View.VISIBLE);
+                        mTV_buyerNameTextView.setText(String.valueOf(finalTotal));
+                        adapterSellReport = new AdapterBillDetailsReport(IncSellBillDetailsActivity.this, mArrayListSellReport);
+                        mRv_loanDueReport.setAdapter(adapterSellReport);
+                        mPb_proggress.setVisibility(View.GONE);
+
+                        // Now that we have data, try to generate the PDF
+                        if (!mArrayListSellReport.isEmpty()) {
+                            try {
+                                downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
+                            } catch (Exception e) {
+                                Log.e("PDF Generation", "Error generating bill after data load", e);
+                                Toast.makeText(IncSellBillDetailsActivity.this,
+                                        "Could not generate bill: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        mPb_proggress.setVisibility(View.GONE);
+                        Toast.makeText(IncSellBillDetailsActivity.this, "No data found", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            } catch (Exception ex) {
+                Log.e("getCollReport", "Database error: " + ex.getMessage(), ex);
+                runOnUiThread(() -> {
+                    mPb_proggress.setVisibility(View.GONE);
+                    Toast.makeText(IncSellBillDetailsActivity.this,
+                            "Database error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            } finally {
+                // Close resources in reverse order
+                try {
+                    if (resultSet != null) resultSet.close();
+                    if (statement != null) statement.close();
+                    if (connection != null) connection.close();
+                } catch (Exception e) {
+                    Log.e("getCollReport", "Error closing database resources: " + e.getMessage());
+                }
             }
-        } catch (Exception ex) {
-            mPb_proggress.setVisibility(View.GONE);
-            Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
-            Log.e("Exception1", "" + ex);
-        }
+        }).start();
     }
+
+
+
 
     @Override
      public boolean onOptionsItemSelected(MenuItem item) {

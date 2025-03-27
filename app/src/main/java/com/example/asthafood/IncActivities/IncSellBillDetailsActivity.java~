@@ -1,4 +1,4 @@
-package com.example.asthafood.activity;
+package com.example.asthafood.IncActivities;
 
 import static android.view.View.VISIBLE;
 
@@ -64,154 +64,154 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SellBillDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    // toolbar
-    private Toolbar mToolbar;
-    // private ArrayList<SellProductDetailsModel> arrayList=new ArrayList<>();
-    private TextView mToolbarTitle,mTV_buyerNameTextView;
+public class IncSellBillDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+     // toolbar
+     private Toolbar mToolbar;
+   // private ArrayList<SellProductDetailsModel> arrayList=new ArrayList<>();
+     private TextView mToolbarTitle,mTV_buyerNameTextView;
     SellProductDetailsModel sellProductDetailsModel;
-    private TextView mTv_fDate;
+     private TextView mTv_fDate;
     String fileName="";
     private ProgressDialog progressDialog;
-    private  AppCompatButton Btn_download;
+     private  AppCompatButton Btn_download;
 
-    private  EditText Edt_txtSearchShopkeeper;
-    private TextView mTv_tDate;
-    private  String saleid="";
-    private  String bill_id="";
-    private  String BuyerName="";
-    private EditText mEt_loanCode;
-    private AppCompatButton mBtn_show;
+     private  EditText Edt_txtSearchShopkeeper;
+     private TextView mTv_tDate;
+     private  String saleid="";
+     private  String bill_id="";
+     private  String BuyerName="";
+     private EditText mEt_loanCode;
+     private AppCompatButton mBtn_show;
 
-    private ProgressBar mPb_proggress;
+     private ProgressBar mPb_proggress;
 
-    private EditText mEt_enterOfficeId;
-    private Button mBtn_showAll,btn_SearchShopkepper;
+     private EditText mEt_enterOfficeId;
+     private Button mBtn_showAll,btn_SearchShopkepper;
 
-    // vars
-    private int fdate = 0;
-    private int tdate = 0;
-    int mYear, mMonth, mDay;
-    private int currentDay, currentMonth, currentYear;
-    private Calendar mCalendar;
-    private  Double totalAmount=0.0;
+     // vars
+     private int fdate = 0;
+     private int tdate = 0;
+     int mYear, mMonth, mDay;
+     private int currentDay, currentMonth, currentYear;
+     private Calendar mCalendar;
+     private  Double totalAmount=0.0;
 
-    private Connection cn;
-    private Spinner activity_get_shopkeeper_list;
+     private Connection cn;
+     private Spinner activity_get_shopkeeper_list;
 
-    private ArrayList<SetGetSellDetailsReport> mArrayListSellReport;
-    private RecyclerView mRv_loanDueReport;
-    private AdapterBillDetailsReport adapterSellReport;
+     private ArrayList<SetGetSellDetailsReport> mArrayListSellReport;
+     private RecyclerView mRv_loanDueReport;
+     private AdapterBillDetailsReport adapterSellReport;
 
 
     private ArrayList<String> arrayList_SCode = new ArrayList<>();
     private ArrayList<String> arrayList_SCodeName = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill_details);
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_bill_details);
 
-        setViewReferences();
-        bindEventHandlers();
+         setViewReferences();
+         bindEventHandlers();
 
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        mToolbarTitle.setText("Bill Report");
+         setSupportActionBar(mToolbar);
+         if (getSupportActionBar() != null) {
+             getSupportActionBar().setDisplayShowTitleEnabled(false);
+             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+             getSupportActionBar().setDisplayShowHomeEnabled(true);
+         }
+         mToolbarTitle.setText("Bill Report");
 
-        mArrayListSellReport = new ArrayList<>();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRv_loanDueReport.setLayoutManager(linearLayoutManager);
-        mArrayListSellReport.clear();
+         mArrayListSellReport = new ArrayList<>();
+         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+         mRv_loanDueReport.setLayoutManager(linearLayoutManager);
+         mArrayListSellReport.clear();
 
-        Intent intent = getIntent();
-        saleid = intent.getStringExtra("Saleid");
-        bill_id = saleid;
-        BuyerName = intent.getStringExtra("CoustomerName");
-        // Initialize progress dialog
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        // Get bill data first
-        getCollReport(1, saleid);
-        Log.e("Saleid1", "" + saleid);
-        Log.e("bill_id1", "" + bill_id);
+         Intent intent = getIntent();
+         saleid = intent.getStringExtra("Saleid");
+         bill_id = saleid;
+         BuyerName = intent.getStringExtra("CoustomerName");
+         // Initialize progress dialog
+         progressDialog = new ProgressDialog(this);
+         progressDialog.setMessage("Loading...");
+         progressDialog.setCancelable(false);
+         // Get bill data first
+         getCollReport(1, saleid);
+         Log.e("Saleid1", "" + saleid);
+         Log.e("bill_id1", "" + bill_id);
 
-        // Try to generate PDF, but don't crash if it fails
-        try {
-            // Only attempt to download if we have data
-            if (mArrayListSellReport != null && !mArrayListSellReport.isEmpty()) {
-
-
-                downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
-            } else {
-                Log.w("PDF Generation", "No data to generate PDF");
-                // Wait for getCollReport to finish
-            }
-        } catch (Exception e) {
-            Log.e("PDF Generation", "Error generating bill in onCreate", e);
-            Toast.makeText(this, "Could not generate bill: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void setViewReferences() {
-        mToolbar = findViewById(R.id.custom_toolbar);
-        mToolbarTitle = findViewById(R.id.toolbar_title);
-
-        mTv_fDate = findViewById(R.id.tv_activity_agent_loan_due_report_fdate);
-        mTv_tDate = findViewById(R.id.tv_activity_agent_loan_due_report_tdate);
-        mEt_loanCode = findViewById(R.id.ev_activity_agent_loan_due_report_enter_loan_code);
-        mBtn_show = findViewById(R.id.btn_activity_agent_loan_due_report_show);
-        mRv_loanDueReport = findViewById(R.id.rv_activity_loan_due_report);
-
-        mPb_proggress = findViewById(R.id.pb_activity_agent_loan_due_report);
-
-        //mEt_enterOfficeId = findViewById(R.id.et_activity_agent_loan_due_report_enter_office_id);
-        mBtn_showAll = findViewById(R.id.btn_activity_agent_loan_due_report_show_all);
-        mTV_buyerNameTextView=findViewById(R.id.totalamt);
-        Edt_txtSearchShopkeeper=findViewById(R.id.txtSearchShopkeeper);
-        btn_SearchShopkepper=findViewById(R.id.btnSearchShopkepper);
-        activity_get_shopkeeper_list=findViewById(R.id.sp_activity_get_shopkeeper_list);
-        Btn_download=findViewById(R.id.download);
-    }
-
-    private void bindEventHandlers() {
-        mTv_tDate.setOnClickListener(this);
-        mBtn_showAll.setOnClickListener(this);
-        btn_SearchShopkepper.setOnClickListener(this);
-        Btn_download.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == mTv_tDate) {
-            selectTDate();
-        } else if (v==btn_SearchShopkepper) {
-            if (!Edt_txtSearchShopkeeper.getText().toString().isEmpty()){
-                arrayList_SCode.clear();
-                arrayList_SCodeName.clear();
-                arrayList_SCode.add("");
-                arrayList_SCodeName.add("---Select ShoopKeeper---");
-                getShopkeeperID(Edt_txtSearchShopkeeper.getText().toString());
-
-            }else{
-                Toast.makeText(SellBillDetailsActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
-                Edt_txtSearchShopkeeper.requestFocus();
-            }
-        } else if (v == Btn_download) {
-
-            Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
-            shrarefile(fileName);
+         // Try to generate PDF, but don't crash if it fails
+         try {
+             // Only attempt to download if we have data
+             if (mArrayListSellReport != null && !mArrayListSellReport.isEmpty()) {
 
 
-        }
-    }
+                 downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
+             } else {
+                 Log.w("PDF Generation", "No data to generate PDF");
+                 // Wait for getCollReport to finish
+             }
+         } catch (Exception e) {
+             Log.e("PDF Generation", "Error generating bill in onCreate", e);
+             Toast.makeText(this, "Could not generate bill: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+         }
+
+     }
+
+     private void setViewReferences() {
+         mToolbar = findViewById(R.id.custom_toolbar);
+         mToolbarTitle = findViewById(R.id.toolbar_title);
+
+         mTv_fDate = findViewById(R.id.tv_activity_agent_loan_due_report_fdate);
+         mTv_tDate = findViewById(R.id.tv_activity_agent_loan_due_report_tdate);
+         mEt_loanCode = findViewById(R.id.ev_activity_agent_loan_due_report_enter_loan_code);
+         mBtn_show = findViewById(R.id.btn_activity_agent_loan_due_report_show);
+         mRv_loanDueReport = findViewById(R.id.rv_activity_loan_due_report);
+
+         mPb_proggress = findViewById(R.id.pb_activity_agent_loan_due_report);
+
+         //mEt_enterOfficeId = findViewById(R.id.et_activity_agent_loan_due_report_enter_office_id);
+         mBtn_showAll = findViewById(R.id.btn_activity_agent_loan_due_report_show_all);
+         mTV_buyerNameTextView=findViewById(R.id.totalamt);
+         Edt_txtSearchShopkeeper=findViewById(R.id.txtSearchShopkeeper);
+         btn_SearchShopkepper=findViewById(R.id.btnSearchShopkepper);
+         activity_get_shopkeeper_list=findViewById(R.id.sp_activity_get_shopkeeper_list);
+         Btn_download=findViewById(R.id.download);
+     }
+
+     private void bindEventHandlers() {
+         mTv_tDate.setOnClickListener(this);
+         mBtn_showAll.setOnClickListener(this);
+         btn_SearchShopkepper.setOnClickListener(this);
+         Btn_download.setOnClickListener(this);
+     }
+
+     @Override
+     public void onClick(View v) {
+         if (v == mTv_tDate) {
+             selectTDate();
+         } else if (v==btn_SearchShopkepper) {
+             if (!Edt_txtSearchShopkeeper.getText().toString().isEmpty()){
+                 arrayList_SCode.clear();
+                 arrayList_SCodeName.clear();
+                 arrayList_SCode.add("");
+                 arrayList_SCodeName.add("---Select ShoopKeeper---");
+                 getShopkeeperID(Edt_txtSearchShopkeeper.getText().toString());
+
+             }else{
+                 Toast.makeText(IncSellBillDetailsActivity.this,"Please Enter Value",Toast.LENGTH_LONG).show();
+                 Edt_txtSearchShopkeeper.requestFocus();
+             }
+         } else if (v == Btn_download) {
+
+             Toast.makeText(this, "Bill Downloaded Successfully", Toast.LENGTH_SHORT).show();
+             Toast.makeText(this, "Saved in " + fileName, Toast.LENGTH_SHORT).show();
+             shrarefile(fileName);
+
+
+         }
+     }
 
     private void downloadSavingStatement(ArrayList<SetGetSellDetailsReport> arrayList, String billNo, String partyName, String address) {
 
@@ -866,7 +866,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
     }
 
     private void getShopkeeperID(String Value) {
-        final ProgressDialog progressDialog = new ProgressDialog(SellBillDetailsActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(IncSellBillDetailsActivity.this,
                 ProgressDialog.THEME_HOLO_DARK);
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
@@ -884,12 +884,12 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                         arrayList_SCodeName.add(rs.getString("Name")+"-"+rs.getString("Phone"));
                     }
                     activity_get_shopkeeper_list.setVisibility(VISIBLE);
-                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter(SellBillDetailsActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter(IncSellBillDetailsActivity.this,R.layout.spinner_hint, arrayList_SCodeName);
                     activity_get_shopkeeper_list.setAdapter(arrayAdapter);
                     progressDialog.dismiss();
                 }else{
                     progressDialog.dismiss();
-                    Toast.makeText(SellBillDetailsActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
+                    Toast.makeText(IncSellBillDetailsActivity.this,"No Data Found",Toast.LENGTH_LONG).show();
                 }
 
             }else{
@@ -909,36 +909,36 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
 
 
 
-    private void selectTDate() {
-        Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+     private void selectTDate() {
+         Calendar c = Calendar.getInstance();
+         mYear = c.get(Calendar.YEAR);
+         mMonth = c.get(Calendar.MONTH);
+         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        // Calendar
-        mCalendar = Calendar.getInstance();
-        currentDay = mCalendar.get(Calendar.DAY_OF_MONTH);
-        currentMonth = mCalendar.get(Calendar.MONTH);
-        currentYear = mCalendar.get(Calendar.YEAR);
+         // Calendar
+         mCalendar = Calendar.getInstance();
+         currentDay = mCalendar.get(Calendar.DAY_OF_MONTH);
+         currentMonth = mCalendar.get(Calendar.MONTH);
+         currentYear = mCalendar.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(SellBillDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month += 1;
+         DatePickerDialog datePickerDialog = new DatePickerDialog(IncSellBillDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
+             @Override
+             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                 month += 1;
 
-                mTv_tDate.setText(dayOfMonth + "-" + month + "-" + year);
-                tdate = Integer.parseInt(Integer.toString(year) + String.format("%02d", month) + String.format("%02d", dayOfMonth));
+                 mTv_tDate.setText(dayOfMonth + "-" + month + "-" + year);
+                 tdate = Integer.parseInt(Integer.toString(year) + String.format("%02d", month) + String.format("%02d", dayOfMonth));
 
-                totalAmount=0.0;
-                mArrayListSellReport.clear();
-                getCollReport( tdate, GlobalStore.GlobalValue.getUserName());
-            }
-        }, currentYear, currentMonth, currentDay);
-        mCalendar.set(currentYear, currentMonth, currentDay);
+                 totalAmount=0.0;
+                 mArrayListSellReport.clear();
+                 getCollReport( tdate, GlobalStore.GlobalValue.getUserName());
+             }
+         }, currentYear, currentMonth, currentDay);
+         mCalendar.set(currentYear, currentMonth, currentDay);
 
-        datePickerDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
-        datePickerDialog.show();
-    }
+         datePickerDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
+         datePickerDialog.show();
+     }
 
 
 
@@ -957,7 +957,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                 if (connection == null) {
                     runOnUiThread(() -> {
                         mPb_proggress.setVisibility(View.GONE);
-                        Toast.makeText(SellBillDetailsActivity.this, "Database connection failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(IncSellBillDetailsActivity.this, "Database connection failed", Toast.LENGTH_SHORT).show();
                     });
                     return;
                 }
@@ -986,7 +986,6 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                         report.setExpary(getStringOrEmpty(resultSet, "ExpiryDate"));
                         report.setItemDetails(getStringOrEmpty(resultSet, "ItemDetails"));
                         report.setBuyer(BuyerName);
-                        Log.e("ItemName",""+getStringOrEmpty(resultSet, "ItemName"));
 
                         // Safely parse double values
                         try {
@@ -1006,7 +1005,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                     runOnUiThread(() -> {
                         Btn_download.setVisibility(View.VISIBLE);
                         mTV_buyerNameTextView.setText(String.valueOf(finalTotal));
-                        adapterSellReport = new AdapterBillDetailsReport(SellBillDetailsActivity.this, mArrayListSellReport);
+                        adapterSellReport = new AdapterBillDetailsReport(IncSellBillDetailsActivity.this, mArrayListSellReport);
                         mRv_loanDueReport.setAdapter(adapterSellReport);
                         mPb_proggress.setVisibility(View.GONE);
 
@@ -1016,7 +1015,7 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                                 downloadSavingStatement(mArrayListSellReport, bill_id, BuyerName, "Customer Address");
                             } catch (Exception e) {
                                 Log.e("PDF Generation", "Error generating bill after data load", e);
-                                Toast.makeText(SellBillDetailsActivity.this,
+                                Toast.makeText(IncSellBillDetailsActivity.this,
                                         "Could not generate bill: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -1024,14 +1023,14 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
                 } else {
                     runOnUiThread(() -> {
                         mPb_proggress.setVisibility(View.GONE);
-                        Toast.makeText(SellBillDetailsActivity.this, "No data found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(IncSellBillDetailsActivity.this, "No data found", Toast.LENGTH_SHORT).show();
                     });
                 }
             } catch (Exception ex) {
                 Log.e("getCollReport", "Database error: " + ex.getMessage(), ex);
                 runOnUiThread(() -> {
                     mPb_proggress.setVisibility(View.GONE);
-                    Toast.makeText(SellBillDetailsActivity.this,
+                    Toast.makeText(IncSellBillDetailsActivity.this,
                             "Database error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
                 });
             } finally {
@@ -1051,25 +1050,25 @@ public class SellBillDetailsActivity extends AppCompatActivity implements View.O
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // todo: goto back activity from here
-                startActivity(new Intent(SellBillDetailsActivity.this, SellBillActivity.class));
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+     public boolean onOptionsItemSelected(MenuItem item) {
+         switch (item.getItemId()) {
+             case android.R.id.home:
+                 // todo: goto back activity from here
+                 startActivity(new Intent(IncSellBillDetailsActivity.this, IncSellBillActivity.class));
+                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                 finish();
+                 return true;
+             default:
+                 return super.onOptionsItemSelected(item);
+         }
+     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(SellBillDetailsActivity.this, SellBillActivity.class));
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        finish();
-    }
-}
+     @Override
+     public void onBackPressed() {
+         super.onBackPressed();
+         startActivity(new Intent(IncSellBillDetailsActivity.this, IncSellBillActivity.class));
+         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+         finish();
+     }
+ }
 
